@@ -8,17 +8,21 @@ class Header extends React.Component {
     return (
       <header>
         <div className="img-searcher">
-          <img src="logo" alt="brandLogo"/>
+          <div className="link-logo">
+            <a href="globo.com">
+              <img src={require("../Logos/logo 1.png")} alt="brandLogo" width="30%"/>
+            </a>
+          </div>
           <Searcher />
+          <ul>
+            <li>
+              <a className="createAcc" href="google.com.br">Crie sua conta</a>
+            </li>
+            <li>
+              <a className="loginButton" href="mercadolivre.com.br">Login</a>
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li>
-            <a className="createAcc" href="google.com.br">Crie sua conta</a>
-          </li>
-          <li>
-            <a className="loginButton" href="mercadolivre.com.br">Login</a>
-          </li>
-        </ul>
         <Nav arrCat={arrCategories} />
       </header>
     )
