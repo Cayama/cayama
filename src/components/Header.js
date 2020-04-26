@@ -7,7 +7,10 @@ class Header extends React.Component {
     const { arrCategories } = this.props;
     return (
       <header>
-        <img src="logo" alt="brandLogo"/>
+        <div className="img-searcher">
+          <img src="logo" alt="brandLogo"/>
+          <Searcher />
+        </div>
         <ul>
           <li>
             <a className="createAcc" href="google.com.br">Crie sua conta</a>
@@ -17,7 +20,6 @@ class Header extends React.Component {
           </li>
         </ul>
         <Nav arrCat={arrCategories} />
-        <Searcher />
       </header>
     )
   }
