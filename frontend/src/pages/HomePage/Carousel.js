@@ -13,7 +13,6 @@ function Carousel() {
   const setCarouselIndexFuncPrevious = () => {
     if (carouselIndex === 0) return setCarouselIndex(carouselImgs.length - 1)
     return setCarouselIndex(carouselIndex - 1)
-
   }
 
   useEffect(() => {
