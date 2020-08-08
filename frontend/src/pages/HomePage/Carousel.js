@@ -29,7 +29,7 @@ function Carousel() {
         <i className="small material-icons">{arrow}</i>
       </button>
     )
-  } 
+  }
 
   return (
     <div>
