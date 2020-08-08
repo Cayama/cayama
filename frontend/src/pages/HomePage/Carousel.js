@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 function Carousel() {
-  const carouserImgs = useSelector(state => state.homePageReducer.carousel)
+  const carouselImgs = useSelector(state => state.homePageReducer.carousel)
   const [carouselIndex, setCarouselIndex] = useState(0)
 
   const setCarouselIndexFuncNext = () => {
-    if (carouselIndex + 1 === carouserImgs.length) return setCarouselIndex(0)
+    if (carouselIndex + 1 === carouselImgs.length) return setCarouselIndex(0)
     return setCarouselIndex(carouselIndex + 1)
   }
 
   const setCarouselIndexFuncPrevious = () => {
-    if (carouselIndex === carouserImgs.length - 1) return setCarouselIndex(carouserImgs.length)
+    if (carouselIndex === 0) return setCarouselIndex(carouselImgs.length - 1)
     return setCarouselIndex(carouselIndex - 1)
   }
 
@@ -26,19 +26,16 @@ function Carousel() {
   const carouselButton = (changePicture, arrow) => {
     return (
       <button type="button" onClick={() => changePicture()}>
-        <i class="small material-icons">{arrow}</i>
+        <i className="small material-icons">{arrow}</i>
       </button>
     )
   } 
 
   return (
     <div>
-      <img src={carouserImgs[carouselIndex].url} alt="carousel image" width="50%" />
+      <img src={carouselImgs[carouselIndex].url} alt="carousel" width="50%" />
       {carouselButton(setCarouselIndexFuncPrevious, "chevron_left")}
       {carouselButton(setCarouselIndexFuncNext, "chevron_right")}
-      <button type="button" onClick={() => setCarouselIndexFuncNext()}>
-        Next
-      </button>
     </div>
   );
 }

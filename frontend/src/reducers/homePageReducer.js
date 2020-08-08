@@ -13,24 +13,28 @@ const INITIAL_STATE = {
   ],
   stores: [
     { store: {
+      id: 1,
       name: 'Maquiagem',
       photo: require('../pages/HomePage/apiMock/store1.png'),
       price: 15
       }
     },
     { store: {
+      id: 2,
       name: 'Batom',
       photo: require('../pages/HomePage/apiMock/store2.png'),
       price: 8
       }
     },
     { store: {
+      id: 3,
       name: 'Relógio de Parede',
       photo: require('../pages/HomePage/apiMock/store3.png'),
       price: 25
       }
     },
     { store: {
+      id: 4,
       name: 'Vinho',
       photo: require('../pages/HomePage/apiMock/store4.png'),
       price: 35
@@ -39,27 +43,35 @@ const INITIAL_STATE = {
   ],
   products: [
     { product: {
+      id: 1,
       name: 'Maquiagem',
       photo: require('../pages/HomePage/apiMock/product1.png'),
-      price: 15
+      price: 15,
+      freeShipping: true
       }
     },
     { product: {
+      id: 2,
       name: 'Batom',
       photo: require('../pages/HomePage/apiMock/product2.png'),
-      price: 8
+      price: 8,
+      freeShipping: false
       }
     },
     { product: {
+      id: 3,
       name: 'Relógio de Parede',
       photo: require('../pages/HomePage/apiMock/product3.png'),
-      price: 25
+      price: 25,
+      freeShipping: true
       }
     },
     { product: {
+      id: 4,
       name: 'Vinho',
       photo: require('../pages/HomePage/apiMock/product4.png'),
-      price: 35
+      price: 35,
+      freeShipping: false
       }
     }
   ],
