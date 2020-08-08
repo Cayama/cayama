@@ -28,6 +28,7 @@ function Carousel() {
       <button type="button" onClick={() => changePicture()}>
         <i className="small material-icons">{arrow}</i>
       </button>
+
     )
   }
 
