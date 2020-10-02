@@ -10,7 +10,13 @@ const registerUser = async (userObj) => {
   return user;
 }
 
+const updateUserAddressesByEmail = async (email, addresses) => {
+  const updatedUser = await userModel.updateUserAddressesByEmail(email, addresses);
+  return updatedUser;
+};
+
 module.exports = {
   registerUser,
   getUserByEmail,
+  updateUserAddressesByEmail,
 };

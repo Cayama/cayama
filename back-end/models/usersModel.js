@@ -14,7 +14,20 @@ const registerUser = async (userObj) => {
   return user.ops[0];
 }
 
+const updateUserAddressesByEmail = async (email, addresses) => {
+  const db = await connection();
+  const updatedUser = await db.collection('users')
+    .findOneAndUpdate(
+      { email },
+      { $set: { addresses } },
+      { returnOriginal: false }
+    );
+
+  return updatedUser.value;
+}
+
 module.exports = {
   getUserByEmail,
   registerUser,
+  updateUserAddressesByEmail,
 };

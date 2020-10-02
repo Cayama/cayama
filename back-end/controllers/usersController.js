@@ -1,33 +1,91 @@
-const rescue = require('express-rescue');
 const Boom = require('boom');
+const rescue = require('express-rescue');
 const usersService = require('../services/usersService');
-const userSchema = require('../services/schemas/userSchema');
 const createJwtToken = require('../utils/createJwtToken');
+const {
+  userRegisterSchema,
+  loginSchema,
+  addressesSchema,
+  userInfluencerSchema,
+} = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
-  const { firstName, lastName, email, password, confirmPassword, birthDate } = req.body;
+  const { firstName, lastName, email, password, confirmPassword, cpf, birthDate } = req.body;
 
-  if (!firstName || !lastName || !email || !password || !confirmPassword) {
+  if (!firstName || !lastName || !email || !password || !confirmPassword || cpf) {
     return next(Boom.badData('Faltando informações'));
   }
 
-  const userExists = await usersService.getUserByEmail(email)
+  const userExists = await usersService.getUserByEmail(email);
 
   if (userExists) return next(Boom.conflict('Email já cadastrado'));
 
-  const { error } = userSchema.validate({
-    firstName, lastName, email, password, confirmPassword, birthDate
+  if (req.body.influencer) {
+    const { socialMedia, contentType, socialMediaName } = req.body.influencer;
+    const { error } = userInfluencerSchema.validate({ socialMedia, contentType, socialMediaName });
+    if (error) return next(Boom.badData(error));
+  }
+
+  const { error } = userRegisterSchema.validate({
+    firstName, lastName, email, password, confirmPassword, cpf, birthDate
   });
 
-  if (error) return next(Boom.badData(error))
+  if (error) return next(Boom.badData(error));
 
-  const newUser = await usersService.registerUser({ firstName, lastName, email, password, birthDate });
+  const { cpf:usercpf, ...newUser } = await usersService.registerUser(req.body);
 
-  const token = createJwtToken(newUser)
+  const token = createJwtToken(newUser);
 
-  return res.status(201).json({ ...newUser, token });
+  return res.status(201).json({ token });
+});
+
+const loginUser = rescue(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) return next(Boom.badData('Faltando informações'));
+
+  const { error } = loginSchema.validate({ email, password });
+
+  if (error) return next(boom.badData(error));
+
+  const user = await usersService.getUserByEmail(email);
+
+  if (user.password !== password) return next(Boom.unauthorized('Email ou senha incorretos'));
+
+  const token = createJwtToken(user);
+
+  return res.status(200).json({ token });
+});
+
+const getAllAddresses = rescue(async(req, res, next) => {
+  const { email } = req.user;
+
+  const { addresses } = await usersService.getUserByEmail(email);
+
+  if (!addresses) return next(Boom.notFound('Endereços não encontrados'));
+
+  return res.status(200).json({ addresses });
+});
+
+const updateUsersAddresses = rescue(async (req, res, next) => {
+  const { addresses } = req.body;
+  const { email } = req.user;
+
+  if (!addresses) return next(Boom.badData('Faltando informações'));
+
+  const { error } = addressesSchema.validate(addresses);
+
+  if (error) return next(Boom.badData(error));
+
+  const { password, ...updatedUser } = await usersService.updateUserAddressesByEmail(email, addresses);
+
+  return res.status(201).json(updatedUser);
+
 });
 
 module.exports = {
   registerUser,
+  loginUser,
+  updateUsersAddresses,
+  getAllAddresses,
 };
