@@ -7,6 +7,7 @@ const {
   loginSchema,
   addressesSchema,
   userInfluencerSchema,
+  influencerLinkSchema
 } = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -83,9 +84,33 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
 
 });
 
+const createInfluencerLink = rescue(async (req, res, next) => {
+  const { influencerLink } = req.body;
+  const { _id } = req.user;
+
+  if (!influencerLink) return next(Boom.badData('Faltando informações'));
+
+  const { error } = influencerLinkSchema.validate({ influencerLink });
+
+  if (error) return next(Boom.badData(error));
+  console.log('lll')
+  const linkExists = await usersService.getInfluencerByLink(influencerLink);
+
+  if (linkExists) return next(Boom.conflict('Este link já esta sendo utilizado'));
+
+  const userWithLink = await usersService.createInfluencerLink(_id, influencerLink);
+
+  if (!userWithLink) return next(Boom.badData('Não é um influencer ainda'));
+
+  const influencer = userWithLink.influencer;
+
+  return res.status(201).json({ influencer });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   updateUsersAddresses,
   getAllAddresses,
+  createInfluencerLink,
 };

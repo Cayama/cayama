@@ -38,32 +38,39 @@ const phoneSchema = Joi.string()
   .error(() => new Error("Apenas números com DDD"));
 
 const cpfSchema = Joi.string()
-    .regex(/^[0-9]+$/)
-    .length(11)
-    .error(() => new Error("Apenas números são permitidos no cpf"));
+  .regex(/^[0-9]+$/)
+  .length(11)
+  .error(() => new Error("Apenas números são permitidos no cpf"));
 
 const cnpjSchema = Joi.string()
   .regex(/^[0-9]+$/)
   .length(14)
   .error(() => new Error("Apenas números são permitidos no cnpj"));
 
-
 const validateSocialMediaChoices = (value, helper) => {
-  const array = ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter'];
-  if (!array.includes(value)) return helper.error('Mídia Social inserida não esta entre as opções');
-  return value
-}
+  const array = ["YouTube", "Instagram", "Facebook", "TikTok", "Twitter"];
+  if (!array.includes(value))
+    return helper.error("Mídia Social inserida não esta entre as opções");
+  return value;
+};
 
 const validateContentTypeChoices = (value, helper) => {
-  const array = ['Tecnologia', 'Moda', 'Fitness', 'Saúde'];
+  const array = ["Tecnologia", "Moda", "Fitness", "Saúde"];
   if (!array.includes(value)) {
-    return helper.error('Tipo de Conteúdo inserido não esta entre as opções');
+    return helper.error("Tipo de Conteúdo inserido não esta entre as opções");
   }
-  return value
-}
+  return value;
+};
 
 const socialMediaSchema = Joi.string().custom(validateSocialMediaChoices);
 const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
+
+const influencerLinkSchema = Joi.string()
+  .min(3)
+  .max(30)
+  .trim()
+  .required()
+  .error(() => new Error("Link não deve conter espacos em branco"));
 
 module.exports = {
   registerNameSchema,
@@ -77,4 +84,5 @@ module.exports = {
   cnpjSchema,
   socialMediaSchema,
   contentTypeSchema,
+  influencerLinkSchema,
 };

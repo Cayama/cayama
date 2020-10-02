@@ -15,8 +15,20 @@ const updateUserAddressesByEmail = async (email, addresses) => {
   return updatedUser;
 };
 
+const getInfluencerByLink = async (influencerLink) => {
+  const influencer = await userModel.getInfluencerByLink(influencerLink);
+  return influencer;
+};
+
+const createInfluencerLink = async (_id, influencerLink) => {
+  const userWithLink = await userModel.createInfluencerLink(_id, influencerLink);
+  return userWithLink
+}
+
 module.exports = {
   registerUser,
   getUserByEmail,
   updateUserAddressesByEmail,
+  getInfluencerByLink,
+  createInfluencerLink,
 };

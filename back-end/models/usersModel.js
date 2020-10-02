@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const { ObjectId } = require('mongodb');
 
 const getUserByEmail = async (email) => {
   const db = await connection();
@@ -26,8 +27,32 @@ const updateUserAddressesByEmail = async (email, addresses) => {
   return updatedUser.value;
 }
 
+const getInfluencerByLink = async (influencerLink) => {
+  const db = await connection();
+  const influencer = await db.collection('users')
+    .findOne(
+      { $and: [ { influencer: { $exists: true }}, { 'influencer.influencerLink': influencerLink } ] }
+    );
+
+  return influencer;
+}
+
+const createInfluencerLink = async (_id, influencerLink) => {
+  const db = await connection();
+  const userWithLink = await db.collection('users')
+    .findOneAndUpdate(
+      { $and: [ { _id: ObjectId(_id) }, { influencer: { $exists: true }} ] },
+      { $set: { 'influencer.influencerLink': influencerLink } },
+      { returnOriginal: false },
+    );
+
+  return userWithLink.value;
+};
+
 module.exports = {
   getUserByEmail,
   registerUser,
   updateUserAddressesByEmail,
+  getInfluencerByLink,
+  createInfluencerLink,
 };
