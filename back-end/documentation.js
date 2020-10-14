@@ -11,7 +11,7 @@ const postRegisterUser = {
   influencer: {
     socialMedia: "YouTube",
     socialMediaName: "Canal You Technology",
-    contentType: "Technology",
+    contentType: "Tecnologia",
   },
 };
 
@@ -35,6 +35,16 @@ const putAddresses = {
     },
   ],
 };
+
+const putCreateLink = {
+  influencerLink: 'canal-you-technology',
+};
+
+const putUpdateIoInfluencer = {
+  socialMedia: "YouTube",
+  socialMediaName: "Canal You Technology",
+  contentType: "Tecnologia",
+},
 
 // =================================== STORE DOCUMENTATION =========================================
 

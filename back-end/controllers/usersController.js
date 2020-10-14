@@ -93,7 +93,7 @@ const createInfluencerLink = rescue(async (req, res, next) => {
   const { error } = influencerLinkSchema.validate({ influencerLink });
 
   if (error) return next(Boom.badData(error));
-  console.log('lll')
+
   const linkExists = await usersService.getInfluencerByLink(influencerLink);
 
   if (linkExists) return next(Boom.conflict('Este link já esta sendo utilizado'));
@@ -107,10 +107,29 @@ const createInfluencerLink = rescue(async (req, res, next) => {
   return res.status(201).json({ influencer });
 });
 
+const updateUserToInfluencer = rescue(async (req, res, next) => {
+  const { socialMedia, contentType, socialMediaName } = req.body;
+
+  const { error } = userInfluencerSchema.validate({ socialMedia, contentType, socialMediaName });
+
+  if (error) return next(Boom.badData(error));
+
+  const { _id } = req.user;
+
+  const newInfluencer = await usersService.updateUserToInfluencer(_id, {
+    socialMedia, contentType, socialMediaName
+  })
+
+  const influencer = newInfluencer.influencer;
+
+  return res.status(200).json({ influencer });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   updateUsersAddresses,
   getAllAddresses,
   createInfluencerLink,
+  updateUserToInfluencer,
 };

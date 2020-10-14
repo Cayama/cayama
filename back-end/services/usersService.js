@@ -25,10 +25,16 @@ const createInfluencerLink = async (_id, influencerLink) => {
   return userWithLink
 }
 
+const updateUserToInfluencer = async (_id, influencerObj) => {
+  const newInfluencer = await userModel.updateUserToInfluencer(_id, influencerObj);
+  return newInfluencer;
+}
+
 module.exports = {
   registerUser,
   getUserByEmail,
   updateUserAddressesByEmail,
   getInfluencerByLink,
   createInfluencerLink,
+  updateUserToInfluencer
 };

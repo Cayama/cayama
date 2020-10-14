@@ -10,7 +10,13 @@ const registerStore = async (storeObj) => {
   return store;
 };
 
+const addNewProduct = async (userId, productObj) => {
+  const newProduct = await storesModel.addNewProduct(userId, productObj);
+  return newProduct;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
+  addNewProduct,
 };

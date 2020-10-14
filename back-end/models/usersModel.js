@@ -49,10 +49,23 @@ const createInfluencerLink = async (_id, influencerLink) => {
   return userWithLink.value;
 };
 
+const updateUserToInfluencer = async (_id, influencerObj) => {
+  const db = await connection();
+  const newInfluencer = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(_id) },
+      { $set: { influencer: influencerObj } },
+      { returnOriginal: false },
+    );
+
+  return newInfluencer.value;
+}
+
 module.exports = {
   getUserByEmail,
   registerUser,
   updateUserAddressesByEmail,
   getInfluencerByLink,
   createInfluencerLink,
+  updateUserToInfluencer,
 };

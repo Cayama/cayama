@@ -9,6 +9,7 @@ usersRoutes
   .post('/login', controllers.usersController.loginUser)
   .put('/addresses', jwtMiddleware(true), controllers.usersController.updateUsersAddresses)
   .put('/create-link', jwtMiddleware(true), controllers.usersController.createInfluencerLink)
-  .get('/addresses', jwtMiddleware(true), controllers.usersController.getAllAddresses);
+  .get('/addresses', jwtMiddleware(true), controllers.usersController.getAllAddresses)
+  .put('/update-to-influencer', jwtMiddleware(true), controllers.usersController.updateUserToInfluencer);
 
 module.exports = usersRoutes;
