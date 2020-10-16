@@ -10,7 +10,8 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname + '/uploads')));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/files', express.static(path.join(__dirname + '/uploads')));
 
 app.use('/user', usersRoutes);
 app.use('/store', storesRoutes);

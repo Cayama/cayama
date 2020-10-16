@@ -19,7 +19,7 @@ const addNewProduct = async (userId, productObj) => {
   const db = await connection();
   const newProduct = await db.collection('users')
     .findOneAndUpdate(
-      { _id: ObjectId(_id)},
+      { _id: ObjectId(userId)},
       { $addToSet: { products: { _id: ObjectId(), ...productObj } } },
       { returnOriginal: false },
     );
@@ -27,8 +27,21 @@ const addNewProduct = async (userId, productObj) => {
   return newProduct.value;
 }
 
+const updatedProducts = async (userId, newProductsArray) => {
+  const db = await connection();
+  const newProducts = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(userId)},
+      { $set: { products: newProductsArray } },
+      { returnOriginal: false },
+    );
+
+  return newProducts.value;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
   addNewProduct,
+  updatedProducts,
 };

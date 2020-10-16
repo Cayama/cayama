@@ -1,22 +1,65 @@
 const multer = require('multer');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
+// const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+// const mkdirp = require('mkdirp');
 
-const storage = multer.diskStorage({
-  destination: (req, _file, callback) => {
+const storageTypes = {
+  local: multer.diskStorage({
+    destination: (req, _file, callback) => {
+      callback(null, path.resolve(__dirname, '..', 'uploads'));
+    },
+    filename: (_req, file, callback) => {
+      crypto.randomBytes(16, (err, hash) => {
+        if (err) return callback(err);
 
-    const { _id } = req.user;
+        file.key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`
 
-    fs.exists(`uploads/${_id}`, (exists) => {
-      if (exists) return callback(null, `./uploads/${_id}`);
+        file.location = `${process.env.APP_URL}/files/${file.key}`
 
-      mkdirp.sync(`uploads/${_id}`);
-      return callback(null, `./uploads/${_id}`);
-    })
-  },
-  filename: (_req, file, callback) => {
-    return callback(null, `${file.originalname}-${Date.now()}.jpeg`)
+        return callback(null, file.key);
+      });
+    }
+  }),
+
+  s3: multerS3({
+    s3: new aws.S3(),
+    bucket: process.env.AWS_BUCKET_NAME,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read',
+    key: (req, file, callback) => {
+      crypto.randomBytes(16, (err, hash) => {
+        if (err) return callback(err);
+
+        const key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`
+
+        return callback(null, key);
+      });
+    }
+  }),
+}
+
+const multerConfig = {
+  dest: path.resolve(__dirname, '..', 'uploads'),
+
+  storage: storageTypes[process.env.STORAGE_TYPE],
+
+  limits: { fileSize: 2 * 1024 * 1024 },
+
+  fileFilter: (req, file, callback) => {
+    const allowedMimes = [
+      'image/jpeg',
+      'image/pjpeg',
+      'image/png',
+    ]
+    if (allowedMimes.includes(file.mimetype)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Invalid file type.'))
+    }
   }
-});
+}
 
-module.exports = multer({ storage });
+module.exports = multer(multerConfig);

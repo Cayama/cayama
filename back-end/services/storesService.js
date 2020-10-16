@@ -15,8 +15,14 @@ const addNewProduct = async (userId, productObj) => {
   return newProduct;
 }
 
+const updatedProducts = async (userId, newProductsArray) => {
+  const newProducts = await storesModel.updatedProducts(userId, newProductsArray);
+  return newProducts;
+};
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
   addNewProduct,
+  updatedProducts,
 };
