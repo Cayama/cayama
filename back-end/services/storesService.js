@@ -10,8 +10,8 @@ const registerStore = async (storeObj) => {
   return store;
 };
 
-const addNewProduct = async (userId, productObj) => {
-  const newProduct = await storesModel.addNewProduct(userId, productObj);
+const addNewProduct = async (productObj) => {
+  const newProduct = await storesModel.addNewProduct(productObj);
   return newProduct;
 }
 

@@ -18,4 +18,4 @@ module.exports = Joi.array().items(
   complement: shippingAddressSchema,
   phone: phoneSchema,
   })
-);
+).required()

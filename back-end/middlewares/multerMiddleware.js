@@ -8,7 +8,7 @@ const aws = require('aws-sdk');
 
 const storageTypes = {
   local: multer.diskStorage({
-    destination: (req, _file, callback) => {
+    destination: (_req, _file, callback) => {
       callback(null, path.resolve(__dirname, '..', 'uploads'));
     },
     filename: (_req, file, callback) => {
@@ -29,7 +29,7 @@ const storageTypes = {
     bucket: process.env.AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
-    key: (req, file, callback) => {
+    key: (_req, file, callback) => {
       crypto.randomBytes(16, (err, hash) => {
         if (err) return callback(err);
 

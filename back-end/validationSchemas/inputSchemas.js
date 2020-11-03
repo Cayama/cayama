@@ -3,10 +3,7 @@ const Joi = require('joi');
 const registerNameSchema = Joi.string()
   .min(3)
   .max(40)
-  .required()
-  .error(
-    () => new Error('Nome deve ter pelo menos 3 caracteres alfanuméricos')
-  );
+  .required();
 
 const passwordSchema = Joi.string()
   .min(8)
@@ -25,12 +22,10 @@ const birthDateSchema = Joi.string();
 
 const cepSchema = Joi.string()
   .length(8)
-  .required()
-  .error(() => new Error('CEP inválido'));
+  .required();
 
 const shippingAddressSchema = Joi.string()
-  .required()
-  .error(() => new Error('Dados precisam ser do tipo string'));
+  .required();
 
 const phoneSchema = Joi.string()
   .length(11)
@@ -40,12 +35,14 @@ const phoneSchema = Joi.string()
 const cpfSchema = Joi.string()
   .regex(/^[0-9]+$/)
   .length(11)
-  .error(() => new Error('Apenas números são permitidos no cpf'));
+  .required()
+  .error(() => new Error('Apenas 11 números são permitidos no cpf'));
 
 const cnpjSchema = Joi.string()
   .regex(/^[0-9]+$/)
   .length(14)
-  .error(() => new Error('Apenas números são permitidos no cnpj'));
+  .required()
+  .error(() => new Error('Apenas 14 números são permitidos no cnpj'));
 
 const validateSocialMediaChoices = (value, helper) => {
   const array = ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter'];
@@ -62,36 +59,43 @@ const validateContentTypeChoices = (value, helper) => {
   return value;
 };
 
+const validateProductCategoryChoices = (value, helper) => {
+  const array = ['Tecnologia', 'Moda', 'Fitness', 'Saúde'];
+  if (!array.includes(value)) {
+    return helper.error('Tipo de Conteúdo inserido não esta entre as opções');
+  }
+  return value;
+};
+
 const socialMediaSchema = Joi.string().custom(validateSocialMediaChoices);
 const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
+const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
 
 const influencerLinkSchema = Joi.string()
   .min(3)
   .max(30)
   .trim()
-  .required()
-  .error(() => new Error('Link não deve conter espacos em branco'));
+  .required();
 
 const productPriceSchema = Joi.number()
-  .required()
-  .error(() => new Error('Preço inválido'));
+  .required();
 
 const productStockQuantitySchema = Joi.number()
   .integer()
   .positive()
-  .required()
-  .error(() => new Error('Quantidade inválida'));
+  .required();
 
 const productDescriptionSchema = Joi.string()
   .min(30)
   .max(400)
-  .alphanum()
-  .error(() => new Error('Descrição deve ter no mínimo 30 caracteres e no máximo 400'));
+  .alphanum();
 
 const arrayLinksSchema = Joi.array()
   .items(Joi.string())
-  .required()
-  .error(() => new Error('Array deve conter strings do servidor armazenador'))
+  .required();
+
+const arrayReviewLinksSchema = Joi.array()
+  .items(Joi.string());
 
 module.exports = {
   registerNameSchema,
@@ -110,4 +114,6 @@ module.exports = {
   productStockQuantitySchema,
   productDescriptionSchema,
   arrayLinksSchema,
+  arrayReviewLinksSchema,
+  categoryTypeSchema,
 };

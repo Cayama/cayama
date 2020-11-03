@@ -8,7 +8,7 @@ storesRoutes
   .post('/register', controllers.storesController.registerStore)
   .post('/register-product',
     jwtMiddleware(true),
-    multerMiddleware.single('productImages'),
+    multerMiddleware.array('productImages', 10),
     controllers.storesController.registerProduct
   )
   .delete('/product/:id', jwtMiddleware(true), controllers.storesController.deleteProduct);

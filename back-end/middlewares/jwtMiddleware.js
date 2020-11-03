@@ -4,7 +4,7 @@ const Joi = require('joi');
 const Boom = require('boom');
 const usersModel = require('../models/usersModel');
 
-const jwtTokenSchema = Joi.string().error(() => new Error('token inválido'));
+const jwtTokenSchema = Joi.string().required().error(() => new Error('token inválido'));
 
 const { SECRET } = process.env;
 

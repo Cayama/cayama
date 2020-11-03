@@ -13,9 +13,11 @@ const {
 const registerUser = rescue(async (req, res, next) => {
   const { firstName, lastName, email, password, confirmPassword, cpf, birthDate } = req.body;
 
-  if (!firstName || !lastName || !email || !password || !confirmPassword || cpf) {
-    return next(Boom.badData('Faltando informações'));
-  }
+  const { error } = userRegisterSchema.validate({
+    firstName, lastName, email, password, confirmPassword, cpf, birthDate
+  });
+
+  if (error) return next(Boom.badData(error));
 
   const userExists = await usersService.getUserByEmail(email);
 
@@ -27,12 +29,6 @@ const registerUser = rescue(async (req, res, next) => {
     if (error) return next(Boom.badData(error));
   }
 
-  const { error } = userRegisterSchema.validate({
-    firstName, lastName, email, password, confirmPassword, cpf, birthDate
-  });
-
-  if (error) return next(Boom.badData(error));
-
   const { cpf:usercpf, ...newUser } = await usersService.registerUser(req.body);
 
   const token = createJwtToken(newUser);
@@ -42,8 +38,6 @@ const registerUser = rescue(async (req, res, next) => {
 
 const loginUser = rescue(async (req, res, next) => {
   const { email, password } = req.body;
-
-  if (!email || !password) return next(Boom.badData('Faltando informações'));
 
   const { error } = loginSchema.validate({ email, password });
 
@@ -72,8 +66,6 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
   const { addresses } = req.body;
   const { email } = req.user;
 
-  if (!addresses) return next(Boom.badData('Faltando informações'));
-
   const { error } = addressesSchema.validate(addresses);
 
   if (error) return next(Boom.badData(error));
@@ -87,8 +79,6 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
 const createInfluencerLink = rescue(async (req, res, next) => {
   const { influencerLink } = req.body;
   const { _id } = req.user;
-
-  if (!influencerLink) return next(Boom.badData('Faltando informações'));
 
   const { error } = influencerLinkSchema.validate({ influencerLink });
 

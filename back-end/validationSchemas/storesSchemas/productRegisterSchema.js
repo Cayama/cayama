@@ -5,13 +5,17 @@ const {
   productStockQuantitySchema,
   productDescriptionSchema,
   arrayLinksSchema,
+  arrayReviewLinksSchema,
+  categoryTypeSchema,
 } = require('../inputSchemas');
 
 module.exports = Joi.object({
   productName: registerNameSchema,
   price: productPriceSchema,
+  category: categoryTypeSchema,
   stockQuantity: productStockQuantitySchema,
   description: productDescriptionSchema,
-  productImagesPath: arrayLinksSchema,
-  videosPath: arrayLinksSchema,
+  videosPath: arrayReviewLinksSchema,
+  keys: arrayLinksSchema,
+  urls: arrayLinksSchema,
 });

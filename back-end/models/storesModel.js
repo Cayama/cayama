@@ -15,21 +15,16 @@ const registerStore = async (storeObj) => {
   return newStore.ops[0];
 };
 
-const addNewProduct = async (userId, productObj) => {
+const addNewProduct = async (productObj) => {
   const db = await connection();
-  const newProduct = await db.collection('users')
-    .findOneAndUpdate(
-      { _id: ObjectId(userId)},
-      { $addToSet: { products: { _id: ObjectId(), ...productObj } } },
-      { returnOriginal: false },
-    );
+  const newProduct = await db.collection('products').insertOne(productObj);
 
-  return newProduct.value;
+  return newProduct.ops[0];
 }
 
 const updatedProducts = async (userId, newProductsArray) => {
   const db = await connection();
-  const newProducts = await db.collection('users')
+  const newProducts = await db.collection('products')
     .findOneAndUpdate(
       { _id: ObjectId(userId)},
       { $set: { products: newProductsArray } },

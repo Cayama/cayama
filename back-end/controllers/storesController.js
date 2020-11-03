@@ -15,17 +15,17 @@ const {
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
 
-  if (!storeName || !email || !password || !cnpj) return next(Boom.badData('Faltando informações'));
-
-  const storeExists = await storesService.getStoreByCnpj(cnpj);
-
-  if (storeExists) next(Boom.conflict('Loja já cadastrada'));
+  // if (!storeName || !email || !password || !cnpj) return next(Boom.badData('Faltando informações'));
 
   const { error } = storeRegisterSchema.validate({
     storeName, email, password, confirmPassword, cnpj
   })
 
   if (error) return next(Boom.badData(error));
+
+  const storeExists = await storesService.getStoreByCnpj(cnpj);
+
+  if (storeExists) next(Boom.conflict('Loja já cadastrada'));
 
   const newStore = await storesService.registerStore({ storeName, email, password, cnpj });
 
@@ -35,21 +35,22 @@ const registerStore = rescue(async (req, res, next) => {
 });
 
 const registerProduct = rescue(async (req, res, next) => {
-  const { productName, price, stockQuantity = 1, description, videosPath } = req.body;
+  let { productName, price, category, stockQuantity = 1, description, videosPath } = req.body;
   const { _id } = req.user;
-  console.log(req.file)
-  const { key, location: url = '' } = req.file;
 
-  if (!productName || !price) return next(Boom.badData('Faltando informações'));
+  const keys = req.files.map((product) => product.key);
+  const urls = req.files.map((product) => product.location);
 
-  // const { error } = productRegisterSchema.validate({
-  //   productName, price, stockQuantity, description, videosPath
-  // });
+  videosPath = ['asdasdasdasdasdasdasd'] // até o front estar pronto => videosPath precisa ser um array
 
-  // if (error) return next(Boom.badData(error));
+  const { error } = productRegisterSchema.validate({
+    productName, price, category, stockQuantity, description, videosPath, keys, urls
+  });
 
-  const addNewProduct = await storesService.addNewProduct(_id, {
-    productName, price, stockQuantity, description, url, videosPath, url, key,
+  if (error) return next(Boom.badData(error));
+
+  const addNewProduct = await storesService.addNewProduct({
+    userId: _id, productName, price, category, stockQuantity, description, urls, videosPath, keys,
   });
 
   return res.status(201).json(addNewProduct);
