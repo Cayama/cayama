@@ -1,25 +1,20 @@
 require('dotenv/config');
+const cors = require('cors');
+const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors');
-const { errorMiddleware } = require('./middlewares/index');
-const { usersRoutes, storesRoutes } = require('./routes/index');
+const httpFactory = require('./httpFactory');
+const socketFactory = require('./socket/socketFactory');
 
 const app = express();
-
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/files', express.static(path.join(__dirname + '/uploads')));
 
-app.use('/user', usersRoutes);
-app.use('/store', storesRoutes);
+const httpServer = http.createServer(app);
 
-app.all('*', (_req, res) => res.status(404).json({ message: 'page not found'}));
+const { io } = socketFactory(httpServer);
 
-app.use(errorMiddleware);
+httpFactory(app, io);
 
 const PORT = process.env.PORT || 3001;
-
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Listening on ${PORT}`));

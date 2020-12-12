@@ -3,8 +3,9 @@ const path = require('path');
 const Boom = require('boom');
 const rescue = require('express-rescue');
 const aws = require('aws-sdk');
-const storesService = require('../services/storesService');
-const usersService = require('../services/usersService');
+const { usersService, storesService } = require('../services/index');
+// const storesService = require('../services/storesService');
+// const usersService = require('../services/usersService');
 const createJwtToken = require('../utils/createJwtToken');
 const {
   storeRegisterSchema,

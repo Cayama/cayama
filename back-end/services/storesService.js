@@ -1,4 +1,4 @@
-const storesModel = require('../models/storesModel');
+const { storesModel } = require('../models/index');
 
 const getStoreByCnpj = async (cnpj) => {
   const store = await storesModel.getStoreByCnpj(cnpj);

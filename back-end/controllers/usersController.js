@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
-const usersService = require('../services/usersService');
+const { usersService } = require('../services/index');
 const createJwtToken = require('../utils/createJwtToken');
 const {
   userRegisterSchema,
@@ -108,7 +108,7 @@ const updateUserToInfluencer = rescue(async (req, res, next) => {
 
   const newInfluencer = await usersService.updateUserToInfluencer(_id, {
     socialMedia, contentType, socialMediaName
-  })
+  });
 
   const influencer = newInfluencer.influencer;
 
