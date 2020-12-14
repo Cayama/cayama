@@ -7,7 +7,7 @@ const {
   loginSchema,
   addressesSchema,
   userInfluencerSchema,
-  influencerLinkSchema
+  influencerLinkSchema,
 } = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -29,7 +29,8 @@ const registerUser = rescue(async (req, res, next) => {
     if (error) return next(Boom.badData(error));
   }
 
-  const { cpf:usercpf, ...newUser } = await usersService.registerUser(req.body);
+  const userRegister = { ...req.body, addresses: [] }
+  const { cpf:usercpf, ...newUser } = await usersService.registerUser(userRegister);
 
   const token = createJwtToken(newUser);
 
@@ -73,7 +74,6 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
   const { password, ...updatedUser } = await usersService.updateUserAddressesByEmail(email, addresses);
 
   return res.status(201).json(updatedUser);
-
 });
 
 const createInfluencerLink = rescue(async (req, res, next) => {
@@ -115,6 +115,18 @@ const updateUserToInfluencer = rescue(async (req, res, next) => {
   return res.status(200).json({ influencer });
 });
 
+const createBankAccount = rescue(async (req, res, next) => {
+
+})
+
+const updateRegisters = rescue(async (req, res, next) => {
+
+})
+
+const getUserInfoById = rescue(async (req, res, next) => {
+
+})
+
 module.exports = {
   registerUser,
   loginUser,
@@ -122,4 +134,7 @@ module.exports = {
   getAllAddresses,
   createInfluencerLink,
   updateUserToInfluencer,
+  createBankAccount,
+  updateRegisters,
+  getUserInfoById,
 };

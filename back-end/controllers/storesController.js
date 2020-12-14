@@ -36,7 +36,7 @@ const registerStore = rescue(async (req, res, next) => {
 });
 
 const registerProduct = rescue(async (req, res, next) => {
-  let { productName, price, category, stockQuantity = 1, description, videosPath } = req.body;
+  const { productName, price, category, stockQuantity = 1, description, videosPath } = req.body;
   const { _id } = req.user;
 
   const keys = req.files.map((product) => product.key);
@@ -85,7 +85,17 @@ const deleteProduct = rescue(async (req, res, next) => {
   return res.status(200).json({ updatedProducts });
 })
 
+const updateProduct = rescue(async (req, res, next) => {
+
+})
+
+const getProduct = rescue(async (req, res, next) => {
+
+})
+
 module.exports = {
+  getProduct,
+  updateProduct,
   registerStore,
   registerProduct,
   deleteProduct,
