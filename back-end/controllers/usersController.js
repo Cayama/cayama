@@ -127,6 +127,10 @@ const getUserInfoById = rescue(async (req, res, next) => {
 
 })
 
+const getProductByFieldAndId = rescue(async (req, res, next) => {
+
+})
+
 module.exports = {
   registerUser,
   loginUser,
@@ -137,4 +141,5 @@ module.exports = {
   createBankAccount,
   updateRegisters,
   getUserInfoById,
+  getProductByFieldAndId,
 };
