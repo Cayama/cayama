@@ -46,6 +46,11 @@ const createBankAccount = async (bankAccount, id) => {
   return bankInfo;
 }
 
+const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
+  const updatedUser = await userModel.updateBasicRegistersData(fieldToUpdate, newValue, id)
+  return updatedUser;
+}
+
 module.exports = {
   registerUser,
   getUserByEmail,
@@ -56,4 +61,5 @@ module.exports = {
   getProductByField,
   getUserById,
   createBankAccount,
+  updateBasicRegistersData,
 };

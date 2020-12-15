@@ -82,11 +82,40 @@ const validateMongoId = (value, helper) => {
   return value;
 };
 
+const validateBasicFieldsToUpdate = (value, helper) => {
+  const array = ['firstName', 'lastName', 'email', 'cpf', 'birthDate', 'storeName', 'cnpj'];
+  if (!array.includes(value)) {
+    return helper.error('Opção para atualização inválida');
+  }
+  return value;
+};
+
+const choices = {
+  'firstName': registerNameSchema,
+  'lastName': registerNameSchema,
+  'email': emailSchema,
+  'cpf': cpfSchema,
+  'birthDate': birthDateSchema,
+  'storeName': registerNameSchema,
+  'cnpj': cnpjSchema,
+}
+
+const validateBasicInfo = (value, helper) => {
+  const schema = choices[value.fieldToUpdate];
+  const { error } = Joi.object({newValue: schema}).validate({ newValue: value.newValue });
+  if (error) {
+    return helper.error(error);
+  }
+  return value.newValue;
+};
+
 const socialMediaSchema = Joi.string().custom(validateSocialMediaChoices);
 const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
 const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
 const fieldToSearchSchema = Joi.string().custom(validateFieldToSearch);
 const validateMongoIdSchema = Joi.custom(validateMongoId);
+const fieldsToUpdateSchema = Joi.custom(validateBasicFieldsToUpdate);
+const newValueSchema = Joi.custom(validateBasicInfo)
 
 const influencerLinkSchema = Joi.string()
   .min(3)
@@ -139,4 +168,6 @@ module.exports = {
   fieldToSearchSchema,
   validateMongoIdSchema,
   arrayOfObjectsSchema,
+  fieldsToUpdateSchema,
+  newValueSchema
 };

@@ -61,9 +61,13 @@ const purchase = rescue(async (req, res, next) => {
   return res.status(201).json({ response: 'Compra realizada com sucesso' });
 });
 
-const deliveryCheck = rescue(async (req, res, next) => {});
+const deliveryCheck = rescue(async (req, res, next) => {
 
-const userApproveOfProduct = rescue(async (req, res, next) => {});
+});
+
+const userApproveOfProduct = rescue(async (req, res, next) => {
+
+});
 
 module.exports = {
   createShoppingCart,

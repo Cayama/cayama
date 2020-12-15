@@ -85,3 +85,8 @@ const postCreateBankAccount = {
   accountNumberWithDigit: "451556346347",
   agency: "0001",
 }
+
+const putUpdateBasicInfo = {
+  fieldToUpdate: 'cpf',
+  newValue: '123.111.333-01'
+}

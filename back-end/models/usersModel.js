@@ -88,6 +88,18 @@ const createBankAccount = async (bankAccount, id) => {
   return bankAccountInfo.value
 }
 
+const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
+  const db = await connection();
+  const updatedUser = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(id)},
+      { $set: { [fieldToUpdate]: newValue} },
+      { returnOriginal: false },
+    )
+
+    return updatedUser.value;
+}
+
 module.exports = {
   getUserByEmail,
   registerUser,
@@ -98,4 +110,5 @@ module.exports = {
   getProductByField,
   getUserById,
   createBankAccount,
+  updateBasicRegistersData,
 };

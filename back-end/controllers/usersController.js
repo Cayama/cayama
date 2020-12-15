@@ -10,6 +10,7 @@ const {
   influencerLinkSchema,
   getProductSchema,
   bankAccountSchema,
+  updateBasicRegisterInfoSchema,
 } = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -133,7 +134,19 @@ const createBankAccount = rescue(async (req, res, next) => {
   return res.status(201).json({ userWithBank })
 })
 
-const updateRegisters = rescue(async (req, res, next) => {
+const updateBasicRegistersData = rescue(async (req, res, next) => {
+  const { fieldToUpdate, newValue } = req.body;
+  const { _id } = req.user;
+
+  const { error } = updateBasicRegisterInfoSchema.validate({
+    fieldToUpdate, newValueObject: { newValue, fieldToUpdate }
+  });
+
+  if (error) return next(Boom.badData(error));
+
+  const updatedUser = await usersService.updateBasicRegistersData(fieldToUpdate, newValue, _id);
+
+  return res.status(200).json({ updatedUser });
 
 })
 
@@ -165,7 +178,7 @@ module.exports = {
   createInfluencerLink,
   updateUserToInfluencer,
   createBankAccount,
-  updateRegisters,
+  updateBasicRegistersData,
   getUserById,
   getProductByField
 };
