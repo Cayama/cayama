@@ -82,13 +82,31 @@ const validateMongoId = (value, helper) => {
   return value;
 };
 
-const validateBasicFieldsToUpdate = (value, helper) => {
-  const array = ['firstName', 'lastName', 'email', 'cpf', 'birthDate', 'storeName', 'cnpj'];
+const validateFieldsToUpdate = (value, helper) => {
+  const array = [
+    'firstName', 'lastName', 'cpf', 'birthDate', 'storeName', 'cnpj', 'addresses', 'products'
+  ];
+
   if (!array.includes(value)) {
     return helper.error('Opção para atualização inválida');
   }
+
   return value;
 };
+
+const addressesSchema = Joi.array().items(
+  Joi.object({
+  name: registerNameSchema,
+  cep: cepSchema,
+  state: shippingAddressSchema,
+  city: shippingAddressSchema,
+  neighborhood: shippingAddressSchema,
+  street: shippingAddressSchema,
+  number: shippingAddressSchema,
+  complement: shippingAddressSchema,
+  phone: phoneSchema,
+  })
+).required()
 
 const choices = {
   'firstName': registerNameSchema,
@@ -98,14 +116,16 @@ const choices = {
   'birthDate': birthDateSchema,
   'storeName': registerNameSchema,
   'cnpj': cnpjSchema,
+  'addresses': addressesSchema,
 }
 
-const validateBasicInfo = (value, helper) => {
+const validateRegisterInfo = (value, helper) => {
   const schema = choices[value.fieldToUpdate];
-  const { error } = Joi.object({newValue: schema}).validate({ newValue: value.newValue });
+  const { error } = Joi.object({ newValue: schema }).validate({ newValue: value.newValue });
   if (error) {
     return helper.error(error);
   }
+
   return value.newValue;
 };
 
@@ -114,8 +134,8 @@ const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
 const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
 const fieldToSearchSchema = Joi.string().custom(validateFieldToSearch);
 const validateMongoIdSchema = Joi.custom(validateMongoId);
-const fieldsToUpdateSchema = Joi.custom(validateBasicFieldsToUpdate);
-const newValueSchema = Joi.custom(validateBasicInfo)
+const fieldsToUpdateSchema = Joi.custom(validateFieldsToUpdate);
+const newValueSchema = Joi.custom(validateRegisterInfo)
 
 const influencerLinkSchema = Joi.string()
   .min(3)

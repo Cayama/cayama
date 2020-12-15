@@ -5,7 +5,7 @@ const userInfluencerSchema = require('./userInfluencerSchema');
 const influencerLinkSchema = require('./influencerLinkSchema');
 const getProductSchema = require('./getProductSchema');
 const bankAccountSchema = require('./bankAccountSchema');
-const updateBasicRegisterInfoSchema = require('./updateBasicRegisterInfoSchema');
+const updateRegisterInfoSchema = require('./updateRegisterInfoSchema');
 
 module.exports = {
   addressesSchema,
@@ -15,5 +15,5 @@ module.exports = {
   influencerLinkSchema,
   getProductSchema,
   bankAccountSchema,
-  updateBasicRegisterInfoSchema,
+  updateRegisterInfoSchema,
 };

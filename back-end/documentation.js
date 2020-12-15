@@ -90,3 +90,20 @@ const putUpdateBasicInfo = {
   fieldToUpdate: 'cpf',
   newValue: '123.111.333-01'
 }
+
+const putUpdateArraysInfo = {
+  fieldToUpdate: 'addresses',
+  newValue: [ // ou recebe products ou qualquer outro array
+    {
+      name: "Jafet Henrique Guerra Fagundes",
+      cep: "30350660",
+      state: "Minas Gerais",
+      city: "Belo Horizonte",
+      neighborhood: "São Bento",
+      street: "Rua Doutor Mario Pires",
+      number: "91",
+      complement: "Casa",
+      phone: "31996471888",
+    },
+  ],
+}
