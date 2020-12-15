@@ -14,6 +14,7 @@ module.exports = (io) => {
     .get('/addresses', jwtMiddleware(true), controllers.usersController.getAllAddresses)
     .get('/get-all-user-purchases', jwtMiddleware(true), controllers.usersController.getProductByField)
     .get('/profile', jwtMiddleware(true), controllers.usersController.getUserById)
+    .put('/bank-account-info', jwtMiddleware(true), controllers.usersController.createBankAccount)
     .put('/update-to-influencer', jwtMiddleware(true), controllers.usersController.updateUserToInfluencer);
 
   return usersRoutes;

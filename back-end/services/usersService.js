@@ -41,6 +41,11 @@ const getUserById = async (userId) => {
   return user;
 }
 
+const createBankAccount = async (bankAccount, id) => {
+  const bankInfo = await userModel.createBankAccount(bankAccount, id);
+  return bankInfo;
+}
+
 module.exports = {
   registerUser,
   getUserByEmail,
@@ -50,4 +55,5 @@ module.exports = {
   updateUserToInfluencer,
   getProductByField,
   getUserById,
+  createBankAccount,
 };

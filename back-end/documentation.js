@@ -59,12 +59,9 @@ const postRegisterStore = {
 // =================================== SELL DOCUMENTATION =========================================
 
 const PostPurchase = {
-  buyerId: "5fa09e7a6265167b9d1b3324",
   sellerId: "5fa09e7a6265167b9d1b3324",
   influencerId: "5fa09e7a6265167b9d1b3324", // não é obrigatorio
   totalPrice: "300",
-  status: "preparando",
-  deliveryTrack: "124568754123",
   deliveryService: "correios sedex",
   paymentMethod: "credit card",
   installment: 12,
@@ -76,4 +73,15 @@ const PostPurchase = {
       price: "3",
     },
   ]
+}
+
+const getProductByField = {
+  fieldToSearch: "buyerId",
+}
+
+const postCreateBankAccount = {
+  bank: "Inter",
+  bankDigit: 077,
+  accountNumberWithDigit: "451556346347",
+  agency: "0001",
 }

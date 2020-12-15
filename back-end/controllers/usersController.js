@@ -9,6 +9,7 @@ const {
   userInfluencerSchema,
   influencerLinkSchema,
   getProductSchema,
+  bankAccountSchema,
 } = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -118,7 +119,18 @@ const updateUserToInfluencer = rescue(async (req, res, next) => {
 });
 
 const createBankAccount = rescue(async (req, res, next) => {
+  const { bank, bankDigit, accountNumberWithDigit, agency } = req.body;
+  const { _id } = req.user;
 
+  const { error } = bankAccountSchema.validate({ bank, bankDigit, accountNumberWithDigit, agency });
+
+  if (error) return next(Boom.badData(error));
+
+  const userWithBank = await usersService.createBankAccount({
+    bank, bankDigit, accountNumberWithDigit, agency
+  }, _id);
+
+  return res.status(201).json({ userWithBank })
 })
 
 const updateRegisters = rescue(async (req, res, next) => {
