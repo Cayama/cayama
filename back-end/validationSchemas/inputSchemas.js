@@ -45,6 +45,36 @@ const cnpjSchema = Joi.string()
   .required()
   .error(() => new Error('Apenas 14 números são permitidos no cnpj'));
 
+
+  const influencerLinkSchema = Joi.string()
+  .min(3)
+  .max(30)
+  .trim()
+  .required();
+
+const productPriceSchema = Joi.number()
+  .required();
+
+const productStockQuantitySchema = Joi.number()
+  .integer()
+  .positive()
+  .required();
+
+const productDescriptionSchema = Joi.string()
+  .min(30)
+  .max(400)
+  .alphanum();
+
+const arrayLinksSchema = Joi.array()
+  .items(Joi.string())
+  .required();
+
+const arrayReviewLinksSchema = Joi.array()
+  .items(Joi.string());
+
+const arrayOfObjectsSchema = Joi.array()
+  .items(Joi.object());
+
 const validateSocialMediaChoices = (value, helper) => {
   const array = ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter'];
   if (!array.includes(value))
@@ -84,7 +114,16 @@ const validateMongoId = (value, helper) => {
 
 const validateFieldsToUpdate = (value, helper) => {
   const array = [
-    'firstName', 'lastName', 'cpf', 'birthDate', 'storeName', 'cnpj', 'addresses', 'products'
+    'firstName',
+    'lastName',
+    'cpf',
+    'birthDate',
+    'storeName',
+    'cnpj',
+    'addresses',
+    'products',
+    'influencer',
+    'bankAccount',
   ];
 
   if (!array.includes(value)) {
@@ -93,42 +132,6 @@ const validateFieldsToUpdate = (value, helper) => {
 
   return value;
 };
-
-const addressesSchema = Joi.array().items(
-  Joi.object({
-  name: registerNameSchema,
-  cep: cepSchema,
-  state: shippingAddressSchema,
-  city: shippingAddressSchema,
-  neighborhood: shippingAddressSchema,
-  street: shippingAddressSchema,
-  number: shippingAddressSchema,
-  complement: shippingAddressSchema,
-  phone: phoneSchema,
-  })
-).required()
-
-const registerProductsSchema = Joi.object({
-    productName: registerNameSchema,
-    price: productPriceSchema,
-    category: categoryTypeSchema,
-    stockQuantity: productStockQuantitySchema,
-    description: productDescriptionSchema,
-    videosPath: arrayReviewLinksSchema,
-    keys: arrayLinksSchema,
-    urls: arrayLinksSchema,
-})
-
-const choices = {
-  'firstName': registerNameSchema,
-  'lastName': registerNameSchema,
-  'email': emailSchema,
-  'cpf': cpfSchema,
-  'birthDate': birthDateSchema,
-  'storeName': registerNameSchema,
-  'cnpj': cnpjSchema,
-  'addresses': addressesSchema,
-}
 
 const validateRegisterInfo = (value, helper) => {
   const schema = choices[value.fieldToUpdate];
@@ -148,34 +151,46 @@ const validateMongoIdSchema = Joi.custom(validateMongoId);
 const fieldsToUpdateSchema = Joi.custom(validateFieldsToUpdate);
 const newValueSchema = Joi.custom(validateRegisterInfo)
 
-const influencerLinkSchema = Joi.string()
-  .min(3)
-  .max(30)
-  .trim()
-  .required();
+const addressesSchema = Joi.array().items(
+  Joi.object({
+  name: registerNameSchema,
+  cep: cepSchema,
+  state: shippingAddressSchema,
+  city: shippingAddressSchema,
+  neighborhood: shippingAddressSchema,
+  street: shippingAddressSchema,
+  number: shippingAddressSchema,
+  complement: shippingAddressSchema,
+  phone: phoneSchema,
+  })
+).required()
 
-const productPriceSchema = Joi.number()
-  .required();
+const bankAccountSchema = Joi.object({
+  bank: registerNameSchema,
+  bankDigit: productStockQuantitySchema,
+  accountNumberWithDigit: registerNameSchema,
+  agency: productStockQuantitySchema,
+})
 
-const productStockQuantitySchema = Joi.number()
-  .integer()
-  .positive()
-  .required();
+const influencerSchema = Joi.object({
+  socialMedia: socialMediaSchema,
+  contentType: contentTypeSchema,
+  socialMediaName: registerNameSchema,
+  influencerLink: influencerLinkSchema,
+});
 
-const productDescriptionSchema = Joi.string()
-  .min(30)
-  .max(400)
-  .alphanum();
-
-const arrayLinksSchema = Joi.array()
-  .items(Joi.string())
-  .required();
-
-const arrayReviewLinksSchema = Joi.array()
-  .items(Joi.string());
-
-const arrayOfObjectsSchema = Joi.array()
-  .items(Joi.object());
+const choices = {
+  'firstName': registerNameSchema,
+  'lastName': registerNameSchema,
+  'email': emailSchema,
+  'cpf': cpfSchema,
+  'birthDate': birthDateSchema,
+  'storeName': registerNameSchema,
+  'cnpj': cnpjSchema,
+  'addresses': addressesSchema,
+  'bankAccount': bankAccountSchema,
+  'influencer': influencerSchema,
+}
 
 module.exports = {
   registerNameSchema,
