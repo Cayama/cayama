@@ -108,6 +108,17 @@ const addressesSchema = Joi.array().items(
   })
 ).required()
 
+const registerProductsSchema = Joi.object({
+    productName: registerNameSchema,
+    price: productPriceSchema,
+    category: categoryTypeSchema,
+    stockQuantity: productStockQuantitySchema,
+    description: productDescriptionSchema,
+    videosPath: arrayReviewLinksSchema,
+    keys: arrayLinksSchema,
+    urls: arrayLinksSchema,
+})
+
 const choices = {
   'firstName': registerNameSchema,
   'lastName': registerNameSchema,
