@@ -30,8 +30,9 @@ const registerUser = rescue(async (req, res, next) => {
     if (error) return next(Boom.badData(error));
   }
 
-  const userRegister = { ...req.body, addresses: [] }
-  const { cpf:usercpf, ...newUser } = await usersService.registerUser(userRegister);
+  const { cpf:usercpf, ...newUser } = await usersService.registerUser(
+    { firstName, lastName, email, password, cpf, birthDate, addresses: [] }
+  );
 
   const token = createJwtToken(newUser);
 
@@ -124,8 +125,11 @@ const updateRegisters = rescue(async (req, res, next) => {
 
 })
 
-const getUserInfoById = rescue(async (req, res, next) => {
+const getUserById = rescue(async (req, res, next) => {
+  const { _id } = req.user;
+  const { password, ...user } = await usersService.getUserById(_id);
 
+  return res.status(200).json({ user })
 })
 
 const getProductByField = rescue(async (req, res, next) => {
@@ -138,7 +142,7 @@ const getProductByField = rescue(async (req, res, next) => {
 
   const purchaseList = await usersService.getProductByField(fieldToSearch, userId);
 
-  return res.status(200).json({purchaseList});
+  return res.status(200).json({ purchaseList });
 })
 
 module.exports = {
@@ -150,6 +154,6 @@ module.exports = {
   updateUserToInfluencer,
   createBankAccount,
   updateRegisters,
-  getUserInfoById,
+  getUserById,
   getProductByField
 };

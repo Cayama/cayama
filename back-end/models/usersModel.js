@@ -10,7 +10,7 @@ const getUserByEmail = async (email) => {
 
 const getUserById = async (id) => {
   const db = await connection();
-  const user = db.collection('users').findOne({ _id: ObjectId(_id) })
+  const user = db.collection('users').findOne({ _id: ObjectId(id) })
 
   return user;
 }
@@ -71,9 +71,9 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
 const getProductByField = async (fieldToSearch, userId) => {
   const db = await connection();
   const purchaseList = await db.collection('purchases')
-    .find({fieldToSearch: userId})
+    .find({ [fieldToSearch]: ObjectId(userId) }).toArray();
 
-  return purchaseList
+  return purchaseList;
 }
 
 module.exports = {

@@ -2,9 +2,9 @@ const connection = require('./connection');
 
 const purchase = async (purchase) => {
   const db = await connection();
-  const purchase = await db.collection('purchase').insertOne(purchase)
+  const newPurchase = await db.collection('purchases').insertOne(purchase)
 
-  return purchase.ops[0];
+  return newPurchase.ops[0];
 }
 
 module.exports = {

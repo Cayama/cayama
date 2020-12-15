@@ -32,6 +32,7 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
 
 const getProductByField = async (fieldToSearch, userId) => {
   const purchaseList = await userModel.getProductByField(fieldToSearch, userId);
+  console.log(purchaseList)
   return purchaseList;
 }
 

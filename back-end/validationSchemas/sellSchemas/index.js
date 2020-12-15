@@ -1,4 +1,4 @@
-const purchaseSchema = require('..purchaseSchema');
+const purchaseSchema = require('./purchaseSchema');
 
 module.exports = {
   purchaseSchema,

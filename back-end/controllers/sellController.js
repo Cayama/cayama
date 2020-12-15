@@ -11,14 +11,14 @@ const updateShoppingCart = rescue(async (req, res, next) => {});
 
 const purchase = rescue(async (req, res, next) => {
   const {
-    sellerId,
+    userId: sellerId,
     totalPrice,
     deliveryService,
     paymentMethod,
     installment,
     purchases,
   } = req.body;
-  // status inicial = "preparando"
+
   // deliveryTrack = temos que gerar
 
   const { error } = purchaseSchema.validate({
@@ -32,8 +32,7 @@ const purchase = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const seller = await userService.getUserById(sellerId);
-
+  const seller = await usersService.getUserById(sellerId);
   if (!seller) return next(Boom.notFound('Vendedor não encontrado'));
 
   const { _id: buyerId, email } = req.user;
@@ -48,11 +47,12 @@ const purchase = rescue(async (req, res, next) => {
 
   await sellService.purchase({
     buyerId,
-    sellerId,
+    sellerId: seller._id,
     influencerId,
     totalPrice,
     deliveryService,
-    deliveryTrack,
+    deliveryTrack: 'Temos que gerar ainda',
+    status: 'preparando',
     paymentMethod,
     installment,
     purchases,
