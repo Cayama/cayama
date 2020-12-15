@@ -30,11 +30,23 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
   return newInfluencer;
 }
 
+const getProductByField = async (fieldToSearch, userId) => {
+  const purchaseList = await userModel.getProductByField(fieldToSearch, userId);
+  return purchaseList;
+}
+
+const getUserById = async (userId) => {
+  const user = await userModel.getUserById(userId);
+  return user;
+}
+
 module.exports = {
   registerUser,
   getUserByEmail,
   updateUserAddressesByEmail,
   getInfluencerByLink,
   createInfluencerLink,
-  updateUserToInfluencer
+  updateUserToInfluencer,
+  getProductByField,
+  getUserById,
 };

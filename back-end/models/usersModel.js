@@ -8,6 +8,13 @@ const getUserByEmail = async (email) => {
   return user;
 };
 
+const getUserById = async (id) => {
+  const db = await connection();
+  const user = db.collection('users').findOne({ _id: ObjectId(_id) })
+
+  return user;
+}
+
 const registerUser = async (userObj) => {
   const db = await connection();
   const user = await db.collection('users').insertOne(userObj);
@@ -61,6 +68,14 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
   return newInfluencer.value;
 }
 
+const getProductByField = async (fieldToSearch, userId) => {
+  const db = await connection();
+  const purchaseList = await db.collection('purchases')
+    .find({fieldToSearch: userId})
+
+  return purchaseList
+}
+
 module.exports = {
   getUserByEmail,
   registerUser,
@@ -68,4 +83,6 @@ module.exports = {
   getInfluencerByLink,
   createInfluencerLink,
   updateUserToInfluencer,
+  getProductByField,
+  getUserById,
 };

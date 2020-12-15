@@ -8,6 +8,7 @@ const {
   addressesSchema,
   userInfluencerSchema,
   influencerLinkSchema,
+  getProductSchema,
 } = require('../validationSchemas/usersSchemas/index');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -127,8 +128,17 @@ const getUserInfoById = rescue(async (req, res, next) => {
 
 })
 
-const getProductByFieldAndId = rescue(async (req, res, next) => {
+const getProductByField = rescue(async (req, res, next) => {
+  const { fieldToSearch } = req.body;
+  const { _id: userId } = req.user;
 
+  const { error } = getProductSchema.validate({ fieldToSearch });
+
+  if (error) return next(Boom.badData(error));
+
+  const purchaseList = await usersService.getProductByField(fieldToSearch, userId);
+
+  return res.status(200).json({purchaseList});
 })
 
 module.exports = {
@@ -141,5 +151,5 @@ module.exports = {
   createBankAccount,
   updateRegisters,
   getUserInfoById,
-  getProductByFieldAndId,
+  getProductByField
 };

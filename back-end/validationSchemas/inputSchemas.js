@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 
 const registerNameSchema = Joi.string()
   .min(3)
@@ -51,6 +52,13 @@ const validateSocialMediaChoices = (value, helper) => {
   return value;
 };
 
+const validateFieldToSearch = (value, helper) => {
+  const array = ['buyerId', 'sellerId', 'influencerId'];
+  if (!array.includes(value))
+    return helper.error('FieldToSearch não esta entre as opções');
+  return value;
+};
+
 const validateContentTypeChoices = (value, helper) => {
   const array = ['Tecnologia', 'Moda', 'Fitness', 'Saúde'];
   if (!array.includes(value)) {
@@ -67,9 +75,18 @@ const validateProductCategoryChoices = (value, helper) => {
   return value;
 };
 
+const validateMongoId = (value, helper) => {
+  if (!ObjectId.isValid(value)) {
+    return helper.error('Id inválido');
+  }
+  return value;
+};
+
 const socialMediaSchema = Joi.string().custom(validateSocialMediaChoices);
 const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
 const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
+const fieldToSearchSchema = Joi.string().custom(validateFieldToSearch);
+const validateMongoIdSchema = Joi.custom(validateMongoId);
 
 const influencerLinkSchema = Joi.string()
   .min(3)
@@ -97,6 +114,9 @@ const arrayLinksSchema = Joi.array()
 const arrayReviewLinksSchema = Joi.array()
   .items(Joi.string());
 
+const arrayOfObjectsSchema = Joi.array()
+  .items(Joi.object());
+
 module.exports = {
   registerNameSchema,
   passwordSchema,
@@ -116,4 +136,7 @@ module.exports = {
   arrayLinksSchema,
   arrayReviewLinksSchema,
   categoryTypeSchema,
+  fieldToSearchSchema,
+  validateMongoIdSchema,
+  arrayOfObjectsSchema,
 };

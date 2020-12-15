@@ -89,12 +89,7 @@ const updateProduct = rescue(async (req, res, next) => {
 
 })
 
-const getProduct = rescue(async (req, res, next) => {
-
-})
-
 module.exports = {
-  getProduct,
   updateProduct,
   registerStore,
   registerProduct,
