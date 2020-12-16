@@ -45,7 +45,7 @@ exclude_patterns:
 - "src/__tests__/"
 plugins:
   editorconfig:
-    enabled: true
+    enabled: false
   csslint:
     enabled: false
     checks:
