@@ -149,7 +149,7 @@ const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
 const fieldToSearchSchema = Joi.string().custom(validateFieldToSearch);
 const validateMongoIdSchema = Joi.custom(validateMongoId);
 const fieldsToUpdateSchema = Joi.custom(validateFieldsToUpdate);
-const newValueSchema = Joi.custom(validateRegisterInfo)
+const newValueSchema = Joi.custom(validateRegisterInfo);
 
 const addressesSchema = Joi.array().items(
   Joi.object({
