@@ -1,7 +1,7 @@
 const Boom = require("boom");
 const rescue = require("express-rescue");
 const { usersService } = require("../services/index");
-const createJwtToken = require("../utils/createJwtToken");
+const { createJwtToken } = require("../utils/index");
 const {
   userRegisterSchema,
   loginSchema,
@@ -22,7 +22,8 @@ const registerUser = rescue(async (req, res, next) => {
     confirmPassword,
     cpf,
     birthDate,
-    influencer = null
+    addresses = [],
+    influencer = {}
   } = req.body;
 
   const { error } = userRegisterSchema.validate({
@@ -41,8 +42,13 @@ const registerUser = rescue(async (req, res, next) => {
 
   if (userExists) return next(Boom.conflict("Email já cadastrado"));
 
-  if (req.body.influencer) {
+  if (req.body.influencer != {}) {
     const { socialMedia, contentType, socialMediaName, influencerLink } = req.body.influencer;
+
+    const influencerLinkCheck = await usersService.getInfluencerByLink(influencerLink);
+
+    if (influencerLinkCheck) return next(Boom.conflict('Link já existente'));
+
     const { error } = userInfluencerSchema.validate({
       socialMedia: { field: 'socialMedia', value: socialMedia },
       contentType: { field: 'contentType', value: contentType },
@@ -52,14 +58,14 @@ const registerUser = rescue(async (req, res, next) => {
     if (error) return next(Boom.badData(error));
   }
 
-  const { cpf: usercpf, ...newUser } = await usersService.registerUser({
+  const { cpf: usercpf,  ...newUser } = await usersService.registerUser({
     firstName,
     lastName,
     email,
     password,
     cpf,
     birthDate,
-    addresses: [],
+    addresses,
     influencer,
   });
 
@@ -150,14 +156,12 @@ const updateUserToInfluencer = rescue(async (req, res, next) => {
 
   const { _id } = req.user;
 
-  const newInfluencer = await usersService.updateUserToInfluencer(_id, {
+  const { influencer } = await usersService.updateUserToInfluencer(_id, {
     socialMedia,
     contentType,
     socialMediaName,
     influencerLink,
   });
-
-  const influencer = newInfluencer.influencer;
 
   return res.status(200).json({ influencer });
 });

@@ -4,9 +4,7 @@ const Boom = require("boom");
 const rescue = require("express-rescue");
 const aws = require("aws-sdk");
 const { usersService, storesService } = require("../services/index");
-// const storesService = require('../services/storesService');
-// const usersService = require('../services/usersService');
-const createJwtToken = require("../utils/createJwtToken");
+const { createJwtToken } = require("../utils/index");
 const {
   storeRegisterSchema,
   productRegisterSchema,
@@ -14,8 +12,6 @@ const {
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-
-  // if (!storeName || !email || !password || !cnpj) return next(Boom.badData('Faltando informações'));
 
   const { error } = storeRegisterSchema.validate({
     storeName,
