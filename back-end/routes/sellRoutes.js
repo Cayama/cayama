@@ -6,6 +6,6 @@ const sellRoutes = Router();
 
 module.exports = (io) => {
   sellRoutes
-    .post('/purchase', jwtMiddleware(true), controllers.sellController.purchase);
+    .post('/purchase', jwtMiddleware, controllers.sellController.purchase);
   return sellRoutes;
 };

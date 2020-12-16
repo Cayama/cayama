@@ -8,14 +8,14 @@ module.exports = (io) => {
   usersRoutes
     .post('/register', controllers.usersController.registerUser)
     .post('/login', controllers.usersController.loginUser)
-    .put('/addresses', jwtMiddleware(true), controllers.usersController.updateUsersAddresses)
-    .put('/create-link', jwtMiddleware(true), controllers.usersController.createInfluencerLink)
-    .get('/addresses', jwtMiddleware(true), controllers.usersController.getAllAddresses)
-    .get('/get-all-user-purchases', jwtMiddleware(true), controllers.usersController.getProductByField)
-    .get('/profile', jwtMiddleware(true), controllers.usersController.getUserById)
-    .put('/bank-account-info', jwtMiddleware(true), controllers.usersController.createBankAccount)
-    .put('/update-info', jwtMiddleware(true), controllers.usersController.updateBasicRegistersData)
-    .put('/update-to-influencer', jwtMiddleware(true), controllers.usersController.updateUserToInfluencer);
+    .put('/addresses', jwtMiddleware, controllers.usersController.updateUsersAddresses)
+    .put('/create-link', jwtMiddleware, controllers.usersController.createInfluencerLink)
+    .get('/addresses', jwtMiddleware, controllers.usersController.getAllAddresses)
+    .get('/get-all-user-purchases', jwtMiddleware, controllers.usersController.getProductByField)
+    .get('/profile', jwtMiddleware, controllers.usersController.getUserById)
+    .put('/bank-account-info', jwtMiddleware, controllers.usersController.createBankAccount)
+    .put('/update-info', jwtMiddleware, controllers.usersController.updateBasicRegistersData)
+    .put('/update-to-influencer', jwtMiddleware, controllers.usersController.updateUserToInfluencer);
 
   return usersRoutes;
 };

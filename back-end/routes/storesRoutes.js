@@ -8,10 +8,10 @@ module.exports = (io) => {
   storesRoutes
     .post('/register', controllers.storesController.registerStore)
     .post('/register-product',
-      jwtMiddleware(true),
+      jwtMiddleware,
       multerMiddleware.array('productImages', 10),
       controllers.storesController.registerProduct)
-    .delete('/product/:id', jwtMiddleware(true), controllers.storesController.deleteProduct);
+    .delete('/product/:id', jwtMiddleware, controllers.storesController.deleteProduct);
 
   return storesRoutes;
 };

@@ -8,7 +8,7 @@ const jwtTokenSchema = Joi.string().required().error(() => new Error('token invÃ
 
 const { SECRET } = process.env;
 
-module.exports = (isNecessary = true) => rescue(async (req, _res, next) => {
+module.exports = rescue(async (req, _res, next) => {
   const token = req.headers.authorization;
   const { error } = jwtTokenSchema.validate(token);
 
@@ -22,5 +22,5 @@ module.exports = (isNecessary = true) => rescue(async (req, _res, next) => {
 
   req.user = user;
 
-  next();
+  return next();
 });
