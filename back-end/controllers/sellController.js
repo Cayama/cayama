@@ -2,7 +2,6 @@ const Boom = require("boom");
 const rescue = require("express-rescue");
 const { sellService, usersService, cartService } = require("../services/index");
 const { purchaseSchema, purchaseIdSchema } = require("../validationSchemas/sellSchemas/index");
-const { createCartSchema } = require("../validationSchemas/cartSchema/index");
 
 const purchase = rescue(async (req, res, next) => {
   const {
@@ -63,7 +62,7 @@ const deliveryCheck = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const purchase = await usersService.getProductByField("sellerId", sellerId);
+  const purchase = await usersService.getProductByField("_id", purchaseId);
 
   if (!purchase.sellerId.equals(sellerId)) return next(
     Boom.unauthorized('Você não tem permissão para alterar o status')
@@ -82,7 +81,7 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const purchase = await usersService.getProductByField("buyerId", buyerId);
+  const purchase = await usersService.getProductByField("_id", purchaseId);
 
   if (!purchase.buyerId.equals(buyerId)) return next(
     Boom.unauthorized('Você não tem permissão para alterar o status')
