@@ -1,7 +1,7 @@
 const Joi = require('joi');
-const { fieldsToUpdateSchema, newValueSchema } = require('../inputSchemas');
+const { fieldsExistenceSchema, newValueSchema } = require('../inputSchemas');
 
 module.exports = Joi.object({
-  fieldToUpdate: fieldsToUpdateSchema,
+  fieldToUpdate: fieldsExistenceSchema,
   newValueObject: newValueSchema,
 })

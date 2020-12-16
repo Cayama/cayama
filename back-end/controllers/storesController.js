@@ -1,17 +1,16 @@
-const fs = require('fs').promises;
-const path = require('path');
-const Boom = require('boom');
-const rescue = require('express-rescue');
-const aws = require('aws-sdk');
-const { usersService, storesService } = require('../services/index');
+const fs = require("fs").promises;
+const path = require("path");
+const Boom = require("boom");
+const rescue = require("express-rescue");
+const aws = require("aws-sdk");
+const { usersService, storesService } = require("../services/index");
 // const storesService = require('../services/storesService');
 // const usersService = require('../services/usersService');
-const createJwtToken = require('../utils/createJwtToken');
+const createJwtToken = require("../utils/createJwtToken");
 const {
   storeRegisterSchema,
-  productRegisterSchema
-} = require('../validationSchemas/storesSchemas/index');
-
+  productRegisterSchema,
+} = require("../validationSchemas/storesSchemas/index");
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
@@ -19,16 +18,25 @@ const registerStore = rescue(async (req, res, next) => {
   // if (!storeName || !email || !password || !cnpj) return next(Boom.badData('Faltando informações'));
 
   const { error } = storeRegisterSchema.validate({
-    storeName, email, password, confirmPassword, cnpj
-  })
+    storeName,
+    email,
+    password,
+    confirmPassword,
+    cnpj,
+  });
 
   if (error) return next(Boom.badData(error));
 
   const storeExists = await storesService.getStoreByCnpj(cnpj);
 
-  if (storeExists) next(Boom.conflict('Loja já cadastrada'));
+  if (storeExists) next(Boom.conflict("Loja já cadastrada"));
 
-  const newStore = await storesService.registerStore({ storeName, email, password, cnpj });
+  const newStore = await storesService.registerStore({
+    storeName,
+    email,
+    password,
+    cnpj,
+  });
 
   const token = createJwtToken(newStore);
 
@@ -36,26 +44,49 @@ const registerStore = rescue(async (req, res, next) => {
 });
 
 const registerProduct = rescue(async (req, res, next) => {
-  const { productName, price, category, stockQuantity = 1, description, videosPath } = req.body;
+  const {
+    productName,
+    price,
+    category,
+    stockQuantity = 1,
+    description,
+    // videosPath = ["hahahahah"],
+  } = req.body;
+
   const { _id } = req.user;
 
   const keys = req.files.map((product) => product.key);
   const urls = req.files.map((product) => product.location);
-
+  let videosPath
   videosPath = ['asdasdasdasdasdasdasd'] // até o front estar pronto => videosPath precisa ser um array
 
   const { error } = productRegisterSchema.validate({
-    productName, price, category, stockQuantity, description, videosPath, keys, urls
+    productName,
+    price,
+    category: { field: "categories", value: category },
+    stockQuantity,
+    description,
+    videosPath,
+    keys,
+    urls,
   });
 
   if (error) return next(Boom.badData(error));
 
   const addNewProduct = await storesService.addNewProduct({
-    userId: _id, productName, price, category, stockQuantity, description, urls, videosPath, keys,
+    userId: _id,
+    productName,
+    price,
+    category,
+    stockQuantity,
+    description,
+    urls,
+    videosPath,
+    keys,
   });
 
   return res.status(201).json(addNewProduct);
-})
+});
 
 const deleteProduct = rescue(async (req, res, next) => {
   const { _id, email } = req.user;
@@ -63,31 +94,40 @@ const deleteProduct = rescue(async (req, res, next) => {
 
   const user = await usersService.getUserByEmail(email);
 
-  if (!user._id.equals(_id)) return next(Boom.unauthorized('Você não tem permissão para deletar esse produto'));
+  if (!user._id.equals(_id))
+    return next(
+      Boom.unauthorized("Você não tem permissão para deletar esse produto")
+    );
 
-  const productToDeleted = user.products.find((product) => product._id.equals(productId));
+  const productToDeleted = user.products.find((product) =>
+    product._id.equals(productId)
+  );
 
-  const newProducts = user.products.filter((product) => !product._id.equals(productId));
+  const newProducts = user.products.filter(
+    (product) => !product._id.equals(productId)
+  );
 
   const updatedProducts = await storesService.updatedProducts(_id, newProducts);
 
-  if (process.env.STORAGE_TYPE === 's3') {
+  if (process.env.STORAGE_TYPE === "s3") {
     const s3 = new aws.S3();
-    await s3.deleteObject({
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: productToDeleted.key,
-    }).promise();
+    await s3
+      .deleteObject({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: productToDeleted.key,
+      })
+      .promise();
   } else {
-    await fs.unlink(path.resolve(__dirname, '..', 'uploads', productToDeleted.key));
-  };
+    await fs.unlink(
+      path.resolve(__dirname, "..", "uploads", productToDeleted.key)
+    );
+  }
   // deletar no s3, do disco e do banco de dados (depende do tipo que estamos utilizando.)
 
   return res.status(200).json({ updatedProducts });
-})
+});
 
-const updateProduct = rescue(async (req, res, next) => {
-
-})
+const updateProduct = rescue(async (req, res, next) => {});
 
 module.exports = {
   updateProduct,

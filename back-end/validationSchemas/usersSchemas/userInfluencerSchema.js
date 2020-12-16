@@ -1,8 +1,9 @@
 const Joi = require('joi');
-const { contentTypeSchema, socialMediaSchema, registerNameSchema } = require('../inputSchemas');
+const { fieldsExistenceSchema, registerNameSchema, influencerLinkSchema } = require('../inputSchemas');
 
 module.exports = Joi.object({
-  socialMedia: socialMediaSchema,
-  contentType: contentTypeSchema,
+  socialMedia: fieldsExistenceSchema,
+  contentType: fieldsExistenceSchema,
   socialMediaName: registerNameSchema,
+  influencerLink: influencerLinkSchema,
 });

@@ -1,6 +1,6 @@
 const Joi = require('joi');
-const { fieldToSearchSchema } = require('../inputSchemas')
+const { fieldsExistenceSchema } = require('../inputSchemas')
 
 module.exports = Joi.object({
-  fieldToSearch: fieldToSearchSchema,
+  fieldToSearch: fieldsExistenceSchema,
 })

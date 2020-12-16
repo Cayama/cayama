@@ -1,7 +1,7 @@
-const Boom = require('boom');
-const rescue = require('express-rescue');
-const { usersService } = require('../services/index');
-const createJwtToken = require('../utils/createJwtToken');
+const Boom = require("boom");
+const rescue = require("express-rescue");
+const { usersService } = require("../services/index");
+const createJwtToken = require("../utils/createJwtToken");
 const {
   userRegisterSchema,
   loginSchema,
@@ -11,30 +11,57 @@ const {
   getProductSchema,
   bankAccountSchema,
   updateRegisterInfoSchema,
-} = require('../validationSchemas/usersSchemas/index');
+} = require("../validationSchemas/usersSchemas/index");
 
 const registerUser = rescue(async (req, res, next) => {
-  const { firstName, lastName, email, password, confirmPassword, cpf, birthDate } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    cpf,
+    birthDate,
+    influencer = null
+  } = req.body;
 
   const { error } = userRegisterSchema.validate({
-    firstName, lastName, email, password, confirmPassword, cpf, birthDate
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    cpf,
+    birthDate,
   });
 
   if (error) return next(Boom.badData(error));
 
   const userExists = await usersService.getUserByEmail(email);
 
-  if (userExists) return next(Boom.conflict('Email já cadastrado'));
+  if (userExists) return next(Boom.conflict("Email já cadastrado"));
 
   if (req.body.influencer) {
-    const { socialMedia, contentType, socialMediaName } = req.body.influencer;
-    const { error } = userInfluencerSchema.validate({ socialMedia, contentType, socialMediaName });
+    const { socialMedia, contentType, socialMediaName, influencerLink } = req.body.influencer;
+    const { error } = userInfluencerSchema.validate({
+      socialMedia: { field: 'socialMedia', value: socialMedia },
+      contentType: { field: 'contentType', value: contentType },
+      socialMediaName,
+      influencerLink
+    });
     if (error) return next(Boom.badData(error));
   }
 
-  const { cpf:usercpf, ...newUser } = await usersService.registerUser(
-    { firstName, lastName, email, password, cpf, birthDate, addresses: [] }
-  );
+  const { cpf: usercpf, ...newUser } = await usersService.registerUser({
+    firstName,
+    lastName,
+    email,
+    password,
+    cpf,
+    birthDate,
+    addresses: [],
+    influencer,
+  });
 
   const token = createJwtToken(newUser);
 
@@ -50,19 +77,20 @@ const loginUser = rescue(async (req, res, next) => {
 
   const user = await usersService.getUserByEmail(email);
 
-  if (user.password !== password) return next(Boom.unauthorized('Email ou senha incorretos'));
+  if (user.password !== password)
+    return next(Boom.unauthorized("Email ou senha incorretos"));
 
   const token = createJwtToken(user);
 
   return res.status(200).json({ token });
 });
 
-const getAllAddresses = rescue(async(req, res, next) => {
+const getAllAddresses = rescue(async (req, res, next) => {
   const { email } = req.user;
 
   const { addresses } = await usersService.getUserByEmail(email);
 
-  if (!addresses) return next(Boom.notFound('Endereços não encontrados'));
+  if (!addresses) return next(Boom.notFound("Endereços não encontrados"));
 
   return res.status(200).json({ addresses });
 });
@@ -75,7 +103,10 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const { password, ...updatedUser } = await usersService.updateUserAddressesByEmail(email, addresses);
+  const {
+    password,
+    ...updatedUser
+  } = await usersService.updateUserAddressesByEmail(email, addresses);
 
   return res.status(201).json(updatedUser);
 });
@@ -90,11 +121,15 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 
   const linkExists = await usersService.getInfluencerByLink(influencerLink);
 
-  if (linkExists) return next(Boom.conflict('Este link já esta sendo utilizado'));
+  if (linkExists)
+    return next(Boom.conflict("Este link já esta sendo utilizado"));
 
-  const userWithLink = await usersService.createInfluencerLink(_id, influencerLink);
+  const userWithLink = await usersService.createInfluencerLink(
+    _id,
+    influencerLink
+  );
 
-  if (!userWithLink) return next(Boom.badData('Não é um influencer ainda'));
+  if (!userWithLink) return next(Boom.badData("Não é um influencer ainda"));
 
   const influencer = userWithLink.influencer;
 
@@ -102,16 +137,24 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 });
 
 const updateUserToInfluencer = rescue(async (req, res, next) => {
-  const { socialMedia, contentType, socialMediaName } = req.body;
+  const { socialMedia, contentType, socialMediaName, influencerLink } = req.body;
 
-  const { error } = userInfluencerSchema.validate({ socialMedia, contentType, socialMediaName });
+  const { error } = userInfluencerSchema.validate({
+    socialMedia: { field: 'socialMedia', value: socialMedia },
+    contentType: { field: 'contentType', value: contentType },
+    socialMediaName,
+    influencerLink,
+  });
 
   if (error) return next(Boom.badData(error));
 
   const { _id } = req.user;
 
   const newInfluencer = await usersService.updateUserToInfluencer(_id, {
-    socialMedia, contentType, socialMediaName
+    socialMedia,
+    contentType,
+    socialMediaName,
+    influencerLink,
   });
 
   const influencer = newInfluencer.influencer;
@@ -123,51 +166,72 @@ const createBankAccount = rescue(async (req, res, next) => {
   const { bank, bankDigit, accountNumberWithDigit, agency } = req.body;
   const { _id } = req.user;
 
-  const { error } = bankAccountSchema.validate({ bank, bankDigit, accountNumberWithDigit, agency });
+  const { error } = bankAccountSchema.validate({
+    bank,
+    bankDigit,
+    accountNumberWithDigit,
+    agency,
+  });
 
   if (error) return next(Boom.badData(error));
 
-  const userWithBank = await usersService.createBankAccount({
-    bank, bankDigit, accountNumberWithDigit, agency
-  }, _id);
+  const userWithBank = await usersService.createBankAccount(
+    {
+      bank,
+      bankDigit,
+      accountNumberWithDigit,
+      agency,
+    },
+    _id
+  );
 
-  return res.status(201).json({ userWithBank })
-})
+  return res.status(201).json({ userWithBank });
+});
 
 const updateBasicRegistersData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id } = req.user;
 
   const { error } = updateRegisterInfoSchema.validate({
-    fieldToUpdate, newValueObject: { newValue, fieldToUpdate }
+    fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
+    newValueObject: { newValue, fieldToUpdate },
   });
 
   if (error) return next(Boom.badData(error));
 
-  const updatedUser = await usersService.updateBasicRegistersData(fieldToUpdate, newValue, _id);
+  const updatedUser = await usersService.updateBasicRegistersData(
+    fieldToUpdate,
+    newValue,
+    _id
+  );
 
   return res.status(200).json({ updatedUser });
-})
+});
 
 const getUserById = rescue(async (req, res, next) => {
   const { _id } = req.user;
   const { password, ...user } = await usersService.getUserById(_id);
 
-  return res.status(200).json({ user })
-})
+  return res.status(200).json({ user });
+});
 
 const getProductByField = rescue(async (req, res, next) => {
   const { fieldToSearch } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = getProductSchema.validate({ fieldToSearch });
+  const { error } = getProductSchema.validate({
+    fieldToSearch: { field: 'fieldSearch', value: fieldToSearch },
+  });
 
   if (error) return next(Boom.badData(error));
 
-  const purchaseList = await usersService.getProductByField(fieldToSearch, userId);
+  const purchaseList = await usersService.getProductByField(
+    fieldToSearch,
+    userId
+  );
 
   return res.status(200).json({ purchaseList });
-})
+});
 
 module.exports = {
   registerUser,
