@@ -4,9 +4,10 @@
   "description": "marketplace",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "start:watch": "nodemon index.js",
+    "test": "jest --forceExit",
+    "test-coverage": "jest --coverage --forceExit --watchAll=false",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
     "lint:fix": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --fix"
   },
@@ -34,6 +35,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.4.2",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "supertest": "^6.0.1"
   }
 }

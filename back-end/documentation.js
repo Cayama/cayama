@@ -12,6 +12,7 @@ const postRegisterUser = {
     socialMedia: "YouTube",
     socialMediaName: "Canal You Technology",
     contentType: "Tecnologia",
+    influencerLink: 'Jatech'
   },
 };
 
@@ -55,6 +56,18 @@ const postRegisterStore = {
   confirmPassword: "cayama123",
   cnpj: "01478899000138",
 };
+
+const postRegisterProduct = {
+    userId: '5fa09e7a6265167b9d1b3324',
+    productName: 'Teclado Keychron',
+    price: '1000,00',
+    category: 'Eletronicos',
+    stockQuantity: 5,
+    description: 'Teclado mecanico muito bom, confiavel.',
+    urls: ['https://cayama-upload.s3.amazonaws.com/d4d2cc50c72532aab0d45edd7f787ca', 'https://cayama-upload.s3.amazonaws.com/f32fc2c4e2066e03d3d7ee0e680a6f'],
+    videosPath: ['www.youtube.com.br/keychron-k2'],
+    keys: ['31530333c183f1bb78f6e9e6be7bd504-Keychron-k2.jpg', 'f0e53de034270dcbee0add49d22dbbe7-Keychron-k2.jpg'],
+}
 
 // =================================== SELL DOCUMENTATION =========================================
 
