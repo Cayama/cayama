@@ -3,7 +3,7 @@ const { notificationExample } = require('./index');
 
 const onConnection = (socket, io) => {
   socket.on('notificationExample', notificationExample(socket, io));
-}
+};
 
 module.exports = (httpServer) => {
   const io = socketIo(httpServer, { origins: '*:*' });
@@ -11,4 +11,4 @@ module.exports = (httpServer) => {
   io.on('connection', (socket) => onConnection(socket, io));
 
   return { io };
-}
+};

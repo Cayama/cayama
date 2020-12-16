@@ -5,7 +5,6 @@ const { jwtMiddleware } = require('../middlewares/index');
 const usersRoutes = Router();
 
 module.exports = (io) => {
-
   usersRoutes
     .post('/register', controllers.usersController.registerUser)
     .post('/login', controllers.usersController.loginUser)
@@ -19,6 +18,4 @@ module.exports = (io) => {
     .put('/update-to-influencer', jwtMiddleware(true), controllers.usersController.updateUserToInfluencer);
 
   return usersRoutes;
-}
-
-
+};

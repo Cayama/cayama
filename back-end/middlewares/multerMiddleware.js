@@ -13,13 +13,13 @@ const storageTypes = {
       crypto.randomBytes(16, (err, hash) => {
         if (err) return callback(err);
 
-        file.key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`
+        file.key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`;
 
-        file.location = `${process.env.APP_URL}/files/${file.key}`
+        file.location = `${process.env.APP_URL}/files/${file.key}`;
 
         return callback(null, file.key);
       });
-    }
+    },
   }),
 
   s3: multerS3({
@@ -31,13 +31,13 @@ const storageTypes = {
       crypto.randomBytes(16, (err, hash) => {
         if (err) return callback(err);
 
-        const key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`
+        const key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`;
 
         return callback(null, key);
       });
-    }
+    },
   }),
-}
+};
 
 const multerConfig = {
   dest: path.resolve(__dirname, '..', 'uploads'),
@@ -51,13 +51,13 @@ const multerConfig = {
       'image/jpeg',
       'image/pjpeg',
       'image/png',
-    ]
+    ];
     if (allowedMimes.includes(file.mimetype)) {
       callback(null, true);
     } else {
-      callback(new Error('Invalid file type.'))
+      callback(new Error('Invalid file type.'));
     }
-  }
-}
+  },
+};
 
 module.exports = multer(multerConfig);

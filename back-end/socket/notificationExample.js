@@ -1,6 +1,6 @@
 const notificationExample = (socket, io) => {
-  //examples
-}
+  // examples
+};
 
 module.exports = {
   notificationExample,

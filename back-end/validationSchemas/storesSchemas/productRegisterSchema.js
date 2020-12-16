@@ -7,7 +7,7 @@ const {
   arrayLinksSchema,
   arrayReviewLinksSchema,
   categoryTypeSchema,
-  fieldsExistenceSchema
+  fieldsExistenceSchema,
 } = require('../inputSchemas');
 
 module.exports = Joi.object({

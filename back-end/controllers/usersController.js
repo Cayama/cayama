@@ -135,7 +135,7 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 
   if (!userWithLink) return next(Boom.badData('Não é um influencer ainda'));
 
-  const influencer = userWithLink.influencer;
+  const { influencer } = userWithLink;
 
   return res.status(201).json({ influencer });
 });

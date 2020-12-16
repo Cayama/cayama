@@ -13,7 +13,7 @@ const registerStore = async (storeObj) => {
 const addNewProduct = async (productObj) => {
   const newProduct = await storesModel.addNewProduct(productObj);
   return newProduct;
-}
+};
 
 const updatedProducts = async (userId, newProductsArray) => {
   const newProducts = await storesModel.updatedProducts(userId, newProductsArray);

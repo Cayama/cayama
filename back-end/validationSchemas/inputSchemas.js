@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const { ObjectId } = require("mongodb");
+const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 
 const registerNameSchema = Joi.string().min(3).max(40).required();
 
@@ -7,14 +7,14 @@ const passwordSchema = Joi.string()
   .min(8)
   .alphanum()
   .required()
-  .error(() => new Error("Senha deve conter 8 caracteres alfanuméricos"));
+  .error(() => new Error('Senha deve conter 8 caracteres alfanuméricos'));
 
 const emailSchema = Joi.string()
   .regex(
-    /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   )
   .required()
-  .error(() => new Error("Email inválido"));
+  .error(() => new Error('Email inválido'));
 
 const birthDateSchema = Joi.string();
 
@@ -25,21 +25,22 @@ const shippingAddressSchema = Joi.string().required();
 const phoneSchema = Joi.string()
   .length(11)
   .required()
-  .error(() => new Error("Apenas números com DDD"));
+  .error(() => new Error('Apenas números com DDD'));
 
 const cpfSchema = Joi.string()
   .regex(/^[0-9]+$/)
   .length(11)
   .required()
-  .error(() => new Error("Apenas 11 números são permitidos no cpf"));
+  .error(() => new Error('Apenas 11 números são permitidos no cpf'));
 
 const cnpjSchema = Joi.string()
   .regex(/^[0-9]+$/)
   .length(14)
   .required()
-  .error(() => new Error("Apenas 14 números são permitidos no cnpj"));
+  .error(() => new Error('Apenas 14 números são permitidos no cnpj'));
 
-const influencerLinkSchema = Joi.string().min(3).max(30).trim().required();
+const influencerLinkSchema = Joi.string().min(3).max(30).trim()
+  .required();
 
 const productPriceSchema = Joi.number().required();
 
@@ -85,33 +86,33 @@ const arrayOfObjectsSchema = Joi.array().items(Joi.object());
 
 const fieldsObjectManaget = {
   categories: {
-    array: ["Tecnologia", "Moda", "Fitness", "Saúde", "Bebidas"],
-    error: "Tipo de Conteúdo inserido não esta entre as opções",
+    array: ['Tecnologia', 'Moda', 'Fitness', 'Saúde', 'Bebidas'],
+    error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   socialMedia: {
-    array: ["YouTube", "Instagram", "Facebook", "TikTok", "Twitter"],
-    error: "Mídia Social inserida não esta entre as opções",
+    array: ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter'],
+    error: 'Mídia Social inserida não esta entre as opções',
   },
   contentType: {
-    array: ["Tecnologia", "Moda", "Fitness", "Saúde"],
-    error: "Tipo de Conteúdo inserido não esta entre as opções",
+    array: ['Tecnologia', 'Moda', 'Fitness', 'Saúde'],
+    error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   fieldSearch: {
-    array: ["buyerId", "sellerId", "influencerId"],
-    error: "FieldToSearch não esta entre as opções",
+    array: ['buyerId', 'sellerId', 'influencerId'],
+    error: 'FieldToSearch não esta entre as opções',
   },
   fieldToUpdate: {
     array: [
-      "firstName",
-      "lastName",
-      "cpf",
-      "birthDate",
-      "storeName",
-      "cnpj",
-      "addresses",
-      "products",
-      "influencer",
-      "bankAccount",
+      'firstName',
+      'lastName',
+      'cpf',
+      'birthDate',
+      'storeName',
+      'cnpj',
+      'addresses',
+      'products',
+      'influencer',
+      'bankAccount',
     ],
     error: 'Opção para atualização inválida',
   },
@@ -148,7 +149,7 @@ const validateFieldExistence = (value, helper) => {
 
 const validateMongoId = (value, helper) => {
   if (!ObjectId.isValid(value)) {
-    return helper.error("Id inválido");
+    return helper.error('Id inválido');
   }
   return value;
 };
@@ -187,7 +188,7 @@ const addressesSchema = Joi.array()
       number: shippingAddressSchema,
       complement: shippingAddressSchema,
       phone: phoneSchema,
-    })
+    }),
   )
   .required();
 

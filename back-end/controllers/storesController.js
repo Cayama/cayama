@@ -25,7 +25,7 @@ const registerStore = rescue(async (req, res, next) => {
 
   const storeExists = await storesService.getStoreByCnpj(cnpj);
 
-  if (storeExists) next(Boom.conflict("Loja já cadastrada"));
+  if (storeExists) next(Boom.conflict('Loja já cadastrada'));
 
   const newStore = await storesService.registerStore({
     storeName,
@@ -92,7 +92,7 @@ const deleteProduct = rescue(async (req, res, next) => {
 
   if (!user._id.equals(_id)) {
     return next(
-      Boom.unauthorized('Você não tem permissão para deletar esse produto')
+      Boom.unauthorized('Você não tem permissão para deletar esse produto'),
     );
   }
 

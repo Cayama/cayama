@@ -6,4 +6,4 @@ module.exports = Joi.object({
   bankDigit: productStockQuantitySchema,
   accountNumberWithDigit: registerNameSchema,
   agency: productStockQuantitySchema,
-})
+});

@@ -1,5 +1,5 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
-const { ObjectId } = require('mongodb')
 
 const getStoreByCnpj = async (cnpj) => {
   const db = await connection();
@@ -20,19 +20,19 @@ const addNewProduct = async (productObj) => {
   const newProduct = await db.collection('products').insertOne(productObj);
 
   return newProduct.ops[0];
-}
+};
 
 const updatedProducts = async (userId, newProductsArray) => {
   const db = await connection();
   const newProducts = await db.collection('products')
     .findOneAndUpdate(
-      { _id: ObjectId(userId)},
+      { _id: ObjectId(userId) },
       { $set: { products: newProductsArray } },
       { returnOriginal: false },
     );
 
   return newProducts.value;
-}
+};
 
 module.exports = {
   getStoreByCnpj,

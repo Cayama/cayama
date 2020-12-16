@@ -4,6 +4,4 @@ const { jwtMiddleware } = require('../middlewares/index');
 
 const plataformRoutes = Router();
 
-module.exports = (io) => {
-  return plataformRoutes;
-};
+module.exports = (io) => plataformRoutes;
