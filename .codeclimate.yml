@@ -47,7 +47,7 @@ plugins:
   editorconfig:
     enabled: true
   csslint:
-    enabled: true
+    enabled: false
     checks:
       box-sizing:
         enabled: false
