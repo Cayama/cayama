@@ -217,7 +217,7 @@ const getUserById = rescue(async (req, res, _next) => {
   return res.status(200).json({ user });
 });
 
-const getProductByField = rescue(async (req, res, next) => {
+const getPurchaseByField = rescue(async (req, res, next) => {
   const { fieldToSearch } = req.body;
   const { _id: userId } = req.user;
 
@@ -227,7 +227,7 @@ const getProductByField = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const purchaseList = await usersService.getProductByField(
+  const purchaseList = await usersService.getPurchaseByField(
     fieldToSearch,
     userId,
   );
@@ -245,5 +245,5 @@ module.exports = {
   createBankAccount,
   updateBasicRegistersData,
   getUserById,
-  getProductByField,
+  getPurchaseByField,
 };

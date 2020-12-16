@@ -1,18 +1,5 @@
 const mongoClient = require('mongodb').MongoClient;
 
-const connectionTest = () =>
-  mongoClient
-    .connect('mongodb://localhost:27017/CayamaTest', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then((conn) => conn.db('CayamaTest'))
-    .catch((err) => {
-      console.log(err);
-      process.exit(1);
-    });
-
-
 const usersTest = [
   {
     firstName: "Jafet Henrique",
@@ -115,21 +102,34 @@ const productsTest = [
   }
 ];
 
-const databaseConnection = await connectionTest();
+const connectionTest = () =>
+  mongoClient
+    .connect('mongodb://localhost:27017/CayamaTest', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then((conn) => conn.db('CayamaTest'))
+    .catch((err) => {
+      console.log(err);
+      process.exit(1);
+    });
 
 const resetTestingMongoDb = async (collectionsToReset) => {
-  Promise.all(collectionsToReset.forEach((collection) => {
-    return databaseConnection.collection(collection).deleteMany()
-  }));
+  const db = await connectionTest();
 
-  await databaseConnection.collection('users').insertMany(usersTest);
+  await Promise.all([collectionsToReset.forEach((collection) => {
+    return db.collection(collection).deleteMany()
+  })]);
 
-  await databaseConnection.collection('purchases').insertMany(purchasesTest);
+  await db.collection('users').insertMany(usersTest);
 
-  await databaseConnection.collection('products').insertMany(productsTest);
+  await db.collection('purchases').insertMany(purchasesTest);
+
+  await db.collection('products').insertMany(productsTest);
+
+  return { db }
 }
 
 module.exports = {
   resetTestingMongoDb,
-  databaseConnection,
 }

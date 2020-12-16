@@ -68,7 +68,7 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
   return newInfluencer.value;
 };
 
-const getProductByField = async (fieldToSearch, userId) => {
+const getPurchaseByField = async (fieldToSearch, userId) => {
   const db = await connection();
   const purchaseList = await db.collection('purchases')
     .find({ [fieldToSearch]: ObjectId(userId) }).toArray();
@@ -107,7 +107,7 @@ module.exports = {
   getInfluencerByLink,
   createInfluencerLink,
   updateUserToInfluencer,
-  getProductByField,
+  getPurchaseByField,
   getUserById,
   createBankAccount,
   updateBasicRegistersData,

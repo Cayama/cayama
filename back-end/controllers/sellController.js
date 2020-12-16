@@ -1,17 +1,10 @@
-const Boom = require('boom');
-const rescue = require('express-rescue');
-const { sellService, usersService } = require('../services/index');
-const { purchaseSchema } = require('../validationSchemas/sellSchemas/index');
-
-// const createShoppingCart = rescue(async (req, res, next) => {});
-
-// const getShoppingCart = rescue(async (req, res, next) => {});
-
-// const updateShoppingCart = rescue(async (req, res, next) => {});
+const Boom = require("boom");
+const rescue = require("express-rescue");
+const { sellService, usersService, cartService } = require("../services/index");
+const { purchaseSchema, purchaseIdSchema } = require("../validationSchemas/sellSchemas/index");
 
 const purchase = rescue(async (req, res, next) => {
   const {
-    userId: sellerId,
     totalPrice,
     deliveryService,
     paymentMethod,
@@ -61,19 +54,47 @@ const purchase = rescue(async (req, res, next) => {
   return res.status(201).json({ response: 'Compra realizada com sucesso' });
 });
 
-// const deliveryCheck = rescue(async (req, res, next) => {
+const deliveryCheck = rescue(async (req, res, next) => {
+  const { purchaseId } = req.body;
+  const { _id: sellerId } = req.user;
 
-// });
+  const { error } = purchaseIdSchema.validate({ purchaseId });
 
-// const userApproveOfProduct = rescue(async (req, res, next) => {
+  if (error) return next(Boom.badData(error));
+  console.log(purchaseId)
+  const purchase = await usersService.getPurchaseByField("_id", purchaseId);
+  console.log(purchase)
 
-// });
+  if (!purchase[0].sellerId.equals(sellerId)) return next(
+    Boom.unauthorized('Você não tem permissão para alterar o status')
+  );
+
+  await sellService.deliveryCheck(purchaseId);
+
+  return res.status(201).json({ response: 'Entrega realizada com sucesso' });
+});
+
+const userApproveOfProduct = rescue(async (req, res, next) => {
+  const { purchaseId } = req.body;
+  const { _id: buyerId } = req.user;
+
+  const { error } = purchaseIdSchema.validate({ purchaseId });
+
+  if (error) return next(Boom.badData(error));
+
+  const purchase = await usersService.getPurchaseByField("_id", purchaseId);
+
+  if (!purchase[0].buyerId.equals(buyerId)) return next(
+    Boom.unauthorized('Você não tem permissão para alterar o status')
+  );
+
+  await sellService.userApproveOfProduct(purchaseId);
+
+  return res.status(201).json({ response: 'Produto entregue sem problemas' });
+});
 
 module.exports = {
-  // createShoppingCart,
-  // getShoppingCart,
-  // updateShoppingCart,
   purchase,
-  // deliveryCheck,
-  // userApproveOfProduct,
+  deliveryCheck,
+  userApproveOfProduct,
 };

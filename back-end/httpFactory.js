@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const { usersRoutes, storesRoutes, sellRoutes, plataformRoutes } = require('./routes/index');
+const { usersRoutes, storesRoutes, sellRoutes, plataformRoutes, cartRoutes } = require('./routes/index');
 const { errorMiddleware } = require('./middlewares/index');
 
 module.exports = (app, io) => {
@@ -11,6 +11,7 @@ module.exports = (app, io) => {
   app.use('/store', storesRoutes(io));
   app.use('/sell', sellRoutes(io));
   app.use('/plataform', plataformRoutes(io));
+  app.use('/cart', cartRoutes(io));
 
   app.all('*', (_req, res) => res.status(404).json({ message: 'page not found' }));
 
