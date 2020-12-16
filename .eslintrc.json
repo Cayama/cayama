@@ -6,7 +6,8 @@
     "react/prefer-stateless-function": 0,
     "react/prop-types": 0,
     "object-curly-newline": ["error", { "multiline": true }],
-    "arrow-parens": [2, "always"]
+    "arrow-parens": [2, "always"],
+    "eslint no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }]
   },
   "env": {
     "browser": true,
