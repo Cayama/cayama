@@ -1,13 +1,13 @@
-const Boom = require("boom");
-const rescue = require("express-rescue");
-const { sellService, usersService } = require("../services/index");
-const { purchaseSchema } = require("../validationSchemas/sellSchemas/index");
+const Boom = require('boom');
+const rescue = require('express-rescue');
+const { sellService, usersService } = require('../services/index');
+const { purchaseSchema } = require('../validationSchemas/sellSchemas/index');
 
-const createShoppingCart = rescue(async (req, res, next) => {});
+// const createShoppingCart = rescue(async (req, res, next) => {});
 
-const getShoppingCart = rescue(async (req, res, next) => {});
+// const getShoppingCart = rescue(async (req, res, next) => {});
 
-const updateShoppingCart = rescue(async (req, res, next) => {});
+// const updateShoppingCart = rescue(async (req, res, next) => {});
 
 const purchase = rescue(async (req, res, next) => {
   const {
@@ -61,19 +61,19 @@ const purchase = rescue(async (req, res, next) => {
   return res.status(201).json({ response: 'Compra realizada com sucesso' });
 });
 
-const deliveryCheck = rescue(async (req, res, next) => {
+// const deliveryCheck = rescue(async (req, res, next) => {
 
-});
+// });
 
-const userApproveOfProduct = rescue(async (req, res, next) => {
+// const userApproveOfProduct = rescue(async (req, res, next) => {
 
-});
+// });
 
 module.exports = {
-  createShoppingCart,
-  getShoppingCart,
-  updateShoppingCart,
+  // createShoppingCart,
+  // getShoppingCart,
+  // updateShoppingCart,
   purchase,
-  deliveryCheck,
-  userApproveOfProduct,
+  // deliveryCheck,
+  // userApproveOfProduct,
 };

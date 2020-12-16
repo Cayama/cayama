@@ -1,4 +1,4 @@
-const Boom = require("boom");
+const Boom = require('boom');
 
 module.exports = (err, _req, res, _next) => {
   if (Boom.isBoom(err)) {
@@ -17,7 +17,7 @@ module.exports = (err, _req, res, _next) => {
   return res.status(500).json({
     err: {
       error: err.message,
-      message: "Internal Error",
+      message: 'Internal Error',
       stack: err.stack,
     },
   });

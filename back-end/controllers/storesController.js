@@ -1,14 +1,14 @@
-const fs = require("fs").promises;
-const path = require("path");
-const Boom = require("boom");
-const rescue = require("express-rescue");
-const aws = require("aws-sdk");
-const { usersService, storesService } = require("../services/index");
-const { createJwtToken } = require("../utils/index");
+const fs = require('fs').promises;
+const path = require('path');
+const Boom = require('boom');
+const rescue = require('express-rescue');
+const aws = require('aws-sdk');
+const { usersService, storesService } = require('../services/index');
+const { createJwtToken } = require('../utils/index');
 const {
   storeRegisterSchema,
   productRegisterSchema,
-} = require("../validationSchemas/storesSchemas/index");
+} = require('../validationSchemas/storesSchemas/index');
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
@@ -53,13 +53,13 @@ const registerProduct = rescue(async (req, res, next) => {
 
   const keys = req.files.map((product) => product.key);
   const urls = req.files.map((product) => product.location);
-  let videosPath
-  videosPath = ['asdasdasdasdasdasdasd'] // até o front estar pronto => videosPath precisa ser um array
+  let videosPath;
+  videosPath = ['asdasdasdasdasdasdasd']; // até o front estar pronto => videosPath precisa ser um array
 
   const { error } = productRegisterSchema.validate({
     productName,
     price,
-    category: { field: "categories", value: category },
+    category: { field: 'categories', value: category },
     stockQuantity,
     description,
     videosPath,
@@ -90,22 +90,19 @@ const deleteProduct = rescue(async (req, res, next) => {
 
   const user = await usersService.getUserByEmail(email);
 
-  if (!user._id.equals(_id))
+  if (!user._id.equals(_id)) {
     return next(
-      Boom.unauthorized("Você não tem permissão para deletar esse produto")
+      Boom.unauthorized('Você não tem permissão para deletar esse produto')
     );
+  }
 
-  const productToDeleted = user.products.find((product) =>
-    product._id.equals(productId)
-  );
+  const productToDeleted = user.products.find((product) => product._id.equals(productId));
 
-  const newProducts = user.products.filter(
-    (product) => !product._id.equals(productId)
-  );
+  const newProducts = user.products.filter((product) => !product._id.equals(productId));
 
   const updatedProducts = await storesService.updatedProducts(_id, newProducts);
 
-  if (process.env.STORAGE_TYPE === "s3") {
+  if (process.env.STORAGE_TYPE === 's3') {
     const s3 = new aws.S3();
     await s3
       .deleteObject({
@@ -115,7 +112,7 @@ const deleteProduct = rescue(async (req, res, next) => {
       .promise();
   } else {
     await fs.unlink(
-      path.resolve(__dirname, "..", "uploads", productToDeleted.key)
+      path.resolve(__dirname, '..', 'uploads', productToDeleted.key),
     );
   }
   // deletar no s3, do disco e do banco de dados (depende do tipo que estamos utilizando.)
