@@ -27,6 +27,7 @@ checks:
   similar-code:
     enabled: false
   identical-code:
+    enabled: false
     config:
       threshold: # language-specific defaults. an override will affect all languages.
 exclude_patterns:
