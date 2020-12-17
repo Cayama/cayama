@@ -132,4 +132,5 @@ const resetTestingMongoDb = async (collectionsToReset) => {
 
 module.exports = {
   resetTestingMongoDb,
+  connectionTest,
 }
