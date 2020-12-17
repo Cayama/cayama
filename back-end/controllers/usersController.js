@@ -83,6 +83,8 @@ const loginUser = rescue(async (req, res, next) => {
 
   const user = await usersService.getUserByEmail(email);
 
+  if (!user) return next(Boom.unauthorized('Email ou senha incorretos'));
+
   if (user.password !== password) return next(Boom.unauthorized('Email ou senha incorretos'));
 
   const token = createJwtToken(user);

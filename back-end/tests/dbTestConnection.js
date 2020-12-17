@@ -24,12 +24,6 @@ const usersTest = [
     confirmPassword: 'a1234567',
     cpf: '12345678902',
     birthDate: '10/11/1995',
-    influencer: {
-      socialMedia: 'Instagram',
-      socialMediaName: 'EuSouLuis',
-      contentType: 'Life Style',
-      influencerLink: 'luistyle',
-    },
   },
   {
     storeName: 'Cayama',
@@ -133,4 +127,5 @@ const resetTestingMongoDb = async (collectionsToReset) => {
 module.exports = {
   resetTestingMongoDb,
   connectionTest,
+  usersTest,
 };
