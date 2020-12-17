@@ -1,7 +1,7 @@
-const Boom = require("boom");
-const rescue = require("express-rescue");
-const { cartService } = require("../services/index");
-const { createCartSchema } = require("../validationSchemas/cartSchema/index");
+const Boom = require('boom');
+const rescue = require('express-rescue');
+const { cartService } = require('../services/index');
+const { createCartSchema } = require('../validationSchemas/cartSchema/index');
 
 const createShoppingCart = rescue(async (req, res, next) => {
   const { totalPrice, purchases } = req.body;

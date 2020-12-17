@@ -1,8 +1,8 @@
-const Joi = require("joi");
+const Joi = require('joi');
 const {
   productPriceSchema,
   arrayOfObjectsSchema,
-} = require("../inputSchemas");
+} = require('../inputSchemas');
 
 module.exports = Joi.object({
   totalPrice: productPriceSchema,

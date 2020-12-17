@@ -11,4 +11,4 @@ module.exports = (io) => {
     .put('/cart', jwtMiddleware, controllers.cartController.updateShoppingCart)
     .delete('/cart', jwtMiddleware, controllers.cartController.deleteShoppingCart);
   return sellRoutes;
-}
+};

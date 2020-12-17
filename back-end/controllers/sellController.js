@@ -1,7 +1,7 @@
-const Boom = require("boom");
-const rescue = require("express-rescue");
-const { sellService, usersService, cartService } = require("../services/index");
-const { purchaseSchema, purchaseIdSchema } = require("../validationSchemas/sellSchemas/index");
+const Boom = require('boom');
+const rescue = require('express-rescue');
+const { sellService, usersService, cartService } = require('../services/index');
+const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/sellSchemas/index');
 
 const purchase = rescue(async (req, res, next) => {
   const {
@@ -61,13 +61,15 @@ const deliveryCheck = rescue(async (req, res, next) => {
   const { error } = purchaseIdSchema.validate({ purchaseId });
 
   if (error) return next(Boom.badData(error));
-  console.log(purchaseId)
-  const purchase = await usersService.getPurchaseByField("_id", purchaseId);
-  console.log(purchase)
+  console.log(purchaseId);
+  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
+  console.log(purchase);
 
-  if (!purchase[0].sellerId.equals(sellerId)) return next(
-    Boom.unauthorized('Você não tem permissão para alterar o status')
-  );
+  if (!purchase[0].sellerId.equals(sellerId)) {
+    return next(
+      Boom.unauthorized('Você não tem permissão para alterar o status'),
+    );
+  }
 
   await sellService.deliveryCheck(purchaseId);
 
@@ -82,11 +84,13 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const purchase = await usersService.getPurchaseByField("_id", purchaseId);
+  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
 
-  if (!purchase[0].buyerId.equals(buyerId)) return next(
-    Boom.unauthorized('Você não tem permissão para alterar o status')
-  );
+  if (!purchase[0].buyerId.equals(buyerId)) {
+    return next(
+      Boom.unauthorized('Você não tem permissão para alterar o status'),
+    );
+  }
 
   await sellService.userApproveOfProduct(purchaseId);
 

@@ -6,14 +6,14 @@ const purchase = async (purchaseObject) => {
 };
 
 const deliveryCheck = async (purchaseId) => {
-  const purchase = await sellModel.deliveryCheck(purchaseId);
-  return purchase;
-}
+  const status = await sellModel.deliveryCheck(purchaseId);
+  return status;
+};
 
 const userApproveOfProduct = async (purchaseId) => {
-  const purchase = await sellModel.userApproveOfProduct(purchaseId);
-  return purchase;
-}
+  const approve = await sellModel.userApproveOfProduct(purchaseId);
+  return approve;
+};
 
 module.exports = {
   purchase,

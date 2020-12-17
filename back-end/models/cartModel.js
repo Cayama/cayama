@@ -1,12 +1,12 @@
-const connection = require('./connection');
 const { ObjectId } = require('mongodb');
+const connection = require('./connection');
 
 const createShoppingCart = async (cart) => {
   const db = await connection();
-  const newCart = await db.collection('shoppingCart').insertOne(cart)
+  const newCart = await db.collection('shoppingCart').insertOne(cart);
 
   return newCart.ops[0];
-}
+};
 
 const updateShoppingCart = async (userId, totalPrice, purchases) => {
   const db = await connection();
@@ -16,9 +16,9 @@ const updateShoppingCart = async (userId, totalPrice, purchases) => {
       { $set: { totalPrice, purchases } },
       { returnOriginal: false },
     );
-    console.log(newCart.value)
+  console.log(newCart.value);
   return newCart.value;
-}
+};
 
 const deleteShoppingCart = async (userId) => {
   const db = await connection();
@@ -28,9 +28,9 @@ const deleteShoppingCart = async (userId) => {
       { returnOriginal: false },
     );
 
-    console.log(deletedCart);
+  console.log(deletedCart);
   return deletedCart;
-}
+};
 
 const getShoppingCart = async (userId) => {
   const db = await connection();
@@ -38,7 +38,7 @@ const getShoppingCart = async (userId) => {
     .findOne({ userId });
 
   return shoppingCart;
-}
+};
 
 module.exports = {
   createShoppingCart,

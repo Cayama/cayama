@@ -10,4 +10,4 @@ module.exports = (io) => {
     .put('/purchase/deliver', jwtMiddleware, controllers.sellController.deliveryCheck)
     .put('/purchase/acceptance', jwtMiddleware, controllers.sellController.userApproveOfProduct);
   return sellRoutes;
-}
+};

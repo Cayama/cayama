@@ -13,23 +13,23 @@ describe('UserController Test', () => {
 
   beforeAll(async (done) => {
     const { db } = await resetTestingMongoDb(deleteAllData);
-    databaseTest = db
+    databaseTest = db;
     server = httpServer.listen(8085, () => done());
-  })
+  });
 
   afterAll(async () => {
     databaseTest.close();
     return server && httpServer.close();
-  })
+  });
 
   test('testing', async () => {
     const { body } = await request(httpServer)
       .post('/user/login')
       .send({
-        "email": "jafet@jafet.com.br",
-        "password": "a1234567"
-      })
+        email: 'jafet@jafet.com.br',
+        password: 'a1234567',
+      });
 
-    console.log(body.token)
-  })
-})
+    console.log(body.token);
+  });
+});
