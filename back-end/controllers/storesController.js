@@ -70,7 +70,7 @@ const registerProduct = rescue(async (req, res, next) => {
   if (error) return next(Boom.badData(error));
 
   const addNewProduct = await storesService.addNewProduct({
-    userId: _id,
+    sellerId: _id,
     productName,
     price,
     category,

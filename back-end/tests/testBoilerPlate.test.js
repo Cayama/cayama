@@ -1,4 +1,5 @@
 const request = require('supertest');
+const faker = require('faker/locale/pt_BR');
 const connection = require('../models/connection');
 const { resetTestingMongoDb, connectionTest } = require('./dbTestConnection');
 const httpServer = require('./serverTest');
@@ -8,7 +9,7 @@ const deleteAllData = ['products', 'purchases', 'users'];
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
 
-describe('UserController Test', () => {
+describe('Boilerplate for integration test', () => {
   let databaseTest;
   let server;
   beforeAll(async (done) => {
@@ -22,14 +23,20 @@ describe('UserController Test', () => {
     return server && httpServer.close();
   });
 
-  test('testing', async () => {
-    const { body } = await request(httpServer)
-      .post('/user/login')
-      .send({
-        email: 'jafet@jafet.com.br',
-        password: 'a1234567',
-      });
+  describe('testing everything', () => {
+    const state = faker.address.state();
+    const name = faker.name.firstName();
 
-    console.log(body.token);
+    test('testing if database is responding', async () => {
+      const { body } = await request(httpServer)
+        .post('/user/login')
+        .send({
+          email: 'jafet@jafet.com.br',
+          password: 'a1234567',
+        });
+      console.log(state);
+      console.log(name);
+      console.log(body.token);
+    });
   });
 });

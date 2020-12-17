@@ -58,7 +58,7 @@ const postRegisterStore = {
 };
 
 const postRegisterProduct = {
-    userId: "5fa09e7a6265167b9d1b3324",
+    sellerId: "5fa09e7a6265167b9d1b3324",
     productName: "Teclado Keychron",
     price: "1000,00",
     category: "Eletronicos",
@@ -81,6 +81,7 @@ const PostPurchase = {
   purchases: [
     {
       name: "Teclado Keychron",
+      sellerId: "5fa09e7a6265167b9d1b3324",
       productId: "5fa09e7a6265167b9d1b3324",
       quantity: "100",
       price: "3",
@@ -130,13 +131,15 @@ const postCreateCart = {
   purchases: [
     {
       name: "Teclado Keychron",
-      productId: "5fa09e7a6265167b9d1b3324",
+      productId: "8fs09e7a62225167b9d1b142",
+      sellerId: "5fa09e7a6265167b9d1b3324",
       quantity: "3",
       price: "1000",
     },
     {
       name: "Mouse Keychron",
-      productId: "5fa09e7a6265167b9d1b3324",
+      productId: "1va09e7a6262367b9d1b1464",
+      sellerId: "5fa09e7a6265167b9d1b3324",
       quantity: "2",
       price: "200",
     }

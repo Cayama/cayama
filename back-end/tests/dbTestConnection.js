@@ -117,7 +117,9 @@ const connectionTest = () =>
 const resetTestingMongoDb = async (collectionsToReset) => {
   const db = await connectionTest();
 
-  await Promise.all([collectionsToReset.forEach((collection) => db.collection(collection).deleteMany())]);
+  await Promise.all(
+    [collectionsToReset.forEach((collection) => db.collection(collection).deleteMany())],
+  );
 
   await db.collection('users').insertMany(usersTest);
 

@@ -15,7 +15,6 @@ const purchase = rescue(async (req, res, next) => {
   // deliveryTrack = temos que gerar
 
   const { error } = purchaseSchema.validate({
-    sellerId,
     totalPrice,
     deliveryService,
     paymentMethod,
@@ -25,8 +24,8 @@ const purchase = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const seller = await usersService.getUserById(sellerId);
-  if (!seller) return next(Boom.notFound('Vendedor não encontrado'));
+  // const seller = await usersService.getUserById(sellerId);
+  // if (!seller) return next(Boom.notFound('Vendedor não encontrado'));
 
   const { _id: buyerId, email } = req.user;
   const user = await usersService.getUserByEmail(email);
@@ -40,7 +39,7 @@ const purchase = rescue(async (req, res, next) => {
 
   await sellService.purchase({
     buyerId,
-    sellerId: seller._id,
+    // sellerId: seller._id,
     influencerId,
     totalPrice,
     deliveryService,
