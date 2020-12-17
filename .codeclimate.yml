@@ -64,8 +64,8 @@ plugins:
   fixme:
     enabled: true
   nodesecurity:
-    enabled: true
+    enabled: false
   shellcheck:
-    enabled: true
+    enabled: false
   stylelint:
     enabled: true
