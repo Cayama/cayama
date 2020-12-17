@@ -103,6 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-uploads/*
 node_modules/*
 .env
