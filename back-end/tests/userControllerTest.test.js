@@ -249,8 +249,8 @@ describe('UserController Test', () => {
       newValue: firstName,
     };
 
-    afterEach(() => {
-
+    afterAll(async () => {
+      await resetTestingMongoDb(deleteAllData);
     });
 
     test('Successfull: user login', async () => {
@@ -264,37 +264,77 @@ describe('UserController Test', () => {
 
     test('Successful: Changing firstName', async () => {
       const { body } = await request(httpServer)
-        .put('user/update-info')
+        .put('/user/update-info')
         .set('Authorization', token)
         .send(basicData);
+
+      expect(body.updatedUser.firstName).toBe(firstName);
     });
 
     test('Successful: Changing lastName', async () => {
+      basicData.fieldToUpdate = 'lastName';
+      basicData.newValue = lastName;
       const { body } = await request(httpServer)
-        .put('user/update-info')
+        .put('/user/update-info')
         .set('Authorization', token)
         .send(basicData);
+
+      expect(body.updatedUser.lastName).toBe(lastName);
     });
 
     test('Successful: Changing cpf', async () => {
+      basicData.fieldToUpdate = 'cpf';
+      const newCpf = generateFakeCpf();
+      basicData.newValue = newCpf;
       const { body } = await request(httpServer)
-        .put('user/update-info')
+        .put('/user/update-info')
         .set('Authorization', token)
         .send(basicData);
+      expect(body.updatedUser.cpf).toBe(newCpf);
     });
 
     test('Successful: Changing birthDate', async () => {
+      basicData.fieldToUpdate = 'birthDate';
+      const newBirthDate = '30/11/1999';
+      basicData.newValue = newBirthDate;
       const { body } = await request(httpServer)
-        .put('user/update-info')
+        .put('/user/update-info')
         .set('Authorization', token)
         .send(basicData);
+
+      expect(body.updatedUser.birthDate).toBe(newBirthDate);
     });
 
-    test('Successful: Changing ', async () => {
+    test('Error: opção de atualização inválida ', async () => {
+      basicData.fieldToUpdate = 'buyerId';
+      basicData.newValue = 'a2h22fgsd45654jh6ytf';
       const { body } = await request(httpServer)
-        .put('user/update-info')
+        .put('/user/update-info')
         .set('Authorization', token)
         .send(basicData);
+      expect(body.err.error).toBe('Unprocessable Entity');
+      expect(body.err.message).toContain('Opção para atualização inválida');
+    });
+  });
+
+  describe('testing getUserById', () => {
+    test('Successfull: user login', async () => {
+      const { body } = await request(httpServer)
+        .post('/user/login')
+        .send(loginObj);
+
+      token = body.token;
+      expect(token).toMatch(/[A-z-=0-9.]*/);
+    });
+
+    test('Successfull: get correct user searching by id', async () => {
+      const { body } = await request(httpServer)
+        .get('/user/profile')
+        .set('Authorization', token);
+
+      expect(body.user.firstName).toBe(usersTest[0].firstName);
+      expect(body.user.lastName).toBe(usersTest[0].lastName);
+      expect(body.user.email).toBe(usersTest[0].email);
     });
   });
 });
