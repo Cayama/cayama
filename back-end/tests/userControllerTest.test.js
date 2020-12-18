@@ -17,12 +17,6 @@ const password = '123a123b123c';
 const confirmPassword = password;
 const birthDate = '01/05/1990';
 const cpf = '11122233344';
-const influencer = {
-  socialMedia: 'YouTube',
-  contentType: 'Tecnologia',
-  socialMediaName: 'Canal You Technology',
-  influencerLink: 'tech-tech',
-};
 
 const registerObj = {
   firstName,
@@ -32,7 +26,6 @@ const registerObj = {
   confirmPassword,
   cpf,
   birthDate,
-  influencer,
 };
 
 const loginObj = {
@@ -56,15 +49,9 @@ describe('UserController Test', () => {
     return server && server.close();
   });
 
-  describe('testing registerUser', () => {
+  describe('testing registerUser - normal user', () => {
     afterEach(() => {
       const string11Elem = generateFakeCpf();
-      const influencerRestored = {
-        socialMedia: 'YouTube',
-        contentType: 'Tecnologia',
-        socialMediaName: 'Canal You Technology',
-        influencerLink: 'tech-tech',
-      };
       registerObj.firstName = firstName;
       registerObj.lastName = lastName;
       registerObj.email = faker.internet.email();
@@ -72,13 +59,12 @@ describe('UserController Test', () => {
       registerObj.confirmPassword = confirmPassword;
       registerObj.cpf = string11Elem;
       registerObj.birthDate = birthDate;
-      registerObj.influencer = influencerRestored;
-      registerObj.influencer.influencerLink = string11Elem;
     });
     test('Successfull: normal register', async () => {
       const { body } = await request(httpServer)
         .post('/user/register')
         .send(registerObj);
+
       expect(body.token).toMatch(/[A-z-=0-9.]*/);
     });
 
@@ -109,35 +95,6 @@ describe('UserController Test', () => {
       expect(body.err.error).toBe('Conflict');
       expect(body.err.message).toBe('Apenas 11 números são permitidos no cpf');
     });
-
-    test('Error: incorrect Social Media', async () => {
-      registerObj.influencer.socialMedia = 'Youtube';
-      const { body } = await request(httpServer)
-        .post('/user/register')
-        .send(registerObj);
-
-      expect(body.err.error).toBe('Unprocessable Entity');
-      expect(body.err.message).toContain('Mídia Social inserida não esta entre as opções');
-    });
-
-    test('Error: influencerLink alredy exists', async () => {
-      registerObj.influencer.influencerLink = 'tech-tech';
-      const { body } = await request(httpServer)
-        .post('/user/register')
-        .send(registerObj);
-
-      expect(body.err.error).toBe('Conflict');
-      expect(body.err.message).toBe('Link já existente');
-    });
-
-    test('Error: incorrect Content Type', async () => {
-      registerObj.influencer.contentType = 'Modaaa';
-      const { body } = await request(httpServer)
-        .post('/user/register')
-        .send(registerObj);
-      expect(body.err.error).toBe('Unprocessable Entity');
-      expect(body.err.message).toContain('Tipo de Conteúdo inserido não esta entre as opções');
-    });
   });
 
   describe('testing loginUser', () => {
@@ -164,7 +121,7 @@ describe('UserController Test', () => {
       expect(body.err.message).toContain('Email ou senha incorretos');
     });
 
-    test('Error: email inexistente', async () => {
+    test('Error: password errado', async () => {
       loginObj.password = '123l123o123u';
       const { body } = await request(httpServer)
         .post('/user/login')

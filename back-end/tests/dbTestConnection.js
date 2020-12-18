@@ -110,7 +110,7 @@ const connectionTest = () =>
 
 const resetTestingMongoDb = async (collectionsToReset) => {
   const db = await connectionTest();
-
+  console.log(1)
   await Promise.all(
     [collectionsToReset.forEach((collection) => db.collection(collection).deleteMany())],
   );

@@ -42,7 +42,7 @@ const registerUser = rescue(async (req, res, next) => {
 
   if (userExists) return next(Boom.conflict('Email já cadastrado'));
 
-  if (req.body.influencer !== {}) {
+  if (influencer.socialMedia) {
     const { socialMedia, contentType, socialMediaName, influencerLink } = req.body.influencer;
 
     const influencerLinkCheck = await usersService.getInfluencerByLink(influencerLink);
