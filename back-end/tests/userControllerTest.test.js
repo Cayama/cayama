@@ -1,37 +1,24 @@
 const request = require('supertest');
 const faker = require('faker/locale/pt_BR');
 const connection = require('../models/connection');
-const { resetTestingMongoDb, connectionTest, usersTest } = require('./dbTestConnection');
-const { generateFakeCpf } = require('./utils');
-const httpServer = require('./serverTest');
+const { resetTestingMongoDb, connectionTest, userTest1 } = require('./testsUtils/dbTestConnection');
+const {
+  generateFakeCpf,
+  registerObj,
+  loginObj,
+  firstName,
+  lastName,
+  password,
+  confirmPassword,
+  birthDate,
+  incorrectValidToken,
+} = require('./testsUtils/utils');
+const httpServer = require('./testsUtils/serverTest');
 
 const deleteAllData = ['products', 'purchases', 'users'];
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
-
-const firstName = faker.name.firstName();
-const lastName = faker.name.lastName();
-const email = faker.internet.email();
-const password = '123a123b123c';
-const confirmPassword = password;
-const birthDate = '01/05/1990';
-const cpf = '11122233344';
-
-const registerObj = {
-  firstName,
-  lastName,
-  email,
-  password,
-  confirmPassword,
-  cpf,
-  birthDate,
-};
-
-const loginObj = {
-  email: usersTest[0].email,
-  password: usersTest[0].password,
-};
 
 describe('UserController Test', () => {
   let databaseTest;
@@ -69,7 +56,7 @@ describe('UserController Test', () => {
     });
 
     test('Error: email alredy exists', async () => {
-      registerObj.email = usersTest[0].email;
+      registerObj.email = userTest1.email;
       const { body } = await request(httpServer)
         .post('/user/register')
         .send(registerObj);
@@ -97,10 +84,10 @@ describe('UserController Test', () => {
     });
   });
 
-  describe('testing loginUser', () => {
+  describe('testing userLogin', () => {
     afterEach(() => {
-      loginObj.email = usersTest[0].email;
-      loginObj.password = usersTest[0].password;
+      loginObj.email = userTest1.email;
+      loginObj.password = userTest1.password;
     });
 
     test('Successfull: user login', async () => {
@@ -262,7 +249,7 @@ describe('UserController Test', () => {
       expect(body.updatedUser.birthDate).toBe(newBirthDate);
     });
 
-    test('Error: opção de atualização inválida ', async () => {
+    test('Error: update option invalid', async () => {
       basicData.fieldToUpdate = 'buyerId';
       basicData.newValue = 'a2h22fgsd45654jh6ytf';
       const { body } = await request(httpServer)
@@ -289,9 +276,9 @@ describe('UserController Test', () => {
         .get('/user/profile')
         .set('Authorization', token);
 
-      expect(body.user.firstName).toBe(usersTest[0].firstName);
-      expect(body.user.lastName).toBe(usersTest[0].lastName);
-      expect(body.user.email).toBe(usersTest[0].email);
+      expect(body.user.firstName).toBe(userTest1.firstName);
+      expect(body.user.lastName).toBe(userTest1.lastName);
+      expect(body.user.email).toBe(userTest1.email);
     });
   });
 });

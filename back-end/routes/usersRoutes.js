@@ -7,7 +7,7 @@ const usersRoutes = Router();
 module.exports = (io) => {
   usersRoutes
     .post('/register', controllers.usersController.registerUser)
-    .post('/login', controllers.usersController.loginUser)
+    .post('/login', controllers.usersController.userLogin)
     .put('/addresses', jwtMiddleware, controllers.usersController.updateUsersAddresses)
     .put('/create-link', jwtMiddleware, controllers.usersController.createInfluencerLink)
     .get('/addresses', jwtMiddleware, controllers.usersController.getAllAddresses)

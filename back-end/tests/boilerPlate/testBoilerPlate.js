@@ -1,8 +1,9 @@
 const request = require('supertest');
 const faker = require('faker/locale/pt_BR');
-const connection = require('../../models/connection');
-const { resetTestingMongoDb, connectionTest } = require('../dbTestConnection');
-const httpServer = require('../serverTest');
+const connection = require('../models/connection');
+const httpServer = require('./testsUtils/serverTest');
+const { resetTestingMongoDb, connectionTest, userTest1 } = require('./testsUtils/dbTestConnection');
+// const {  } = require('./testsUtils/utils');
 
 const deleteAllData = ['products', 'purchases', 'users'];
 

@@ -1,38 +1,43 @@
 const mongoClient = require('mongodb').MongoClient;
 
-const usersTest = [
-  {
-    firstName: 'Jafet Henrique',
-    lastName: 'Guerra Fagundes',
-    email: 'jafet@jafet.com.br',
-    password: 'a1234567',
-    confirmPassword: 'a1234567',
-    cpf: '12345678901',
-    birthDate: '02/07/1994',
-    influencer: {
-      socialMedia: 'YouTube',
-      socialMediaName: 'Canal You Technology',
-      contentType: 'Tecnologia',
-      influencerLink: 'jatech',
-    },
+const userTest1 = {
+  firstName: 'Jafet Henrique',
+  lastName: 'Guerra Fagundes',
+  email: 'jafet@jafet.com.br',
+  password: 'a1234567',
+  confirmPassword: 'a1234567',
+  cpf: '12345678901',
+  birthDate: '02/07/1994',
+  addresses: [],
+  influencer: {
+    socialMedia: 'YouTube',
+    socialMediaName: 'Canal You Technology',
+    contentType: 'Tecnologia',
+    influencerLink: 'jatech',
   },
-  {
-    firstName: 'Luis Eduardo',
-    lastName: 'Guerra Fagundes',
-    email: 'luis@luis.com.br',
-    password: 'a1234567',
-    confirmPassword: 'a1234567',
-    cpf: '12345678902',
-    birthDate: '10/11/1995',
-  },
-  {
-    storeName: 'Cayama',
-    email: 'cayama@cayama.com',
-    password: 'cayama123',
-    confirmPassword: 'cayama123',
-    cnpj: '01478899000138',
-  },
-];
+};
+
+const userTest2 = {
+  firstName: 'Luis Eduardo',
+  lastName: 'Guerra Fagundes',
+  email: 'luis@luis.com.br',
+  password: 'a1234567',
+  confirmPassword: 'a1234567',
+  cpf: '12345678902',
+  birthDate: '10/11/1995',
+  addresses: [],
+  influencer: {},
+};
+
+const userTest3 = {
+  storeName: 'Cayama',
+  email: 'cayama@cayama.com',
+  password: 'cayama123',
+  confirmPassword: 'cayama123',
+  cnpj: '01478899000138',
+};
+
+const usersTest = [userTest1, userTest2, userTest3];
 
 const purchasesTest = [
   {
@@ -110,7 +115,7 @@ const connectionTest = () =>
 
 const resetTestingMongoDb = async (collectionsToReset) => {
   const db = await connectionTest();
-  console.log(1)
+
   await Promise.all(
     [collectionsToReset.forEach((collection) => db.collection(collection).deleteMany())],
   );
@@ -127,5 +132,6 @@ const resetTestingMongoDb = async (collectionsToReset) => {
 module.exports = {
   resetTestingMongoDb,
   connectionTest,
-  usersTest,
+  userTest1,
+  userTest2,
 };

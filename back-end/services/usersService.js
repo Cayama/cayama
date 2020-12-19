@@ -10,8 +10,8 @@ const registerUser = async (userObj) => {
   return user;
 };
 
-const updateUserAddressesByEmail = async (email, addresses) => {
-  const updatedUser = await userModel.updateUserAddressesByEmail(email, addresses);
+const updateUserAddressesById = async (id, addresses) => {
+  const updatedUser = await userModel.updateUserAddressesById(id, addresses);
   return updatedUser;
 };
 
@@ -53,7 +53,7 @@ const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
 module.exports = {
   registerUser,
   getUserByEmail,
-  updateUserAddressesByEmail,
+  updateUserAddressesById,
   getInfluencerByLink,
   createInfluencerLink,
   updateUserToInfluencer,

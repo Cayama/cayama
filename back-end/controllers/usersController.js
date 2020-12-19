@@ -74,7 +74,7 @@ const registerUser = rescue(async (req, res, next) => {
   return res.status(201).json({ token });
 });
 
-const loginUser = rescue(async (req, res, next) => {
+const userLogin = rescue(async (req, res, next) => {
   const { email, password } = req.body;
 
   const { error } = loginSchema.validate({ email, password });
@@ -93,27 +93,26 @@ const loginUser = rescue(async (req, res, next) => {
 });
 
 const getAllAddresses = rescue(async (req, res, next) => {
-  const { email } = req.user;
+  const { _id } = req.user;
 
-  const { addresses } = await usersService.getUserByEmail(email);
+  const { addresses } = await usersService.getUserById(_id);
 
-  if (!addresses) return next(Boom.notFound('Endereços não encontrados'));
+  if (!addresses.length) return next(Boom.notFound('Endereços não encontrados'));
 
   return res.status(200).json({ addresses });
 });
 
 const updateUsersAddresses = rescue(async (req, res, next) => {
   const { addresses } = req.body;
-  const { email } = req.user;
+  const { _id } = req.user;
 
   const { error } = addressesSchema.validate(addresses);
 
   if (error) return next(Boom.badData(error));
 
   const {
-    password,
-    ...updatedUser
-  } = await usersService.updateUserAddressesByEmail(email, addresses);
+    password, confirmPassword, ...updatedUser
+  } = await usersService.updateUserAddressesById(_id, addresses);
 
   return res.status(201).json(updatedUser);
 });
@@ -130,12 +129,14 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 
   if (linkExists) return next(Boom.conflict('Este link já esta sendo utilizado'));
 
+  const user = await usersService.getUserById(_id);
+
+  if (!user.influencer.influencerLink) return next(Boom.badData('Não é um influencer ainda'));
+
   const userWithLink = await usersService.createInfluencerLink(
     _id,
     influencerLink,
   );
-
-  if (!userWithLink) return next(Boom.badData('Não é um influencer ainda'));
 
   const { influencer } = userWithLink;
 
@@ -179,7 +180,7 @@ const createBankAccount = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const userWithBank = await usersService.createBankAccount(
+  const { password, confirmPassword, ...userWithBank } = await usersService.createBankAccount(
     {
       bank,
       bankDigit,
@@ -239,7 +240,7 @@ const getPurchaseByField = rescue(async (req, res, next) => {
 
 module.exports = {
   registerUser,
-  loginUser,
+  userLogin,
   updateUsersAddresses,
   getAllAddresses,
   createInfluencerLink,
