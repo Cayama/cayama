@@ -22,11 +22,11 @@ const registerUser = async (userObj) => {
   return user.ops[0];
 };
 
-const updateUserAddressesByEmail = async (email, addresses) => {
+const updateUserAddressesById = async (id, addresses) => {
   const db = await connection();
   const updatedUser = await db.collection('users')
     .findOneAndUpdate(
-      { email },
+      { _id: id },
       { $set: { addresses } },
       { returnOriginal: false },
     );
@@ -103,7 +103,7 @@ const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
 module.exports = {
   getUserByEmail,
   registerUser,
-  updateUserAddressesByEmail,
+  updateUserAddressesById,
   getInfluencerByLink,
   createInfluencerLink,
   updateUserToInfluencer,

@@ -18,14 +18,14 @@ const emailSchema = Joi.string()
 
 const birthDateSchema = Joi.string();
 
-const cepSchema = Joi.string().length(8).required();
+const cepSchema = Joi.string().length(8).required().error(() => new Error('Cep deve conter 8 caracteres numéricos'));
 
 const shippingAddressSchema = Joi.string().required();
 
 const phoneSchema = Joi.string()
   .length(11)
   .required()
-  .error(() => new Error('Apenas números com DDD'));
+  .error(() => new Error('Apenas números (11) com DDD'));
 
 const cpfSchema = Joi.string()
   .regex(/^[0-9]+$/)
@@ -54,37 +54,7 @@ const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 
 const arrayOfObjectsSchema = Joi.array().items(Joi.object());
 
-// const validateFieldToSearch = (value, helper) => {
-//   const array = ["buyerId", "sellerId", "influencerId"];
-//   if (!array.includes(value))
-//     return helper.error("FieldToSearch não esta entre as opções");
-//   return value;
-// };
-
-// const validateSocialMediaChoices = (value, helper) => {
-//   const array = ["YouTube", "Instagram", "Facebook", "TikTok", "Twitter"];
-//   if (!array.includes(value))
-//     return helper.error("Mídia Social inserida não esta entre as opções");
-//   return value;
-// };
-
-// const validateContentTypeChoices = (value, helper) => {
-//   const array = ["Tecnologia", "Moda", "Fitness", "Saúde"];
-//   if (!array.includes(value)) {
-//     return helper.error("Tipo de Conteúdo inserido não esta entre as opções");
-//   }
-//   return value;
-// };
-
-// const validateProductCategoryChoices = (value, helper) => {
-//   const array = ["Tecnologia", "Moda", "Fitness", "Saúde"];
-//   if (!array.includes(value)) {
-//     return helper.error("Tipo de Conteúdo inserido não esta entre as opções");
-//   }
-//   return value;
-// };
-
-const fieldsObjectManaget = {
+const fieldsObjectManager = {
   categories: {
     array: ['Tecnologia', 'Moda', 'Fitness', 'Saúde', 'Bebidas'],
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
@@ -119,33 +89,12 @@ const fieldsObjectManaget = {
 };
 
 const validateFieldExistence = (value, helper) => {
-  const validationObj = fieldsObjectManaget[value.field];
+  const validationObj = fieldsObjectManager[value.field];
   if (!validationObj.array.includes(value.value)) {
     return helper.error(validationObj.error);
   }
   return value.value;
 };
-
-// const validateFieldsToUpdate = (value, helper) => {
-//   const array = [
-//     "firstName",
-//     "lastName",
-//     "cpf",
-//     "birthDate",
-//     "storeName",
-//     "cnpj",
-//     "addresses",
-//     "products",
-//     "influencer",
-//     "bankAccount",
-//   ];
-
-//   if (!array.includes(value)) {
-//     return helper.error("Opção para atualização inválida");
-//   }
-
-//   return value;
-// };
 
 const validateMongoId = (value, helper) => {
   if (!ObjectId.isValid(value)) {
@@ -167,13 +116,7 @@ const validateRegisterInfo = (value, helper) => {
 };
 
 const fieldsExistenceSchema = Joi.custom(validateFieldExistence);
-
-// const socialMediaSchema = Joi.string().custom(validateSocialMediaChoices);
-// const contentTypeSchema = Joi.string().custom(validateContentTypeChoices);
-// const categoryTypeSchema = Joi.string().custom(validateProductCategoryChoices);
-// const fieldToSearchSchema = Joi.string().custom(validateFieldToSearch);
 const validateMongoIdSchema = Joi.custom(validateMongoId);
-// const fieldsToUpdateSchema = Joi.custom(validateFieldsToUpdate);
 const newValueSchema = Joi.custom(validateRegisterInfo);
 
 const addressesSchema = Joi.array()
@@ -229,19 +172,14 @@ module.exports = {
   phoneSchema,
   cpfSchema,
   cnpjSchema,
-  // socialMediaSchema,
-  // contentTypeSchema,
   influencerLinkSchema,
   productPriceSchema,
   productStockQuantitySchema,
   productDescriptionSchema,
   arrayLinksSchema,
   arrayReviewLinksSchema,
-  // categoryTypeSchema,
-  // fieldToSearchSchema,
   validateMongoIdSchema,
   arrayOfObjectsSchema,
-  // fieldsToUpdateSchema,
   newValueSchema,
   fieldsExistenceSchema,
 };
