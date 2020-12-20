@@ -1,9 +1,9 @@
 const Joi = require('joi');
 const {
-  validateFieldExistence,
+  fieldsExistenceSchema,
 } = require('../inputSchemas');
 
 module.exports = Joi.object({
-  planChoice: validateFieldExistence,
-  registerAs: validateFieldExistence,
+  planChoice: fieldsExistenceSchema,
+  registerAs: fieldsExistenceSchema,
 });

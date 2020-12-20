@@ -11,42 +11,41 @@ const callDate = () => {
   today = `${day}/${month}/${year}`;
 
   return today;
-}
+};
 
 const testplan = (planChoice) => {
-  if ( planChoice === 'basicSeller' || planChoice === 'premiumSeller') return true;
+  if (planChoice === 'basicSeller' || planChoice === 'premiumSeller') return true;
   return false;
-}
-
+};
 
 const subscriptionPlan = rescue(async (req, res, next) => {
   const { planChoice, registerAs } = req.body;
   const { _id: userId } = req.user;
 
   const { error } = checkSubscriptionPlanSchema.validate({
-    planChoice,
-    registerAs,
+    planChoice: { field: 'planChoice', value: planChoice },
+    registerAs: { field: 'registerAs', value: registerAs },
   });
 
   if (error) return next(Boom.badData(error));
 
-  const registerDay = await callDate();
+  const registerDay = callDate();
 
   const lastUpdate = registerDay;
 
-  const obrigatoryPaymente = await testplan(planChoice);
+  const obrigatoryPayment = testplan(planChoice);
 
-  await plataformService.subscriptionPlan({
+  const plan = await plataformService.subscriptionPlan({
     userId,
     planChoice,
     registerAs,
     registerDay,
     lastUpdate,
-    obrigatoryPaymente,
+    obrigatoryPayment,
     status: 'active',
   });
 
-  return res.status(201).json({ response: 'Cadastro realizado com sucesso' });
+  return res.status(201).json({ plan });
 });
 
 const updateSubscriptionPlan = rescue(async (req, res, next) => {
@@ -54,34 +53,34 @@ const updateSubscriptionPlan = rescue(async (req, res, next) => {
   const { _id: userId } = req.user;
 
   const { error } = checkSubscriptionPlanSchema.validate({
-    planChoice,
-    registerAs,
+    planChoice: { field: 'planChoice', value: planChoice },
+    registerAs: { field: 'registerAs', value: registerAs },
   });
 
   if (error) return next(Boom.badData(error));
 
-  const lastUpdate = await callDate();
+  const lastUpdate = callDate();
 
-  const obrigatoryPaymente = await testplan(planChoice);
+  const obrigatoryPayment = testplan(planChoice);
 
-  const newplan = await plataformService.updateSubscriptionPlan(
+  const plan = await plataformService.updateSubscriptionPlan(
     userId,
     planChoice,
     registerAs,
     lastUpdate,
-    obrigatoryPaymente,
+    obrigatoryPayment,
   );
 
-  return res.status(201).json({ newplan });
+  return res.status(201).json({ plan });
 });
 
 const suspendSubscriptionPlan = rescue(async (req, res, _next) => {
   const { _id: userId } = req.user;
 
-  await plataformService.getSubscriptionPlan(userId);
+  await plataformService.suspendSubscriptionPlan(userId);
 
   return res.status(200).json({ response: 'Plano suspenso com sucesso' });
-})
+});
 
 const getSubscriptionPlan = rescue(async (req, res, _next) => {
   const { _id: userId } = req.user;

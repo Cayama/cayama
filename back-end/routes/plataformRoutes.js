@@ -6,9 +6,9 @@ const plataformRoutes = Router();
 
 module.exports = (io) => {
   plataformRoutes
-    .post('/', jwtMiddleware, controllers.plataformRoutes.subscriptionPlan)
-    .get('/plan', jwtMiddleware, controllers.plataformRoutes.getSubscriptionPlan)
-    .put('/change', jwtMiddleware, controllers.plataformRoutes.updateSubscriptionPlan)
-    .put('/suspend', jwtMiddleware, controllers.plataformRoutes.suspendSubscriptionPlan);
+    .post('/', jwtMiddleware, controllers.plataformController.subscriptionPlan)
+    .get('/plan', jwtMiddleware, controllers.plataformController.getSubscriptionPlan)
+    .put('/change', jwtMiddleware, controllers.plataformController.updateSubscriptionPlan)
+    .put('/suspend', jwtMiddleware, controllers.plataformController.suspendSubscriptionPlan);
   return plataformRoutes;
 };

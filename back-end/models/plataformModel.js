@@ -28,7 +28,7 @@ const suspendSubscriptionPlan = async (userId) => {
       { $set: { status: 'suspended' } },
       { returnOriginal: false },
     );
-  return suspendedMember;
+  return suspendedMember.value;
 };
 
 const getSubscriptionPlan = async (userId) => {

@@ -88,11 +88,11 @@ const fieldsObjectManager = {
   },
   planChoice: {
     array: ['basicSeller', 'basicInfluencer', 'premiumSeller', 'premiumInfluencer'],
-    error: 'planChoice não esta entre as opções',
+    error: 'Plano não esta entre as opções',
   },
   registerAs: {
     array: ['seller', 'influencer'],
-    error: 'registerAs não esta entre as opções',
+    error: 'Tipo de registro não esta entre as opções',
   },
 };
 
@@ -190,5 +190,4 @@ module.exports = {
   arrayOfObjectsSchema,
   newValueSchema,
   fieldsExistenceSchema,
-  planSchema,
 };
