@@ -6,6 +6,7 @@ const {
   connectionTest,
   userTest1,
   userTest2,
+  deleteAllData,
 } = require('./testsUtils/dbTestConnection');
 const {
   generateFakeCpf,
@@ -18,8 +19,6 @@ const {
   birthDate,
 } = require('./testsUtils/utils');
 const httpServer = require('./testsUtils/serverTest');
-
-const deleteAllData = ['products', 'purchases', 'users'];
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
