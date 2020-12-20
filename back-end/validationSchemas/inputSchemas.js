@@ -86,6 +86,14 @@ const fieldsObjectManager = {
     ],
     error: 'Opção para atualização inválida',
   },
+  planChoice: {
+    array: ['basicSeller', 'basicInfluencer', 'premiumSeller', 'premiumInfluencer'],
+    error: 'planChoice não esta entre as opções',
+  },
+  registerAs: {
+    array: ['seller', 'influencer'],
+    error: 'registerAs não esta entre as opções',
+  },
 };
 
 const validateFieldExistence = (value, helper) => {
@@ -182,4 +190,5 @@ module.exports = {
   arrayOfObjectsSchema,
   newValueSchema,
   fieldsExistenceSchema,
+  planSchema,
 };
