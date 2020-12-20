@@ -86,6 +86,14 @@ const fieldsObjectManager = {
     ],
     error: 'Opção para atualização inválida',
   },
+  planChoice: {
+    array: ['basicSeller', 'basicInfluencer', 'premiumSeller', 'premiumInfluencer'],
+    error: 'Plano não esta entre as opções',
+  },
+  registerAs: {
+    array: ['seller', 'influencer'],
+    error: 'Tipo de registro não esta entre as opções',
+  },
 };
 
 const validateFieldExistence = (value, helper) => {

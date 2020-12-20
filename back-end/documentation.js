@@ -122,6 +122,39 @@ const putUpdateArraysInfo = {
 }
 
 
+// =================================== PLATAFORM DOCUMENTATION =========================================
+
+
+const subscriptionPlan = {
+  userId: "5fa09e7a6265167b9d1b3324",
+  planChoice: "basicSeller",
+  registerAs: "seller",
+}
+
+const getSubscriptionPlanCall = {
+  userId: "5fa09e7a6265167b9d1b3324",
+}
+
+const getSubscriptionPlanResponse = {
+  userId: "5fa09e7a6265167b9d1b3324",
+  planChoice: "basicSeller",
+  registerAs: "seller",
+  registerDay: "18/12/2020",
+  lastUpdate: "18/12/2020",
+  obrigatoryPaymente: "true",
+  status: 'active',
+}
+
+const updateSubscriptionPlan = {
+  userId: "5fa09e7a6265167b9d1b3324",
+  planChoice: "premiumSeller",
+  registerAs: "seller",
+}
+
+const suspendSubscriptionPlan = {
+  userId: "5fa09e7a6265167b9d1b3324",
+}
+
 // =================================== CART DOCUMENTATION =========================================
 
 
