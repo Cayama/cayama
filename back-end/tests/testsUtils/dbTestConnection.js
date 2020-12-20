@@ -113,6 +113,8 @@ const connectionTest = () =>
       process.exit(1);
     });
 
+const deleteAllData = ['products', 'purchases', 'users', 'subscriptionList', 'shoppingCart'];
+
 const resetTestingMongoDb = async (collectionsToReset) => {
   const db = await connectionTest();
 
@@ -134,4 +136,5 @@ module.exports = {
   connectionTest,
   userTest1,
   userTest2,
+  deleteAllData,
 };

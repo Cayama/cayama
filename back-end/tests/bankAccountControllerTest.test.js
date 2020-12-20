@@ -2,10 +2,8 @@ const request = require('supertest');
 const faker = require('faker/locale/pt_BR');
 const connection = require('../models/connection');
 const httpServer = require('./testsUtils/serverTest');
-const { resetTestingMongoDb, connectionTest } = require('./testsUtils/dbTestConnection');
+const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj, bankInfo } = require('./testsUtils/utils');
-
-const deleteAllData = ['products', 'purchases', 'users'];
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
