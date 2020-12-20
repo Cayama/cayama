@@ -73,7 +73,6 @@ const postRegisterProduct = {
 
 const PostPurchase = {
   sellerId: "5fa09e7a6265167b9d1b3324",
-  influencerId: "5fa09e7a6265167b9d1b3324", // não é obrigatorio
   totalPrice: "300",
   deliveryService: "correios sedex",
   paymentMethod: "credit card",
@@ -81,7 +80,7 @@ const PostPurchase = {
   purchases: [
     {
       name: "Teclado Keychron",
-      sellerId: "5fa09e7a6265167b9d1b3324",
+      sellerId: "8ke09e7a6265167b9d1b3324",
       productId: "5fa09e7a6265167b9d1b3324",
       quantity: "100",
       price: "3",

@@ -1,5 +1,6 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
+const { ObjectId } = require('mongodb');
 const { sellService, usersService, cartService } = require('../services/index');
 const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/sellSchemas/index');
 
@@ -24,22 +25,32 @@ const purchase = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  // const seller = await usersService.getUserById(sellerId);
-  // if (!seller) return next(Boom.notFound('Vendedor não encontrado'));
+  const sellersIdArray = purchases.reduce((acc, { sellerId }) => {
+    if (!acc.includes(sellerId)) {
+      acc.push(sellerId);
+      return acc;
+    }
+    return acc;
+  }, []);
 
-  const { _id: buyerId, email } = req.user;
-  const user = await usersService.getUserByEmail(email);
+  Promise.all([sellersIdArray.map(async (sellerId) => {
+    const seller = await usersService.getUserById(sellerId);
+    if (!seller) return next(Boom.notFound('Vendedor não encontrado'));
+  })]);
+
+  const { _id: buyerId } = req.user;
+  const user = await usersService.getUserById(buyerId);
 
   let influencerId = null;
 
-  if (user.influencerLink) {
+  if (user.influencer.influencerLink) {
     const { _id } = await usersService.getInfluencerByLink(user.influencerLink);
     influencerId = _id;
   }
 
   await sellService.purchase({
     buyerId,
-    // sellerId: seller._id,
+    sellerId: sellersIdArray,
     influencerId,
     totalPrice,
     deliveryService,
