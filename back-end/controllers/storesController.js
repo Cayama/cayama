@@ -12,7 +12,7 @@ const {
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-
+  console.log(req.body);
   const { error } = storeRegisterSchema.validate({
     storeName,
     email,

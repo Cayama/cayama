@@ -3,6 +3,7 @@ const storesController = require('./storesController');
 const sellController = require('./sellController');
 const cartController = require('./cartController');
 const plataformController = require('./plataformController');
+const shippingController = require('./shippingController');
 
 module.exports = {
   usersController,
@@ -10,4 +11,5 @@ module.exports = {
   sellController,
   cartController,
   plataformController,
+  shippingController,
 };
