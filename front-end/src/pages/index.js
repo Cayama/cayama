@@ -7,11 +7,11 @@ export default function Home() {
   return (
     <div className='container'>
       <Head title='Home - Cayama' />
-      <Header />
       <main>
-        <Typography>
-          pagina inicial
-        </Typography>
+        <Header />
+          <Typography>
+            pagina inicial
+          </Typography>
       </main>
       <Footer />
     </div>

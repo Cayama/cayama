@@ -6,7 +6,7 @@ const MyHeader = styled.header`
   top: 0;
   left: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   padding: 0 1rem;
   background-color: white;
   box-shadow: 0px 10px 100px #111;
@@ -33,4 +33,21 @@ const HeaderInput = styled.input`
   }
 `
 
-export { MyHeader, MyLogo, HeaderInput };
+const NavBar = styled.nav`
+  display: flex;
+`
+
+const ContainerRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const NavBarDropDownBtn = styled.button`
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export { MyHeader, MyLogo, HeaderInput, NavBar, ContainerRow, NavBarDropDownBtn };
