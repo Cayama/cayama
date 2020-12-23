@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BsChevronDown } from 'react-icons/bs';
-import { MyNavBar, NavBarDropDownBtn, ContainerRow, ContainerColumn } from './styles.js'
+import { MyNavBar, NavBarDropDownBtn } from './styles.js';
+import { ContainerRow, ContainerColumn } from '../dataGrid';
 import NavBarSettings from './navBarSettings/index';
 
 const NavBar = () => {

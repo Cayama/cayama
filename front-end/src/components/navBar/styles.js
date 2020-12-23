@@ -16,13 +16,4 @@ const NavBarDropDownBtn = styled.button`
   }
 `;
 
-const ContainerRow = styled.div`
-  display: flex;
-`;
-
-const ContainerColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-export { NavBarDropDownBtn, MyNavBar, ContainerRow, ContainerColumn };
+export { NavBarDropDownBtn, MyNavBar };

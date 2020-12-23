@@ -1,5 +1,5 @@
 import Head from '../infra/components/Head';
-import Typography from '../components/foundation/Typography';
+import { Title } from '../components/foundation/text';
 import Header from '../patterns/Header';
 import Footer from '../patterns/Footer';
 
@@ -9,9 +9,9 @@ export default function Home() {
       <Head title='Home - Cayama' />
       <main>
         <Header />
-          <Typography>
+          <Title>
             pagina inicial
-          </Typography>
+          </Title>
       </main>
       <Footer />
     </div>
