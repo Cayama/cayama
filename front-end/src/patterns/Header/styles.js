@@ -33,21 +33,10 @@ const HeaderInput = styled.input`
   }
 `
 
-const NavBar = styled.nav`
-  display: flex;
-`
-
 const ContainerRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `
 
-const NavBarDropDownBtn = styled.button`
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-`
-
-export { MyHeader, MyLogo, HeaderInput, NavBar, ContainerRow, NavBarDropDownBtn };
+export { MyHeader, MyLogo, HeaderInput, ContainerRow };
