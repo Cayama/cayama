@@ -1,20 +1,36 @@
-## Foundation Tokens
+# src/components
+### External lib should be in this path
+
+## Foundation
 - Colors
 - Spacings [https://material-ui.com/customization/spacing/#spacing]
-- Typography 
-- Grid -->
+- Typography
 
-## UI Components
+## Layout
+### UI Components
+
 - Typography [https://material-ui.com/components/typography/#typography]
 - Button
 - TextField
 
-## UI Patterns
-- Menu [https://material-ui.com/components/menus/#menus]
-- Footer
+# src/infra
+### External lib should be in this path
 
-## Infra
+## components
 - Head
   - SEO
--Link
-  -Navigation
+- Link
+  - Navigation
+
+# src/pages
+### Routes of the application and render components.
+- Filename (reference to the route) 
+  - index.js (render the components)
+  - styles.js (render the styles)
+
+# src/partens
+
+## Patterns
+### partner is a juction of components.
+- Menu [https://material-ui.com/components/menus/#menus]
+- Footer

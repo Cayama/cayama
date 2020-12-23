@@ -1,7 +1,7 @@
-import Head from '../../../infra/components/Head';
-import Typography from '../../../components/foundation/Typography';
-import Header from '../../../patterns/Header';
-import Footer from '../../../patterns/Footer';
+import Head from '../../../../infra/components/Head';
+import Typography from '../../../../components/foundation/Typography';
+import Header from '../../../../patterns/Header';
+import Footer from '../../../../patterns/Footer';
 
 export default function Home() {
   return (
