@@ -1,26 +1,18 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import { SearchButton, TextButton } from '../../components/Layout/buttonGroup';
+import Link from '../../infra/components/Link';
+import { MyHeader, HeaderInput } from './styles';
 
-import { MyHeader, MyLogo, HeaderInput } from './styles';
-
-function Header({ children }) {
+function Header() {
   return (
     <MyHeader>
-      <MyLogo>
-        <Link href='/'>
-          <Image src='/img/logoCayama.png' width={140} height={100} />
-        </Link>
-      </MyLogo>
+      <Link href='/' src='/img/logoCayama.png' width={140} height={100} />
       <HeaderInput placeholder='Buscar produtos' />
+      <SearchButton />
+      <TextButton Text='Entre ou cadastre-se' />
     </MyHeader>
   );
-}
-
-Header.propTypes = {
-  children: PropTypes.node,
 }
 
 export default Header;
