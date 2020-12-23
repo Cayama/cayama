@@ -9,7 +9,7 @@ export default function Home() {
       <Head title='Home - Cayama' />
       <Header />
       <main>
-        <Typography>
+        <Typography variant='h1'>
           pagina inicial
         </Typography>
       </main>

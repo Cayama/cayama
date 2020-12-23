@@ -9,11 +9,10 @@ const SearchButtonStyle = styled.button`
 `
 
 const TextButtonStyle = styled.button`
-background: ${({ theme }) => theme.colors.secundary};
-border-top-right-radius: 5px;
-border-bottom-right-radius: 5px;
-border: none;
-height: 40px;
+  background: ${({ theme }) => theme.colors.secundary};
+  border-radius: 5px;
+  border: none;
+  height: 40px;
 `
 
 export { SearchButtonStyle, TextButtonStyle };

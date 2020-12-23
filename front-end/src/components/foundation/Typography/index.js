@@ -2,20 +2,37 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Title = styled.h1`
-  font-size: 50px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secundary};
 `
 
-function Typography({ children }) {
+const ButtonText = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: bold;
+`
+
+function Typography({ children, variant }) {
+  const text = () => {
+    switch(variant) {
+      case 'h1': 
+      return <Title>
+        {children}
+      </Title>
+      case 'button':
+      return <ButtonText>
+        {children}
+      </ButtonText>
+      default:
+      return <></>
+    }
+  }
   return (
-    <Title>
-      {children}
-    </Title>
+    text()
   );
 }
 
 Typography.propTypes = {
   children: PropTypes.node,
+  variant: PropTypes.string.isRequired,
 }
 
 export default Typography;

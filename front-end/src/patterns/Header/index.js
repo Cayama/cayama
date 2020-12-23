@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { SearchButton, TextButton } from '../../components/Layout/buttonGroup';
 import Link from '../../infra/components/Link';
 import { MyHeader, HeaderInput } from './styles';

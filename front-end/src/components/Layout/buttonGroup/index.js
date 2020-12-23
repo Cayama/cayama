@@ -1,5 +1,6 @@
 import Image from '../../../infra/components/Image';
 import { SearchButtonStyle, TextButtonStyle } from './styles';
+import Typography from '../../foundation/Typography';
 
 function SearchButton() {
   return (
@@ -12,7 +13,9 @@ function SearchButton() {
 function TextButton({ Text }) {
   return (
     <TextButtonStyle>
-      {Text}
+      <Typography variant='button'>
+        {Text}
+      </Typography>
     </TextButtonStyle>
   );
 }
