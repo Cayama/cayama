@@ -8,17 +8,17 @@ const NavBar = () => {
   const [settingsDropDown, setSettingsDropDown] = useState(false)
   return (
     <MyNavBar>
-      <NavBarDropDownBtn onClick={() => setSettingsDropDown(!settingsDropDown)}>
-        <ContainerColumn>
-          <ContainerRow>
-            Jafet Henrique
-            <div>
-              <BsChevronDown />
-            </ div>
-          </ContainerRow>
-          {settingsDropDown ? <NavBarSettings /> : null}
-        </ContainerColumn>
-      </NavBarDropDownBtn>
+      <ContainerColumn>
+        <NavBarDropDownBtn onClick={() => setSettingsDropDown(!settingsDropDown)}>
+            <ContainerRow>
+              Jafet Henrique
+              <div>
+                <BsChevronDown />
+              </ div>
+            </ContainerRow>
+        </NavBarDropDownBtn>
+        {settingsDropDown ? <NavBarSettings /> : null}
+      </ContainerColumn>
     </MyNavBar>
   );
 }

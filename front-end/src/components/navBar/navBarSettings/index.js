@@ -1,11 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
+import Link from '../../../infra/components/link';
+import { SettingsContainer } from './styles';
 
 const NavBarSettings = () => {
   return (
-    <Link href='/settings/shippings'>
-      Frete
-    </Link>
+    <SettingsContainer>
+      <Link href='/settings/shippings'>
+        Frete
+      </Link>
+    </SettingsContainer>
   );
 }
 

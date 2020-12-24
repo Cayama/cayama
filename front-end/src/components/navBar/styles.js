@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const MyNavBar = styled.nav`
   display: flex;
+  overflow: hidden;
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const NavBarDropDownBtn = styled.button`

@@ -1,4 +1,4 @@
-import Image from '../../../infra/components/Image';
+import Image from '../../../infra/components/image';
 import { SearchButtonStyle } from './styles';
 
 function SearchButton() {
@@ -11,4 +11,3 @@ function SearchButton() {
 
 export { SearchButton };
 
-      
