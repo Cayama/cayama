@@ -17,7 +17,7 @@ describe('plataformController Test', () => {
   beforeAll(async (done) => {
     const { db } = await resetTestingMongoDb(deleteAllData);
     databaseTest = db;
-    server = httpServer.listen(8090, () => done());
+    server = httpServer.listen(8091, () => done());
   });
 
   afterAll(async () => {
