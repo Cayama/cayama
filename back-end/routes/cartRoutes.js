@@ -6,9 +6,9 @@ const sellRoutes = Router();
 
 module.exports = (io) => {
   sellRoutes
-    .post('/cart', jwtMiddleware, controllers.cartController.createShoppingCart)
-    .get('/cart', jwtMiddleware, controllers.cartController.getShoppingCart)
-    .put('/cart', jwtMiddleware, controllers.cartController.updateShoppingCart)
-    .delete('/cart', jwtMiddleware, controllers.cartController.deleteShoppingCart);
+    .post('/create', jwtMiddleware, controllers.cartController.createShoppingCart)
+    .get('/', jwtMiddleware, controllers.cartController.getShoppingCart)
+    .put('/update', jwtMiddleware, controllers.cartController.updateShoppingCart)
+    .delete('/delete', jwtMiddleware, controllers.cartController.deleteShoppingCart);
   return sellRoutes;
 };

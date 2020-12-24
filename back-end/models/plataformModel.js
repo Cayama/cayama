@@ -8,13 +8,13 @@ const subscriptionPlan = async (newUser) => {
 };
 
 const updateSubscriptionPlan = async (
-  userId, planChoice, registerAs, lastUpdate, obrigatoryPaymente,
+  userId, planChoice, registerAs, lastUpdate, obrigatoryPayment, status,
 ) => {
   const db = await connection();
   const newMember = await db.collection('subscriptionList')
     .findOneAndUpdate(
       { userId },
-      { $set: { planChoice, registerAs, lastUpdate, obrigatoryPaymente } },
+      { $set: { planChoice, registerAs, lastUpdate, obrigatoryPayment, status } },
       { returnOriginal: false },
     );
   return newMember.value;

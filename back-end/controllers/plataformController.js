@@ -63,12 +63,15 @@ const updateSubscriptionPlan = rescue(async (req, res, next) => {
 
   const obrigatoryPayment = testplan(planChoice);
 
+  const status = 'active';
+
   const plan = await plataformService.updateSubscriptionPlan(
     userId,
     planChoice,
     registerAs,
     lastUpdate,
     obrigatoryPayment,
+    status,
   );
 
   return res.status(201).json({ plan });
@@ -95,4 +98,5 @@ module.exports = {
   updateSubscriptionPlan,
   suspendSubscriptionPlan,
   getSubscriptionPlan,
+  callDate,
 };

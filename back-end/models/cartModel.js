@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const createShoppingCart = async (cart) => {
@@ -16,7 +15,7 @@ const updateShoppingCart = async (userId, totalPrice, purchases) => {
       { $set: { totalPrice, purchases } },
       { returnOriginal: false },
     );
-  console.log(newCart.value);
+
   return newCart.value;
 };
 
@@ -28,7 +27,6 @@ const deleteShoppingCart = async (userId) => {
       { returnOriginal: false },
     );
 
-  console.log(deletedCart);
   return deletedCart;
 };
 
