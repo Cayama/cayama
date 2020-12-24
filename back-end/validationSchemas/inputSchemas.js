@@ -52,8 +52,6 @@ const arrayLinksSchema = Joi.array().items(Joi.string()).required();
 
 const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 
-const arrayOfObjectsSchema = Joi.array().items(Joi.object());
-
 const fieldsObjectManager = {
   categories: {
     array: ['Tecnologia', 'Moda', 'Fitness', 'Saúde', 'Bebidas'],
@@ -169,6 +167,24 @@ const choices = {
   bankAccount: bankAccountSchema,
   influencer: influencerSchema,
 };
+
+const arrayOfObjectsSchema = Joi.array().min(1).items(Joi.object({
+  name: registerNameSchema,
+  sellerId: validateMongoIdSchema,
+  productId: validateMongoIdSchema,
+  quantity: shippingAddressSchema,
+  price: shippingAddressSchema,
+})).required();
+
+// const validatePurchaseObjectsSchema = (value, helper) => {
+//   if (value.length === 0) {
+//     return helper.error('\"purchases\" is empty');
+//   }
+
+//   return purchaseObjectsSchema;
+// };
+
+// const arrayOfObjectsSchema = Joi.custom(validatePurchaseObjectsSchema);
 
 module.exports = {
   registerNameSchema,

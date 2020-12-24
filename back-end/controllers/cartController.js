@@ -23,7 +23,7 @@ const createShoppingCart = rescue(async (req, res, next) => {
   return res.status(201).json({ response: 'Carrinho registrado com sucesso' });
 });
 
-const getShoppingCart = rescue(async (req, res, next) => {
+const getShoppingCart = rescue(async (req, res, _next) => {
   const { _id: userId } = req.user;
 
   const cartList = await cartService.getShoppingCart(userId);
@@ -47,7 +47,7 @@ const updateShoppingCart = rescue(async (req, res, next) => {
   return res.status(201).json({ newCart });
 });
 
-const deleteShoppingCart = rescue(async (req, res, next) => {
+const deleteShoppingCart = rescue(async (req, res, _next) => {
   const { _id: userId } = req.user;
 
   await cartService.deleteShoppingCart(userId);
