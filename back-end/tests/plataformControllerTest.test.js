@@ -88,7 +88,7 @@ describe('plataformController Test', () => {
       expect(body).toHaveProperty('err');
       expect(body.err.error).toBe('Unprocessable Entity');
       expect(body.err.message)
-        .toContain('Error code \"Tipo de registro não esta entre as opções\" is not defined, your custom type is missing the correct messages definition');
+        .toContain('Tipo de registro não esta entre as opções');
       // corrigir o erro code
     });
 
@@ -105,7 +105,7 @@ describe('plataformController Test', () => {
       expect(body).toHaveProperty('err');
       expect(body.err.error).toBe('Unprocessable Entity');
       expect(body.err.message)
-        .toContain('Error code \"Plano não esta entre as opções\" is not defined, your custom type is missing the correct messages definition');
+        .toContain('Plano não esta entre as opções');
       // corrigir o erro code
     });
   });
@@ -235,7 +235,7 @@ describe('plataformController Test', () => {
       expect(body).toHaveProperty('err');
       expect(body.err.error).toBe('Unprocessable Entity');
       expect(body.err.message)
-        .toContain('Error code \"Tipo de registro não esta entre as opções\" is not defined, your custom type is missing the correct messages definition');
+        .toContain('Tipo de registro não esta entre as opções');
       // corrigir o erro code
     });
 
@@ -257,7 +257,7 @@ describe('plataformController Test', () => {
       expect(body).toHaveProperty('err');
       expect(body.err.error).toBe('Unprocessable Entity');
       expect(body.err.message)
-        .toContain('Error code \"Plano não esta entre as opções\" is not defined, your custom type is missing the correct messages definition');
+        .toContain('Plano não esta entre as opções');
       // corrigir o erro code e ver porque ele voltou o erro errado
     });
   });
