@@ -146,7 +146,7 @@ describe('cartController Test', () => {
         {
           name: 'Teclado Keychron',
           sellerId: new ObjectId('5fa09e7a6265167b9d1b3324'),
-          productId: '5fa09e7a6265167b9d1b3324',
+          productId: new ObjectId('5f77540c9ca251495d861ca2'),
           quantity: '1',
           price: '1000',
         },
@@ -176,20 +176,15 @@ describe('cartController Test', () => {
         .set('Authorization', token)
         .send(updateShoppingCartObj);
 
-    //   console.log(typeof body.newCart.purchases[0].sellerId, body.newCart.purchases[0].sellerId);
-
-    //   console.log(typeof updateShoppingCartObj.purchases[0].sellerId,
-    //     updateShoppingCartObj.purchases[0].sellerId);
-
       expect(body).toHaveProperty('newCart');
       expect(body.newCart.totalPrice).toBe(updateShoppingCartObj.totalPrice);
       expect(body.newCart.purchases[0].name).toBe(updateShoppingCartObj.purchases[0].name);
       expect(body.newCart.purchases[0].price).toBe(updateShoppingCartObj.purchases[0].price);
       expect(body.newCart.purchases[0].productId)
-        .toBe(updateShoppingCartObj.purchases[0].productId);
+        .toBe(updateShoppingCartObj.purchases[0].productId.toString());
       expect(body.newCart.purchases[0].quantity).toBe(updateShoppingCartObj.purchases[0].quantity);
       expect(body.newCart.purchases[0].sellerId)
-        .toMatchObject(updateShoppingCartObj.purchases[0].sellerId);
+        .toBe(updateShoppingCartObj.purchases[0].sellerId.toString());
     });
 
     test('Error: invalid totalPrice', async () => {
