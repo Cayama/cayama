@@ -4,6 +4,7 @@ const connection = require('../models/connection');
 const httpServer = require('./testsUtils/serverTest');
 const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj, purchaseObj } = require('./testsUtils/utils');
+const { usersPaths, purchasePaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -27,7 +28,7 @@ describe('Purchases Test', () => {
   describe('testing purchase', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -36,7 +37,7 @@ describe('Purchases Test', () => {
 
     test('Error: invalid totalPrice', async () => {
       const { body } = await request(httpServer)
-        .post('/sell/purchase')
+        .post(`/purchase/${purchasePaths.createPurchase}`)
         .set('Authorization', token)
         .send(purchaseObj);
     });
@@ -73,7 +74,7 @@ describe('Purchases Test', () => {
   describe('testing getPurchaseByField', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -82,7 +83,7 @@ describe('Purchases Test', () => {
 
     test('Error: testing get purchase with non existent field', async () => {
       const { body } = await request(httpServer)
-        .get('/user/get-all-user-purchases')
+        .get(`/purchase/${purchasePaths.getAllPurchases}`)
         .set('Authorization', token)
         .send({});
 
@@ -93,7 +94,7 @@ describe('Purchases Test', () => {
 
     test('Error: testing get purchase with non existent field', async () => {
       const { body } = await request(httpServer)
-        .get('/user/get-all-user-purchases')
+        .get(`/purchase/${purchasePaths.getAllPurchases}`)
         .set('Authorization', token)
         .send({ fieldToSearch: 'Tech' });
 

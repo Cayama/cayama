@@ -2,17 +2,16 @@ const Boom = require('boom');
 const rescue = require('express-rescue');
 const { cartService } = require('../services/index');
 const { createCartSchema } = require('../validationSchemas/cartSchema/index');
+const { validateSchemas } = require('../services/schemasService');
 
 const createShoppingCart = rescue(async (req, res, next) => {
   const { totalPrice, purchases } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = createCartSchema.validate({
+  validateSchemas(next, createCartSchema, {
     totalPrice,
     purchases,
   });
-
-  if (error) return next(Boom.badData(error));
 
   await cartService.createShoppingCart({
     userId,
@@ -35,12 +34,10 @@ const updateShoppingCart = rescue(async (req, res, next) => {
   const { totalPrice, purchases } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = createCartSchema.validate({
+  validateSchemas(next, createCartSchema, {
     totalPrice,
     purchases,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const newCart = await cartService.updateShoppingCart(userId, totalPrice, purchases);
 

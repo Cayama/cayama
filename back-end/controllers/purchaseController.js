@@ -3,6 +3,7 @@ const rescue = require('express-rescue');
 const { ObjectId } = require('mongodb');
 const { sellService, usersService, cartService } = require('../services/index');
 const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/sellSchemas/index');
+const { validateSchemas } = require('../services/schemasService');
 
 const purchase = rescue(async (req, res, next) => {
   const {
@@ -15,15 +16,13 @@ const purchase = rescue(async (req, res, next) => {
 
   // deliveryTrack = temos que gerar
 
-  const { error } = purchaseSchema.validate({
+  validateSchemas(next, purchaseSchema, {
     totalPrice,
     deliveryService,
     paymentMethod,
     installment,
     purchases,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const sellersIdArray = purchases.reduce((acc, { sellerId }) => {
     if (!acc.includes(sellerId)) {
@@ -68,9 +67,8 @@ const deliveryCheck = rescue(async (req, res, next) => {
   const { purchaseId } = req.body;
   const { _id: sellerId } = req.user;
 
-  const { error } = purchaseIdSchema.validate({ purchaseId });
+  validateSchemas(next, purchaseIdSchema, { purchaseId });
 
-  if (error) return next(Boom.badData(error));
   console.log(purchaseId);
   const purchase = await usersService.getPurchaseByField('_id', purchaseId);
   console.log(purchase);
@@ -90,9 +88,7 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
   const { purchaseId } = req.body;
   const { _id: buyerId } = req.user;
 
-  const { error } = purchaseIdSchema.validate({ purchaseId });
-
-  if (error) return next(Boom.badData(error));
+  validateSchemas(next, purchaseIdSchema, { purchaseId });
 
   const purchase = await usersService.getPurchaseByField('_id', purchaseId);
 

@@ -14,6 +14,7 @@ const {
   incorrectValidToken,
 } = require('./testsUtils/utils');
 const httpServer = require('./testsUtils/serverTest');
+const { usersPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -47,7 +48,7 @@ describe('UserController Test', () => {
     });
     test('Successfull: normal register', async () => {
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
 
       expect(body.token).toMatch(/[A-z-=0-9.]*/);
@@ -56,7 +57,7 @@ describe('UserController Test', () => {
     test('Error: email alredy exists', async () => {
       registerObj.email = userTest1.email;
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
       expect(body.err.error).toBe('Conflict');
       expect(body.err.message).toBe('Email já cadastrado');
@@ -65,7 +66,7 @@ describe('UserController Test', () => {
     test('Error: confirmPassword diferent than password', async () => {
       registerObj.confirmPassword = '123d123t123r';
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
 
       expect(body.err.error).toBe('Unprocessable Entity');
@@ -75,7 +76,7 @@ describe('UserController Test', () => {
     test.skip('Error: cpf alredy exists', async () => {
       registerObj.cpf = '11122233344';
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
       expect(body.err.error).toBe('Conflict');
       expect(body.err.message).toBe('Apenas 11 números são permitidos no cpf');
@@ -90,7 +91,7 @@ describe('UserController Test', () => {
 
     test('Successfull: user login', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       expect(body.token).toMatch(/[A-z-=0-9.]*/);
@@ -99,7 +100,7 @@ describe('UserController Test', () => {
     test('Error: email inexistente', async () => {
       loginObj.email = 'jaffet@jaffet.com.br';
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       expect(body.err.error).toBe('Unauthorized');
@@ -109,7 +110,7 @@ describe('UserController Test', () => {
     test('Error: password errado', async () => {
       loginObj.password = '123l123o123u';
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       expect(body.err.error).toBe('Unauthorized');
@@ -135,7 +136,7 @@ describe('UserController Test', () => {
 
     test('Successfull: user login', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -144,7 +145,7 @@ describe('UserController Test', () => {
 
     test('Successful: update common user to influencer', async () => {
       const { body } = await request(httpServer)
-        .put('/user/update-to-influencer')
+        .put(`/user/${usersPaths.updateToInfluencer}`)
         .set('Authorization', token)
         .send(userToInfluencerObj);
 
@@ -156,7 +157,7 @@ describe('UserController Test', () => {
     test('Error: incorrect Social Media', async () => {
       userToInfluencerObj.socialMedia = 'Youtube';
       const { body } = await request(httpServer)
-        .put('/user/update-to-influencer')
+        .put(`/user/${usersPaths.updateToInfluencer}`)
         .set('Authorization', token)
         .send(userToInfluencerObj);
       expect(body.err.error).toBe('Unprocessable Entity');
@@ -166,7 +167,7 @@ describe('UserController Test', () => {
     test.skip('Error: influencerLink alredy exists', async () => {
       userToInfluencerObj.influencerLink = 'tech-tech';
       const { body } = await request(httpServer)
-        .put('/user/update-to-influencer')
+        .put(`/user/${usersPaths.updateToInfluencer}`)
         .set('Authorization', token)
         .send(userToInfluencerObj);
 
@@ -177,7 +178,7 @@ describe('UserController Test', () => {
     test('Error: incorrect Content Type', async () => {
       userToInfluencerObj.contentType = 'Modaaa';
       const { body } = await request(httpServer)
-        .put('/user/update-to-influencer')
+        .put(`/user/${usersPaths.updateToInfluencer}`)
         .set('Authorization', token)
         .send(userToInfluencerObj);
       expect(body.err.error).toBe('Unprocessable Entity');
@@ -197,7 +198,7 @@ describe('UserController Test', () => {
 
     test('Successfull: user login', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -206,7 +207,7 @@ describe('UserController Test', () => {
 
     test('Successful: Changing firstName', async () => {
       const { body } = await request(httpServer)
-        .put('/user/update-info')
+        .put(`/user/${usersPaths.updateUserInfo}`)
         .set('Authorization', token)
         .send(basicData);
 
@@ -217,7 +218,7 @@ describe('UserController Test', () => {
       basicData.fieldToUpdate = 'lastName';
       basicData.newValue = lastName;
       const { body } = await request(httpServer)
-        .put('/user/update-info')
+        .put(`/user/${usersPaths.updateUserInfo}`)
         .set('Authorization', token)
         .send(basicData);
 
@@ -229,7 +230,7 @@ describe('UserController Test', () => {
       const newCpf = generateFakeCpf();
       basicData.newValue = newCpf;
       const { body } = await request(httpServer)
-        .put('/user/update-info')
+        .put(`/user/${usersPaths.updateUserInfo}`)
         .set('Authorization', token)
         .send(basicData);
       expect(body.updatedUser.cpf).toBe(newCpf);
@@ -240,7 +241,7 @@ describe('UserController Test', () => {
       const newBirthDate = '30/11/1999';
       basicData.newValue = newBirthDate;
       const { body } = await request(httpServer)
-        .put('/user/update-info')
+        .put(`/user/${usersPaths.updateUserInfo}`)
         .set('Authorization', token)
         .send(basicData);
 
@@ -251,7 +252,7 @@ describe('UserController Test', () => {
       basicData.fieldToUpdate = 'buyerId';
       basicData.newValue = 'a2h22fgsd45654jh6ytf';
       const { body } = await request(httpServer)
-        .put('/user/update-info')
+        .put(`/user/${usersPaths.updateUserInfo}`)
         .set('Authorization', token)
         .send(basicData);
       expect(body.err.error).toBe('Unprocessable Entity');
@@ -262,7 +263,7 @@ describe('UserController Test', () => {
   describe('testing getUserById', () => {
     test('Successfull: user login', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -271,7 +272,7 @@ describe('UserController Test', () => {
 
     test('Successfull: get correct user searching by id', async () => {
       const { body } = await request(httpServer)
-        .get('/user/profile')
+        .get(`/user/${usersPaths.getProfile}`)
         .set('Authorization', token);
 
       expect(body.user.firstName).toBe(userTest1.firstName);

@@ -5,6 +5,7 @@ const httpServer = require('./testsUtils/serverTest');
 const { callDate } = require('../controllers/plataformController');
 const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj } = require('./testsUtils/utils');
+const { usersPaths, plataformPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -40,7 +41,7 @@ describe('plataformController Test', () => {
   describe('testing subscriptionPlan', () => {
     test('Successfull: subscriptionPlan userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -49,7 +50,7 @@ describe('plataformController Test', () => {
 
     test('Successfull: seller', async () => {
       const { body } = await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
@@ -63,7 +64,7 @@ describe('plataformController Test', () => {
 
     test('Successfull: influencer', async () => {
       const { body } = await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformInfluencerObj);
 
@@ -81,7 +82,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -98,7 +99,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -113,7 +114,7 @@ describe('plataformController Test', () => {
   describe('testing getSubscriptionPlan', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -122,12 +123,12 @@ describe('plataformController Test', () => {
 
     test('Successfull: getSubscriptionPlan seller', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
       const { body } = await request(httpServer)
-        .get('/plataform/')
+        .get(`/plataform/${plataformPaths.getSubscriptionPlan}`)
         .set('Authorization', token)
         .send({});
 
@@ -141,12 +142,12 @@ describe('plataformController Test', () => {
 
     test('Successfull: suspendSubscriptionPlan influencer', async () => {
       await request(httpServer)
-        .put('/plataform/change')
+        .put(`/plataform/${plataformPaths.updateSubscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformInfluencerObj);
 
       const { body } = await request(httpServer)
-        .get('/plataform/')
+        .get(`/plataform/${plataformPaths.getSubscriptionPlan}`)
         .set('Authorization', token)
         .send({});
 
@@ -162,7 +163,7 @@ describe('plataformController Test', () => {
   describe('testing updateSubscriptionPlan', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -171,7 +172,7 @@ describe('plataformController Test', () => {
 
     test('Successfull: updateSubscriptionPlan seller', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
@@ -181,7 +182,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/plataform/change')
+        .put(`/plataform/${plataformPaths.updateSubscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -195,7 +196,7 @@ describe('plataformController Test', () => {
 
     test('Successfull: updateSubscriptionPlan influencer', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformInfluencerObj);
 
@@ -205,7 +206,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/plataform/change')
+        .put(`/plataform/${plataformPaths.updateSubscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -219,7 +220,7 @@ describe('plataformController Test', () => {
 
     test('Error: invalid registerAs', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
@@ -228,7 +229,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/plataform/change')
+        .put(`/plataform/${plataformPaths.updateSubscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -241,7 +242,7 @@ describe('plataformController Test', () => {
 
     test('Error: invalid registerAs', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
@@ -250,7 +251,7 @@ describe('plataformController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(newPlanObj);
 
@@ -265,7 +266,7 @@ describe('plataformController Test', () => {
   describe('testing suspendSubscriptionPlan', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -274,12 +275,12 @@ describe('plataformController Test', () => {
 
     test('Successfull: suspendSubscriptionPlan seller', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformSellerObj);
 
       const { body } = await request(httpServer)
-        .put('/plataform/suspend')
+        .put(`/plataform/${plataformPaths.suspendSubscriptionPlan}`)
         .set('Authorization', token)
         .send({});
 
@@ -289,12 +290,12 @@ describe('plataformController Test', () => {
 
     test('Successfull: suspendSubscriptionPlan influencer', async () => {
       await request(httpServer)
-        .post('/plataform/')
+        .post(`/plataform/${plataformPaths.subscriptionPlan}`)
         .set('Authorization', token)
         .send(plataformInfluencerObj);
 
       const { body } = await request(httpServer)
-        .put('/plataform/suspend')
+        .put(`/plataform/${plataformPaths.suspendSubscriptionPlan}`)
         .set('Authorization', token)
         .send({});
 

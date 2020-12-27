@@ -1,6 +1,6 @@
 const usersController = require('./usersController');
 const storesController = require('./storesController');
-const sellController = require('./sellController');
+const purchaseController = require('./purchaseController');
 const cartController = require('./cartController');
 const plataformController = require('./plataformController');
 const shippingController = require('./shippingController');
@@ -8,7 +8,7 @@ const shippingController = require('./shippingController');
 module.exports = {
   usersController,
   storesController,
-  sellController,
+  purchaseController,
   cartController,
   plataformController,
   shippingController,

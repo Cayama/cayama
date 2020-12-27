@@ -13,6 +13,8 @@ const {
   updateRegisterInfoSchema,
 } = require('../validationSchemas/usersSchemas/index');
 
+const { validateSchemas } = require('../services/schemasService');
+
 const registerUser = rescue(async (req, res, next) => {
   const {
     firstName,
@@ -26,7 +28,7 @@ const registerUser = rescue(async (req, res, next) => {
     influencer = {},
   } = req.body;
 
-  const { error } = userRegisterSchema.validate({
+  validateSchemas(next, userRegisterSchema, {
     firstName,
     lastName,
     email,
@@ -35,8 +37,6 @@ const registerUser = rescue(async (req, res, next) => {
     cpf,
     birthDate,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const userExists = await usersService.getUserByEmail(email);
 
@@ -49,13 +49,12 @@ const registerUser = rescue(async (req, res, next) => {
 
     if (influencerLinkCheck) return next(Boom.conflict('Link já existente'));
 
-    const { error: influencerError } = userInfluencerSchema.validate({
+    validateSchemas(next, userInfluencerSchema, {
       socialMedia: { field: 'socialMedia', value: socialMedia },
       contentType: { field: 'contentType', value: contentType },
       socialMediaName,
       influencerLink,
     });
-    if (influencerError) return next(Boom.badData(influencerError));
   }
 
   const { cpf: usercpf, ...newUser } = await usersService.registerUser({
@@ -77,9 +76,7 @@ const registerUser = rescue(async (req, res, next) => {
 const userLogin = rescue(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const { error } = loginSchema.validate({ email, password });
-
-  if (error) return next(Boom.badData(error));
+  validateSchemas(next, loginSchema, { email, password });
 
   const user = await usersService.getUserByEmail(email);
 
@@ -121,9 +118,7 @@ const createInfluencerLink = rescue(async (req, res, next) => {
   const { influencerLink } = req.body;
   const { _id } = req.user;
 
-  const { error } = influencerLinkSchema.validate({ influencerLink });
-
-  if (error) return next(Boom.badData(error));
+  validateSchemas(next, influencerLinkSchema, { influencerLink });
 
   const linkExists = await usersService.getInfluencerByLink(influencerLink);
 
@@ -146,14 +141,12 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 const updateUserToInfluencer = rescue(async (req, res, next) => {
   const { socialMedia, contentType, socialMediaName, influencerLink } = req.body;
 
-  const { error } = userInfluencerSchema.validate({
+  validateSchemas(next, userInfluencerSchema, {
     socialMedia: { field: 'socialMedia', value: socialMedia },
     contentType: { field: 'contentType', value: contentType },
     socialMediaName,
     influencerLink,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const { _id } = req.user;
 
@@ -171,14 +164,12 @@ const createBankAccount = rescue(async (req, res, next) => {
   const { bank, bankDigit, accountNumberWithDigit, agency } = req.body;
   const { _id } = req.user;
 
-  const { error } = bankAccountSchema.validate({
+  validateSchemas(next, bankAccountSchema, {
     bank,
     bankDigit,
     accountNumberWithDigit,
     agency,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const { password, confirmPassword, ...userWithBank } = await usersService.createBankAccount(
     {
@@ -197,12 +188,10 @@ const updateBasicRegistersData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id } = req.user;
 
-  const { error } = updateRegisterInfoSchema.validate({
+  validateSchemas(next, updateRegisterInfoSchema, {
     fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
     newValueObject: { newValue, fieldToUpdate },
   });
-
-  if (error) return next(Boom.badData(error));
 
   const updatedUser = await usersService.updateBasicRegistersData(
     fieldToUpdate,
@@ -224,11 +213,9 @@ const getPurchaseByField = rescue(async (req, res, next) => {
   const { fieldToSearch } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = getProductSchema.validate({ fieldToSearch:
+  validateSchemas(next, getProductSchema, { fieldToSearch:
     { field: 'fieldSearch', value: fieldToSearch },
   });
-
-  if (error) return next(Boom.badData(error));
 
   const purchaseList = await usersService.getPurchaseByField(
     fieldToSearch,

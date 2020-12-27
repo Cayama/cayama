@@ -19,6 +19,7 @@ const {
   birthDate,
 } = require('./testsUtils/utils');
 const httpServer = require('./testsUtils/serverTest');
+const { usersPaths, influencerPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -62,7 +63,7 @@ describe('InfluencerController Test', () => {
     test('Error: invalid Social Media', async () => {
       registerObj.influencer.socialMedia = 'Youtube';
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
 
       expect(body.err.error).toBe('Unprocessable Entity');
@@ -72,7 +73,7 @@ describe('InfluencerController Test', () => {
     test('Error: influencerLink alredy exists', async () => {
       registerObj.influencer.influencerLink = userTest1.influencer.influencerLink;
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
 
       expect(body.err.error).toBe('Conflict');
@@ -82,7 +83,7 @@ describe('InfluencerController Test', () => {
     test('Error: invalid Content Type', async () => {
       registerObj.influencer.contentType = 'Modaaa';
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
       expect(body.err.error).toBe('Unprocessable Entity');
       expect(body.err.message).toContain('Tipo de Conteúdo inserido não esta entre as opções');
@@ -90,7 +91,7 @@ describe('InfluencerController Test', () => {
 
     test('Successfull: influencer register', async () => {
       const { body } = await request(httpServer)
-        .post('/user/register')
+        .post(`/user/${usersPaths.registerUser}`)
         .send(registerObj);
       expect(body.token).toMatch(/[A-z-=0-9.]*/);
     });
@@ -99,7 +100,7 @@ describe('InfluencerController Test', () => {
   describe('testing createInfluencerLink', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -109,7 +110,7 @@ describe('InfluencerController Test', () => {
     test('Error: invalid influencerLink', async () => {
       const influencerLinkObj = { influencerLink: 'Js' };
       const { body } = await request(httpServer)
-        .put('/user/create-link')
+        .put(`/influencer/${influencerPaths.createLink}`)
         .set('Authorization', token)
         .send(influencerLinkObj);
 
@@ -121,7 +122,7 @@ describe('InfluencerController Test', () => {
     test('Error: alredy exists influencerLink', async () => {
       const influencerLinkObj = { influencerLink: userTest1.influencer.influencerLink };
       const { body } = await request(httpServer)
-        .put('/user/create-link')
+        .put(`/influencer/${influencerPaths.createLink}`)
         .set('Authorization', token)
         .send(influencerLinkObj);
 
@@ -133,7 +134,7 @@ describe('InfluencerController Test', () => {
     test('Successfull: createInfluencerLink', async () => {
       const influencerLinkObj = { influencerLink: 'techNews' };
       const { body } = await request(httpServer)
-        .put('/user/create-link')
+        .put(`/influencer/${influencerPaths.createLink}`)
         .set('Authorization', token)
         .send(influencerLinkObj);
       expect(body.influencer).toHaveProperty('influencerLink');
@@ -142,7 +143,7 @@ describe('InfluencerController Test', () => {
 
     test('Error: user is not an influencer yet', async () => {
       const { body: newLoginBody } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send({
           email: userTest2.email,
           password: userTest2.password,
@@ -152,7 +153,7 @@ describe('InfluencerController Test', () => {
 
       const influencerLinkObj = { influencerLink: 'LuisTech' };
       const { body } = await request(httpServer)
-        .put('/user/create-link')
+        .put(`/influencer/${influencerPaths.createLink}`)
         .set('Authorization', token)
         .send(influencerLinkObj);
 

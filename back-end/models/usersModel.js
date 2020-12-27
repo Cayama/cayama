@@ -100,6 +100,19 @@ const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
   return updatedUser.value;
 };
 
+const insertNewObjectData = async (id, newObjectData) => {
+  const db = await connection();
+
+  const newUserData = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { melhorEnvioTokenData: newObjectData } },
+      { returnOriginal: false },
+    );
+
+  return newUserData.value;
+};
+
 module.exports = {
   getUserByEmail,
   registerUser,
@@ -111,4 +124,5 @@ module.exports = {
   getUserById,
   createBankAccount,
   updateBasicRegistersData,
+  insertNewObjectData,
 };

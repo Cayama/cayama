@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const { userModel } = require('../models/index');
 
 const getUserByEmail = async (email) => {
@@ -50,6 +51,13 @@ const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
   return updatedUser;
 };
 
+const insertNewObjectData = async (id, next, newObjectData) => {
+  if (newObjectData.error) return next(Boom.badData(newObjectData.error));
+
+  const newUserData = await userModel.insertNewObjectData(id, newObjectData);
+  return newUserData;
+};
+
 module.exports = {
   registerUser,
   getUserByEmail,
@@ -61,4 +69,5 @@ module.exports = {
   getUserById,
   createBankAccount,
   updateBasicRegistersData,
+  insertNewObjectData,
 };

@@ -4,6 +4,7 @@ const connection = require('../models/connection');
 const httpServer = require('./testsUtils/serverTest');
 const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj, purchaseObj } = require('./testsUtils/utils');
+const { usersPaths, cartPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -27,7 +28,7 @@ describe('cartController Test', () => {
   describe('testing createShoppingCart', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -39,7 +40,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       const { body } = await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -52,7 +53,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { purchases };
 
       const { body } = await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -66,7 +67,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice };
 
       const { body } = await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -80,7 +81,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases: [] };
 
       const { body } = await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -94,7 +95,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases: 'test' };
 
       const { body } = await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -107,7 +108,7 @@ describe('cartController Test', () => {
   describe('testing getShoppingCart', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -119,12 +120,12 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
       const { body } = await request(httpServer)
-        .get('/cart/')
+        .get(`/cart/${cartPaths.getShoppingCart}`)
         .set('Authorization', token)
         .send({});
 
@@ -155,7 +156,7 @@ describe('cartController Test', () => {
 
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -167,12 +168,12 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
       const { body } = await request(httpServer)
-        .put('/cart/update')
+        .put(`/cart/${cartPaths.updateShoppingCart}`)
         .set('Authorization', token)
         .send(updateShoppingCartObj);
 
@@ -192,7 +193,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -201,7 +202,7 @@ describe('cartController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/cart/update')
+        .put(`/cart/${cartPaths.updateShoppingCart}`)
         .set('Authorization', token)
         .send(newShoppingCartObj);
 
@@ -215,7 +216,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -224,7 +225,7 @@ describe('cartController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/cart/update')
+        .put(`/cart/${cartPaths.updateShoppingCart}`)
         .set('Authorization', token)
         .send(newShoppingCartObj);
 
@@ -238,7 +239,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -248,7 +249,7 @@ describe('cartController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/cart/update')
+        .put(`/cart/${cartPaths.updateShoppingCart}`)
         .set('Authorization', token)
         .send(newShoppingCartObj);
 
@@ -262,7 +263,7 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
@@ -272,7 +273,7 @@ describe('cartController Test', () => {
       };
 
       const { body } = await request(httpServer)
-        .put('/cart/update')
+        .put(`/cart/${cartPaths.updateShoppingCart}`)
         .set('Authorization', token)
         .send(newShoppingCartObj);
 
@@ -285,7 +286,7 @@ describe('cartController Test', () => {
   describe('testing deleteShoppingCart', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -297,12 +298,12 @@ describe('cartController Test', () => {
       const shoppingCartObj = { totalPrice, purchases };
 
       await request(httpServer)
-        .post('/cart/create')
+        .post(`/cart/${cartPaths.createShoppingCart}`)
         .set('Authorization', token)
         .send(shoppingCartObj);
 
       const { body } = await request(httpServer)
-        .delete('/cart/delete')
+        .delete(`/cart/${cartPaths.deleteShoppingCart}`)
         .set('Authorization', token)
         .send({});
 

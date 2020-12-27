@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware, multerMiddleware, redirectMiddleware } = require('../middlewares/index');
+const { storesPaths: { registerStore } } = require('./paths/index');
 
 const storesRoutes = Router();
 
 module.exports = (io) => {
   storesRoutes
-    .post('/register', redirectMiddleware, controllers.storesController.registerStore)
+    .post(registerStore, redirectMiddleware, controllers.storesController.registerStore)
     .post('/register-product',
       jwtMiddleware,
       multerMiddleware.array('productImages', 10),

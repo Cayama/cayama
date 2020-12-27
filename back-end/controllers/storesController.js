@@ -9,19 +9,18 @@ const {
   storeRegisterSchema,
   productRegisterSchema,
 } = require('../validationSchemas/storesSchemas/index');
+const { validateSchemas } = require('../services/schemasService');
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-  console.log(req.body);
-  const { error } = storeRegisterSchema.validate({
+
+  validateSchemas(next, storeRegisterSchema, {
     storeName,
     email,
     password,
     confirmPassword,
     cnpj,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const storeExists = await storesService.getStoreByCnpj(cnpj);
 
@@ -56,7 +55,7 @@ const registerProduct = rescue(async (req, res, next) => {
   let videosPath;
   videosPath = ['asdasdasdasdasdasdasd']; // até o front estar pronto => videosPath precisa ser um array
 
-  const { error } = productRegisterSchema.validate({
+  validateSchemas(next, productRegisterSchema, {
     productName,
     price,
     category: { field: 'categories', value: category },
@@ -66,8 +65,6 @@ const registerProduct = rescue(async (req, res, next) => {
     keys,
     urls,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const addNewProduct = await storesService.addNewProduct({
     sellerId: _id,
