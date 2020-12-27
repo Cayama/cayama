@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
-const { usersService } = require('../services/index');
+const { usersService, influencerService } = require('../services/index');
 const { influencerLinkSchema } = require('../validationSchemas/usersSchemas/index');
 const { validateSchemas } = require('../services/schemasService');
 
@@ -10,7 +10,7 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 
   validateSchemas(next, influencerLinkSchema, { influencerLink });
 
-  const linkExists = await usersService.getInfluencerByLink(influencerLink);
+  const linkExists = await influencerService.getInfluencerByLink(influencerLink);
 
   if (linkExists) return next(Boom.conflict('Este link já esta sendo utilizado'));
 
@@ -18,7 +18,7 @@ const createInfluencerLink = rescue(async (req, res, next) => {
 
   if (!user.influencer.influencerLink) return next(Boom.badData('Não é um influencer ainda'));
 
-  const userWithLink = await usersService.createInfluencerLink(
+  const userWithLink = await influencerService.createInfluencerLink(
     _id,
     influencerLink,
   );

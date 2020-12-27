@@ -1,8 +1,9 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
 const { ObjectId } = require('mongodb');
-const { sellService, usersService, cartService } = require('../services/index');
-const { purchaseSchema, purchaseIdSchema, getProductSchema } = require('../validationSchemas/sellSchemas/index');
+const { purchaseService, usersService, influencerService } = require('../services/index');
+const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/purchaseSchemas/index');
+const { getProductSchema } = require('../validationSchemas/usersSchemas/index');
 const { validateSchemas } = require('../services/schemasService');
 
 const purchase = rescue(async (req, res, next) => {
@@ -43,11 +44,11 @@ const purchase = rescue(async (req, res, next) => {
   let influencerId = null;
 
   if (user.influencer.influencerLink) {
-    const { _id } = await usersService.getInfluencerByLink(user.influencerLink);
+    const { _id } = await influencerService.getInfluencerByLink(user.influencerLink);
     influencerId = _id;
   }
 
-  await sellService.purchase({
+  await purchaseService.purchase({
     buyerId,
     sellerId: sellersIdArray,
     influencerId,
@@ -70,7 +71,7 @@ const deliveryCheck = rescue(async (req, res, next) => {
   validateSchemas(next, purchaseIdSchema, { purchaseId });
 
   console.log(purchaseId);
-  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
+  const purchase = await purchaseService.getPurchaseByField('_id', purchaseId);
   console.log(purchase);
 
   if (!purchase[0].sellerId.equals(sellerId)) {
@@ -79,7 +80,7 @@ const deliveryCheck = rescue(async (req, res, next) => {
     );
   }
 
-  await sellService.deliveryCheck(purchaseId);
+  await purchaseService.deliveryCheck(purchaseId);
 
   return res.status(201).json({ response: 'Entrega realizada com sucesso' });
 });
@@ -90,7 +91,7 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
 
   validateSchemas(next, purchaseIdSchema, { purchaseId });
 
-  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
+  const purchase = await purchaseService.getPurchaseByField('_id', purchaseId);
 
   if (!purchase[0].buyerId.equals(buyerId)) {
     return next(
@@ -98,7 +99,7 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
     );
   }
 
-  await sellService.userApproveOfProduct(purchaseId);
+  await purchaseService.userApproveOfProduct(purchaseId);
 
   return res.status(201).json({ response: 'Produto entregue sem problemas' });
 });
@@ -111,7 +112,7 @@ const getPurchaseByField = rescue(async (req, res, next) => {
     { field: 'fieldSearch', value: fieldToSearch },
   });
 
-  const purchaseList = await usersService.getPurchaseByField(
+  const purchaseList = await purchaseService.getPurchaseByField(
     fieldToSearch,
     userId,
   );

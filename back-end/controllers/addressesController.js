@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
-const { usersService } = require('../services/index');
+const { usersService, addressesService } = require('../services/index');
 const { addressesSchema } = require('../validationSchemas/usersSchemas/index');
 const { validateSchemas } = require('../services/schemasService');
 
@@ -14,7 +14,7 @@ const updateUsersAddresses = rescue(async (req, res, next) => {
 
   const {
     password, confirmPassword, ...updatedUser
-  } = await usersService.updateUserAddressesById(_id, addresses);
+  } = await addressesService.updateUserAddressesById(_id, addresses);
 
   return res.status(201).json(updatedUser);
 });

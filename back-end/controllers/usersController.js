@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
-const { usersService } = require('../services/index');
+const { usersService, influencerService } = require('../services/index');
 const { createJwtToken } = require('../utils/index');
 const {
   userRegisterSchema,
@@ -41,7 +41,7 @@ const registerUser = rescue(async (req, res, next) => {
   if (influencer.socialMedia) {
     const { socialMedia, contentType, socialMediaName, influencerLink } = req.body.influencer;
 
-    const influencerLinkCheck = await usersService.getInfluencerByLink(influencerLink);
+    const influencerLinkCheck = await influencerService.getInfluencerByLink(influencerLink);
 
     if (influencerLinkCheck) return next(Boom.conflict('Link já existente'));
 
@@ -135,12 +135,7 @@ const getUserById = rescue(async (req, res, _next) => {
 module.exports = {
   registerUser,
   userLogin,
-  // updateUsersAddresses,
-  // getAllAddresses,
-  // createInfluencerLink,
   updateUserToInfluencer,
-  // createBankAccount,
   updateBasicRegistersData,
   getUserById,
-  // getPurchaseByField,
 };

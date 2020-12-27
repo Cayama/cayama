@@ -22,39 +22,39 @@ const registerUser = async (userObj) => {
   return user.ops[0];
 };
 
-const updateUserAddressesById = async (id, addresses) => {
-  const db = await connection();
-  const updatedUser = await db.collection('users')
-    .findOneAndUpdate(
-      { _id: id },
-      { $set: { addresses } },
-      { returnOriginal: false },
-    );
+// const updateUserAddressesById = async (id, addresses) => {
+//   const db = await connection();
+//   const updatedUser = await db.collection('users')
+//     .findOneAndUpdate(
+//       { _id: id },
+//       { $set: { addresses } },
+//       { returnOriginal: false },
+//     );
 
-  return updatedUser.value;
-};
+//   return updatedUser.value;
+// };
 
-const getInfluencerByLink = async (influencerLink) => {
-  const db = await connection();
-  const influencer = await db.collection('users')
-    .findOne(
-      { $and: [{ influencer: { $exists: true } }, { 'influencer.influencerLink': influencerLink }] },
-    );
+// const getInfluencerByLink = async (influencerLink) => {
+//   const db = await connection();
+//   const influencer = await db.collection('users')
+//     .findOne(
+//       { $and: [{ influencer: { $exists: true } }, { 'influencer.influencerLink': influencerLink }] },
+//     );
 
-  return influencer;
-};
+//   return influencer;
+// };
 
-const createInfluencerLink = async (_id, influencerLink) => {
-  const db = await connection();
-  const userWithLink = await db.collection('users')
-    .findOneAndUpdate(
-      { $and: [{ _id: ObjectId(_id) }, { influencer: { $exists: true } }] },
-      { $set: { 'influencer.influencerLink': influencerLink } },
-      { returnOriginal: false },
-    );
+// const createInfluencerLink = async (_id, influencerLink) => {
+//   const db = await connection();
+//   const userWithLink = await db.collection('users')
+//     .findOneAndUpdate(
+//       { $and: [{ _id: ObjectId(_id) }, { influencer: { $exists: true } }] },
+//       { $set: { 'influencer.influencerLink': influencerLink } },
+//       { returnOriginal: false },
+//     );
 
-  return userWithLink.value;
-};
+//   return userWithLink.value;
+// };
 
 const updateUserToInfluencer = async (_id, influencerObj) => {
   const db = await connection();
@@ -68,25 +68,25 @@ const updateUserToInfluencer = async (_id, influencerObj) => {
   return newInfluencer.value;
 };
 
-const getPurchaseByField = async (fieldToSearch, userId) => {
-  const db = await connection();
-  const purchaseList = await db.collection('purchases')
-    .find({ [fieldToSearch]: ObjectId(userId) }).toArray();
+// const getPurchaseByField = async (fieldToSearch, userId) => {
+//   const db = await connection();
+//   const purchaseList = await db.collection('purchases')
+//     .find({ [fieldToSearch]: ObjectId(userId) }).toArray();
 
-  return purchaseList;
-};
+//   return purchaseList;
+// };
 
-const createBankAccount = async (bankAccount, id) => {
-  const db = await connection();
-  const bankAccountInfo = await db.collection('users')
-    .findOneAndUpdate(
-      { _id: ObjectId(id) },
-      { $set: { bankAccount } },
-      { returnOriginal: false },
-    );
+// const createBankAccount = async (bankAccount, id) => {
+//   const db = await connection();
+//   const bankAccountInfo = await db.collection('users')
+//     .findOneAndUpdate(
+//       { _id: ObjectId(id) },
+//       { $set: { bankAccount } },
+//       { returnOriginal: false },
+//     );
 
-  return bankAccountInfo.value;
-};
+//   return bankAccountInfo.value;
+// };
 
 const updateBasicRegistersData = async (fieldToUpdate, newValue, id) => {
   const db = await connection();
@@ -116,13 +116,13 @@ const insertNewObjectData = async (id, newObjectData) => {
 module.exports = {
   getUserByEmail,
   registerUser,
-  updateUserAddressesById,
-  getInfluencerByLink,
-  createInfluencerLink,
+  // updateUserAddressesById,
+  // getInfluencerByLink,
+  // createInfluencerLink,
   updateUserToInfluencer,
-  getPurchaseByField,
+  // getPurchaseByField,
   getUserById,
-  createBankAccount,
+  // createBankAccount,
   updateBasicRegistersData,
   insertNewObjectData,
 };

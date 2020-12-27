@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const { usersService } = require('../services/index');
+const { bankService } = require('../services/index');
 const { bankAccountSchema } = require('../validationSchemas/usersSchemas/index');
 
 const { validateSchemas } = require('../services/schemasService');
@@ -15,7 +15,7 @@ const createBankAccount = rescue(async (req, res, next) => {
     agency,
   });
 
-  const { password, confirmPassword, ...userWithBank } = await usersService.createBankAccount(
+  const { password, confirmPassword, ...userWithBank } = await bankService.createBankAccount(
     {
       bank,
       bankDigit,
