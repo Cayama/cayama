@@ -6,7 +6,7 @@ const subscriptionPlan = async (planObject) => {
 };
 
 const updateSubscriptionPlan = async (
-  userId, planChoice, registerAs, lastUpdate, obrigatoryPaymente,
+  userId, planChoice, registerAs, lastUpdate, obrigatoryPaymente, status,
 ) => {
   const newMember = await plataformModel.updateSubscriptionPlan(
     userId,
@@ -14,6 +14,7 @@ const updateSubscriptionPlan = async (
     registerAs,
     lastUpdate,
     obrigatoryPaymente,
+    status,
   );
   return newMember;
 };

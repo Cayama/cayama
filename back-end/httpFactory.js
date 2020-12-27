@@ -3,10 +3,13 @@ const express = require('express');
 const {
   usersRoutes,
   storesRoutes,
-  sellRoutes,
+  purchaseRoutes,
   plataformRoutes,
   cartRoutes,
   shippingRoutes,
+  addressesRoutes,
+  bankRoutes,
+  influencerRoutes,
 } = require('./routes/index');
 const { errorMiddleware } = require('./middlewares/index');
 
@@ -16,10 +19,13 @@ module.exports = (app, io) => {
 
   app.use('/user', usersRoutes(io));
   app.use('/store', storesRoutes(io));
-  app.use('/sell', sellRoutes(io));
+  app.use('/purchase', purchaseRoutes(io));
   app.use('/plataform', plataformRoutes(io));
   app.use('/cart', cartRoutes(io));
   app.use('/shipping', shippingRoutes(io));
+  app.use('/addresses', addressesRoutes(io));
+  app.use('/bank', bankRoutes(io));
+  app.use('/influencer', influencerRoutes(io));
   app.use('/test', (req, res) => res.json({ message: 'Chegou aqui' }));
 
   app.all('*', (_req, res) => res.status(404).json({ message: 'page not found' }));

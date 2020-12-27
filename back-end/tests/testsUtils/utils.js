@@ -74,7 +74,7 @@ const purchaseObj = {
   purchases: [
     {
       name: 'Teclado Keychron',
-      sellerId: ObjectId('5fa09e7a6265167b9d1b3324'),
+      sellerId: new ObjectId('5fa09e7a6265167b9d1b3324'),
       productId: '5fa09e7a6265167b9d1b3324',
       quantity: '3',
       price: '1000',

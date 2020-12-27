@@ -4,6 +4,7 @@ const connection = require('../models/connection');
 const httpServer = require('./testsUtils/serverTest');
 const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj, loginObj2, addresses, incorrectValidToken } = require('./testsUtils/utils');
+const { usersPaths, addressesPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -65,7 +66,7 @@ describe('Addresses Controller Test', () => {
   describe('testing updateUsersAddresses', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -74,7 +75,7 @@ describe('Addresses Controller Test', () => {
 
     test('Error: nothing is passed in addresses', async () => {
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({});
 
@@ -86,7 +87,7 @@ describe('Addresses Controller Test', () => {
     test('Error: string is passed in addresses', async () => {
       const nothingAddresses = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses: nothingAddresses });
 
@@ -98,7 +99,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect name', async () => {
       addresses[0].name = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -110,7 +111,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect cep', async () => {
       addresses[0].cep = '333';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -122,7 +123,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect state', async () => {
       addresses[0].state = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -134,7 +135,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect city', async () => {
       addresses[0].city = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -146,7 +147,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect neighborhood', async () => {
       addresses[0].neighborhood = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -158,7 +159,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect street', async () => {
       addresses[0].street = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -170,7 +171,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect number', async () => {
       addresses[0].number = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -182,7 +183,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect complement', async () => {
       addresses[0].complement = '';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -194,7 +195,7 @@ describe('Addresses Controller Test', () => {
     test('Error: incorrect phone', async () => {
       addresses[0].phone = '333';
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -205,7 +206,7 @@ describe('Addresses Controller Test', () => {
 
     test('Successfull: updateUserAddresses with one address object', async () => {
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -218,7 +219,7 @@ describe('Addresses Controller Test', () => {
     test('Successfull: updateUserAddresses with two addresses object', async () => {
       addresses.push(addAddress);
       const { body } = await request(httpServer)
-        .put('/user/addresses')
+        .put(`/addresses/${addressesPaths.updateUserAddresses}`)
         .set('Authorization', token)
         .send({ addresses });
 
@@ -234,7 +235,7 @@ describe('Addresses Controller Test', () => {
   describe('testing getAllAddresses', () => {
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -243,11 +244,11 @@ describe('Addresses Controller Test', () => {
 
     test('Error: user does not have any addresses registered', async () => {
       const { body: loginBody } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj2);
 
       const { body } = await request(httpServer)
-        .get('/user/addresses')
+        .get(`/addresses/${addressesPaths.getAllAddresses}`)
         .set('Authorization', loginBody.token);
 
       expect(body).toHaveProperty('err');
@@ -257,7 +258,7 @@ describe('Addresses Controller Test', () => {
 
     test('Successfull: get all addresses successfully', async () => {
       const { body } = await request(httpServer)
-        .get('/user/addresses')
+        .get(`/addresses/${addressesPaths.getAllAddresses}`)
         .set('Authorization', token);
 
       expect(body).toHaveProperty('addresses');

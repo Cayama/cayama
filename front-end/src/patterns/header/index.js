@@ -1,5 +1,5 @@
-import Link from '../../infra/components/Link';
-import Image from '../../infra/components/Image';
+import Link from '../../infra/components/link';
+import Image from '../../infra/components/image';
 import NavBar from '../../components/navBar';
 import { MyHeader, HeaderInput } from './styles';
 import { SearchButton, TextButton } from '../../components/Layout/buttonGroup';
@@ -14,7 +14,7 @@ function Header({ children }) {
         </Link>
         <HeaderInput placeholder='Buscar produtos' />
         <SearchButton />
-        <TextButton Text='Entre ou cadastre-se' />
+        <TextButton text='Entre ou cadastre-se' onClick={() => console.log('kkk')} />
       </ContainerRow>
       <NavBar />
     </MyHeader>

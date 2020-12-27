@@ -4,5 +4,4 @@ const MyLink = styled.div`
   cursor: pointer;
 `
 
-
 export { MyLink };

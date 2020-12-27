@@ -4,6 +4,7 @@ const connection = require('../models/connection');
 const httpServer = require('./testsUtils/serverTest');
 const { resetTestingMongoDb, connectionTest, deleteAllData } = require('./testsUtils/dbTestConnection');
 const { loginObj, bankInfo } = require('./testsUtils/utils');
+const { usersPaths, bankPaths } = require('../routes/paths/index');
 
 jest.mock('../models/connection');
 connection.mockImplementation(connectionTest);
@@ -40,7 +41,7 @@ describe('BankAccount Test', () => {
 
     test('Successfull: userLogin', async () => {
       const { body } = await request(httpServer)
-        .post('/user/login')
+        .post(`/user/${usersPaths.loginUser}`)
         .send(loginObj);
 
       token = body.token;
@@ -50,7 +51,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid bank name', async () => {
       bankInfo.bank = '';
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -62,7 +63,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid bank number', async () => {
       bankInfo.bankDigit = -1;
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -74,7 +75,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid account number with digit', async () => {
       bankInfo.accountNumberWithDigit = '';
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -86,7 +87,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid account number with digit', async () => {
       delete bankInfo.accountNumberWithDigit;
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -98,7 +99,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid account number with digit', async () => {
       delete bankInfo.accountNumberWithDigit;
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -110,7 +111,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid agency number', async () => {
       bankInfo.agency = -1;
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -122,7 +123,7 @@ describe('BankAccount Test', () => {
     test('Error: invalid agency number', async () => {
       delete bankInfo.agency;
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 
@@ -133,7 +134,7 @@ describe('BankAccount Test', () => {
 
     test('Successfull: user with bank account registered', async () => {
       const { body } = await request(httpServer)
-        .put('/user/bank-account-info')
+        .put(`/bank/${bankPaths.createBankAccount}`)
         .set('Authorization', token)
         .send(bankInfo);
 

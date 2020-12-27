@@ -2,6 +2,7 @@ const Boom = require('boom');
 const rescue = require('express-rescue');
 const { plataformService } = require('../services/index');
 const { checkSubscriptionPlanSchema } = require('../validationSchemas/plataformSchemas/index');
+const { validateSchemas } = require('../services/schemasService');
 
 const callDate = () => {
   let today = new Date();
@@ -22,12 +23,10 @@ const subscriptionPlan = rescue(async (req, res, next) => {
   const { planChoice, registerAs } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = checkSubscriptionPlanSchema.validate({
+  validateSchemas(next, checkSubscriptionPlanSchema, {
     planChoice: { field: 'planChoice', value: planChoice },
     registerAs: { field: 'registerAs', value: registerAs },
   });
-
-  if (error) return next(Boom.badData(error));
 
   const registerDay = callDate();
 
@@ -52,16 +51,16 @@ const updateSubscriptionPlan = rescue(async (req, res, next) => {
   const { planChoice, registerAs } = req.body;
   const { _id: userId } = req.user;
 
-  const { error } = checkSubscriptionPlanSchema.validate({
+  validateSchemas(next, checkSubscriptionPlanSchema, {
     planChoice: { field: 'planChoice', value: planChoice },
     registerAs: { field: 'registerAs', value: registerAs },
   });
 
-  if (error) return next(Boom.badData(error));
-
   const lastUpdate = callDate();
 
   const obrigatoryPayment = testplan(planChoice);
+
+  const status = 'active';
 
   const plan = await plataformService.updateSubscriptionPlan(
     userId,
@@ -69,6 +68,7 @@ const updateSubscriptionPlan = rescue(async (req, res, next) => {
     registerAs,
     lastUpdate,
     obrigatoryPayment,
+    status,
   );
 
   return res.status(201).json({ plan });
@@ -95,4 +95,5 @@ module.exports = {
   updateSubscriptionPlan,
   suspendSubscriptionPlan,
   getSubscriptionPlan,
+  callDate,
 };

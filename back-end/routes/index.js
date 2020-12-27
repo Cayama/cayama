@@ -1,15 +1,21 @@
 const usersRoutes = require('./usersRoutes');
 const storesRoutes = require('./storesRoutes');
-const sellRoutes = require('./sellRoutes');
+const purchaseRoutes = require('./purchaseRoutes');
 const plataformRoutes = require('./plataformRoutes');
 const cartRoutes = require('./cartRoutes');
 const shippingRoutes = require('./shippingRoutes');
+const addressesRoutes = require('./addressesRoutes');
+const bankRoutes = require('./bankRoutes');
+const influencerRoutes = require('./influencerRoutes');
 
 module.exports = {
   usersRoutes,
   storesRoutes,
-  sellRoutes,
+  purchaseRoutes,
   plataformRoutes,
   cartRoutes,
   shippingRoutes,
+  addressesRoutes,
+  bankRoutes,
+  influencerRoutes,
 };

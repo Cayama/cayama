@@ -32,8 +32,17 @@ const userApproveOfProduct = async (purchaseId) => {
   return newPurchase.value;
 };
 
+const getPurchaseByField = async (fieldToSearch, userId) => {
+  const db = await connection();
+  const purchaseList = await db.collection('purchases')
+    .find({ [fieldToSearch]: ObjectId(userId) }).toArray();
+
+  return purchaseList;
+};
+
 module.exports = {
   purchase,
   deliveryCheck,
   userApproveOfProduct,
+  getPurchaseByField,
 };

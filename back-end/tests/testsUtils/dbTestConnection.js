@@ -1,4 +1,5 @@
 const mongoClient = require('mongodb').MongoClient;
+const { ObjectId } = require('mongodb');
 
 const userTest1 = {
   firstName: 'Jafet Henrique',
@@ -41,9 +42,8 @@ const usersTest = [userTest1, userTest2, userTest3];
 
 const purchasesTest = [
   {
-    sellerId: '5fa09e7a6265167b9d1b3324',
-    buyerId: '6za01e7a6222567a9d1b3794',
-    influencerId: '8ka23a7a6288667b9d1a1032',
+    buyerId: new ObjectId('5fa09999492a626c08b6886f'),
+    influencerId: new ObjectId('5fa09ee6afdebe7c7836a322'),
     totalPrice: '300',
     deliveryService: 'correios sedex',
     paymentMethod: 'credit card',
@@ -51,16 +51,16 @@ const purchasesTest = [
     purchases: [
       {
         name: 'Mouse Keychron',
-        productId: '4fb09e7a6231163f4d1b9908',
+        productId: new ObjectId('4fb09e7a6231163f4d1b9908'),
+        sellerId: new ObjectId('5fa09e7a6265167b9d1b3324'),
         quantity: '100',
         price: '3',
       },
     ],
   },
   {
-    sellerId: '5fa09e7a6265167b9d1b3324',
-    buyerId: '6za01e7a6222567a9d1b3794',
-    influencerId: '8ka23a7a6288667b9d1a1032',
+    buyerId: new ObjectId('5fa09999492a626c08b6886f'),
+    influencerId: new ObjectId('5fa09ee6afdebe7c7836a322'),
     totalPrice: '3000',
     deliveryService: 'correios sedex',
     paymentMethod: 'credit card',
@@ -68,7 +68,8 @@ const purchasesTest = [
     purchases: [
       {
         name: 'Teclado Keychron',
-        productId: '8kj07u9a6162967b6c1b2254',
+        productId: new ObjectId('5f77540c9ca251495d861ca2'),
+        sellerId: new ObjectId('5fa09e7a6265167b9d1b3324'),
         quantity: '3',
         price: '1000',
       },
@@ -78,7 +79,7 @@ const purchasesTest = [
 
 const productsTest = [
   {
-    userId: '5fa09e7a6265167b9d1b3324',
+    userId: new ObjectId('5fa09e7a6265167b9d1b3324'),
     productName: 'Teclado Keychron',
     price: '1000,00',
     category: 'Eletronicos',
@@ -89,7 +90,7 @@ const productsTest = [
     keys: ['31530333c183f1bb78f6e9e6be7bd504-Keychron-k2.jpg', 'f0e53de034270dcbee0add49d22dbbe7-Keychron-k2.jpg'],
   },
   {
-    userId: '5fa09e7a6265167b9d1b3324',
+    userId: new ObjectId('5fa09e7a6265167b9d1b3324'),
     productName: 'Mouse Keychron',
     price: '100,00',
     category: 'Eletronicos',

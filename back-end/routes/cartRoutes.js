@@ -1,14 +1,20 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware } = require('../middlewares/index');
+const { cartPaths: {
+  getShoppingCart,
+  createShoppingCart,
+  updateShoppingCart,
+  deleteShoppingCart,
+} } = require('./paths/index');
 
 const sellRoutes = Router();
 
 module.exports = (io) => {
   sellRoutes
-    .post('/cart', jwtMiddleware, controllers.cartController.createShoppingCart)
-    .get('/cart', jwtMiddleware, controllers.cartController.getShoppingCart)
-    .put('/cart', jwtMiddleware, controllers.cartController.updateShoppingCart)
-    .delete('/cart', jwtMiddleware, controllers.cartController.deleteShoppingCart);
+    .get(getShoppingCart, jwtMiddleware, controllers.cartController.getShoppingCart)
+    .post(createShoppingCart, jwtMiddleware, controllers.cartController.createShoppingCart)
+    .put(updateShoppingCart, jwtMiddleware, controllers.cartController.updateShoppingCart)
+    .delete(deleteShoppingCart, jwtMiddleware, controllers.cartController.deleteShoppingCart);
   return sellRoutes;
 };

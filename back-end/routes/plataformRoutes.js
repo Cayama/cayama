@@ -1,14 +1,28 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware } = require('../middlewares/index');
+const { plataformPaths: {
+  getSubscriptionPlan,
+  subscriptionPlan,
+  updateSubscriptionPlan,
+  suspendSubscriptionPlan,
+} } = require('./paths/index');
 
 const plataformRoutes = Router();
 
 module.exports = (io) => {
   plataformRoutes
-    .post('/', jwtMiddleware, controllers.plataformController.subscriptionPlan)
-    .get('/plan', jwtMiddleware, controllers.plataformController.getSubscriptionPlan)
-    .put('/change', jwtMiddleware, controllers.plataformController.updateSubscriptionPlan)
-    .put('/suspend', jwtMiddleware, controllers.plataformController.suspendSubscriptionPlan);
+    .get(getSubscriptionPlan, jwtMiddleware, controllers.plataformController.getSubscriptionPlan)
+    .post(subscriptionPlan, jwtMiddleware, controllers.plataformController.subscriptionPlan)
+    .put(
+      updateSubscriptionPlan,
+      jwtMiddleware,
+      controllers.plataformController.updateSubscriptionPlan,
+    )
+    .put(
+      suspendSubscriptionPlan,
+      jwtMiddleware,
+      controllers.plataformController.suspendSubscriptionPlan,
+    );
   return plataformRoutes;
 };

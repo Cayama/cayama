@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 
 import { MyLink } from './styles';
 
-function Link({ href, children }) {
+const Link = ({ href, children }) => {
   return (
     <MyLink>
       <NextLink href={href}>

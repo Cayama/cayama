@@ -1,8 +1,10 @@
 const Boom = require('boom');
 const rescue = require('express-rescue');
 const { ObjectId } = require('mongodb');
-const { sellService, usersService, cartService } = require('../services/index');
-const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/sellSchemas/index');
+const { purchaseService, usersService, influencerService } = require('../services/index');
+const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/purchaseSchemas/index');
+const { getProductSchema } = require('../validationSchemas/usersSchemas/index');
+const { validateSchemas } = require('../services/schemasService');
 
 const purchase = rescue(async (req, res, next) => {
   const {
@@ -15,15 +17,13 @@ const purchase = rescue(async (req, res, next) => {
 
   // deliveryTrack = temos que gerar
 
-  const { error } = purchaseSchema.validate({
+  validateSchemas(next, purchaseSchema, {
     totalPrice,
     deliveryService,
     paymentMethod,
     installment,
     purchases,
   });
-
-  if (error) return next(Boom.badData(error));
 
   const sellersIdArray = purchases.reduce((acc, { sellerId }) => {
     if (!acc.includes(sellerId)) {
@@ -44,11 +44,11 @@ const purchase = rescue(async (req, res, next) => {
   let influencerId = null;
 
   if (user.influencer.influencerLink) {
-    const { _id } = await usersService.getInfluencerByLink(user.influencerLink);
+    const { _id } = await influencerService.getInfluencerByLink(user.influencerLink);
     influencerId = _id;
   }
 
-  await sellService.purchase({
+  await purchaseService.purchase({
     buyerId,
     sellerId: sellersIdArray,
     influencerId,
@@ -68,11 +68,10 @@ const deliveryCheck = rescue(async (req, res, next) => {
   const { purchaseId } = req.body;
   const { _id: sellerId } = req.user;
 
-  const { error } = purchaseIdSchema.validate({ purchaseId });
+  validateSchemas(next, purchaseIdSchema, { purchaseId });
 
-  if (error) return next(Boom.badData(error));
   console.log(purchaseId);
-  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
+  const purchase = await purchaseService.getPurchaseByField('_id', purchaseId);
   console.log(purchase);
 
   if (!purchase[0].sellerId.equals(sellerId)) {
@@ -81,7 +80,7 @@ const deliveryCheck = rescue(async (req, res, next) => {
     );
   }
 
-  await sellService.deliveryCheck(purchaseId);
+  await purchaseService.deliveryCheck(purchaseId);
 
   return res.status(201).json({ response: 'Entrega realizada com sucesso' });
 });
@@ -90,11 +89,9 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
   const { purchaseId } = req.body;
   const { _id: buyerId } = req.user;
 
-  const { error } = purchaseIdSchema.validate({ purchaseId });
+  validateSchemas(next, purchaseIdSchema, { purchaseId });
 
-  if (error) return next(Boom.badData(error));
-
-  const purchase = await usersService.getPurchaseByField('_id', purchaseId);
+  const purchase = await purchaseService.getPurchaseByField('_id', purchaseId);
 
   if (!purchase[0].buyerId.equals(buyerId)) {
     return next(
@@ -102,13 +99,30 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
     );
   }
 
-  await sellService.userApproveOfProduct(purchaseId);
+  await purchaseService.userApproveOfProduct(purchaseId);
 
   return res.status(201).json({ response: 'Produto entregue sem problemas' });
+});
+
+const getPurchaseByField = rescue(async (req, res, next) => {
+  const { fieldToSearch } = req.body;
+  const { _id: userId } = req.user;
+
+  validateSchemas(next, getProductSchema, { fieldToSearch:
+    { field: 'fieldSearch', value: fieldToSearch },
+  });
+
+  const purchaseList = await purchaseService.getPurchaseByField(
+    fieldToSearch,
+    userId,
+  );
+
+  return res.status(200).json({ purchaseList });
 });
 
 module.exports = {
   purchase,
   deliveryCheck,
   userApproveOfProduct,
+  getPurchaseByField,
 };

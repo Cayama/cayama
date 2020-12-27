@@ -1,8 +1,8 @@
-import Image from '../../../infra/components/Image';
+import Image from '../../../infra/components/image';
 import { SearchButtonStyle, TextButtonStyle } from './styles';
 import { ButtonText } from '../../foundation/text';
 
-function SearchButton() {
+const SearchButton = () => {
   return (
     <SearchButtonStyle>
       <Image src='/img/searchIcon.svg' width={40} height={40} />
@@ -10,11 +10,11 @@ function SearchButton() {
   );
 }
 
-function TextButton({ Text }) {
+const TextButton = ({ text, onClick }) => {
   return (
-    <TextButtonStyle>
+    <TextButtonStyle onClick={onClick}>
       <ButtonText>
-        {Text}
+        {text}
       </ButtonText>
     </TextButtonStyle>
   );
