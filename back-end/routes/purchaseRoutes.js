@@ -12,7 +12,7 @@ const sellRoutes = Router();
 
 module.exports = (io) => {
   sellRoutes
-    .get(getAllPurchases, jwtMiddleware, controllers.usersController.getPurchaseByField)
+    .get(getAllPurchases, jwtMiddleware, controllers.purchaseController.getPurchaseByField)
     .post(createPurchase, jwtMiddleware, controllers.purchaseController.purchase)
     .put(deliveryCheck, jwtMiddleware, controllers.purchaseController.deliveryCheck)
     .put(acceptancePurchase, jwtMiddleware, controllers.purchaseController.userApproveOfProduct);

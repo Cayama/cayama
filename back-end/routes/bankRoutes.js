@@ -7,7 +7,7 @@ const bankRoutes = Router();
 
 module.exports = (io) => {
   bankRoutes
-    .put(createBankAccount, jwtMiddleware, controllers.usersController.createBankAccount);
+    .put(createBankAccount, jwtMiddleware, controllers.bankController.createBankAccount);
 
   return bankRoutes;
 };

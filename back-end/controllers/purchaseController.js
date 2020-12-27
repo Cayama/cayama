@@ -2,7 +2,7 @@ const Boom = require('boom');
 const rescue = require('express-rescue');
 const { ObjectId } = require('mongodb');
 const { sellService, usersService, cartService } = require('../services/index');
-const { purchaseSchema, purchaseIdSchema } = require('../validationSchemas/sellSchemas/index');
+const { purchaseSchema, purchaseIdSchema, getProductSchema } = require('../validationSchemas/sellSchemas/index');
 const { validateSchemas } = require('../services/schemasService');
 
 const purchase = rescue(async (req, res, next) => {
@@ -103,8 +103,25 @@ const userApproveOfProduct = rescue(async (req, res, next) => {
   return res.status(201).json({ response: 'Produto entregue sem problemas' });
 });
 
+const getPurchaseByField = rescue(async (req, res, next) => {
+  const { fieldToSearch } = req.body;
+  const { _id: userId } = req.user;
+
+  validateSchemas(next, getProductSchema, { fieldToSearch:
+    { field: 'fieldSearch', value: fieldToSearch },
+  });
+
+  const purchaseList = await usersService.getPurchaseByField(
+    fieldToSearch,
+    userId,
+  );
+
+  return res.status(200).json({ purchaseList });
+});
+
 module.exports = {
   purchase,
   deliveryCheck,
   userApproveOfProduct,
+  getPurchaseByField,
 };

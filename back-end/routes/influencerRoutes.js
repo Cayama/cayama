@@ -7,7 +7,7 @@ const influencerRoutes = Router();
 
 module.exports = (io) => {
   influencerRoutes
-    .put(createLink, jwtMiddleware, controllers.usersController.createInfluencerLink);
+    .put(createLink, jwtMiddleware, controllers.influencerController.createInfluencerLink);
 
   return influencerRoutes;
 };

@@ -7,8 +7,8 @@ const addressesRoutes = Router();
 
 module.exports = (io) => {
   addressesRoutes
-    .put(updateUserAddresses, jwtMiddleware, controllers.usersController.updateUsersAddresses)
-    .get(getAllAddresses, jwtMiddleware, controllers.usersController.getAllAddresses);
+    .put(updateUserAddresses, jwtMiddleware, controllers.addressesController.updateUsersAddresses)
+    .get(getAllAddresses, jwtMiddleware, controllers.addressesController.getAllAddresses);
 
   return addressesRoutes;
 };
