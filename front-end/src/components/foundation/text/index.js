@@ -5,9 +5,13 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.colors.secundary};
 `
 
-const ButtonText = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
-  font-weight: bold;
+const CardTitle = styled.h5`
+  color: ${({ theme }) => theme.colors.primaryDark};
 `
 
-export { Title, ButtonText };
+const ButtonText = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.fontFamily.button};
+`
+
+export { Title, ButtonText, CardTitle };

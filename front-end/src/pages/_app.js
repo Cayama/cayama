@@ -24,16 +24,24 @@ const theme = {
     textTitle: '#32264D',
     textComplement: '#9C98A6',
     textBase: '#393838',
-    // font2: 500 1.5rem 'Montserrat', sans-serif,
+  },
+  fontFamily: {
+    button: 'Montserrat sans-serif'
   },
 };
 
 const GlobalStyle = createGlobalStyle`
-  html, body {
+  * {
+    padding: 0;
     border: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, div#__next, div#general-container {
     box-sizing: border-box;
     height: 100vh;
-    margin: 0;
+    width: 100%;
     align-items: center;
     display: flex;
     justify-content: center;

@@ -3,22 +3,39 @@ import styled from 'styled-components';
 const MyNavBar = styled.nav`
   display: flex;
   overflow: hidden;
-
+  width: 100%;
+  height: 30%;
+  justify-content: space-between;
   a {
     text-decoration: none;
   }
 `;
 
-const NavBarDropDownBtn = styled.button`
-  border: none;
-  cursor: pointer;
+const Ul = styled.ul`
+  list-style: none;
   display: flex;
-  align-items: center;
+  flex-flow: row nowrap;
 
-  div {
-    display: flex;
-    margin-left: 5px;
+  li {
+    padding-right: 10px;
+  }
+
+  @media (max-width: 768px) {
+    flex-flow: column nowrap;
+    background: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 300px;
+    padding-top: 3.5rem;
+
+    li {
+      color: black;
+    }
   }
 `;
 
-export { NavBarDropDownBtn, MyNavBar };
+
+
+export { MyNavBar, Ul };

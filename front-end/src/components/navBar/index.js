@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-import { BsChevronDown } from 'react-icons/bs';
-import { MyNavBar, NavBarDropDownBtn } from './styles.js';
-import { ContainerRow, ContainerColumn } from '../dataGrid';
+import { DropdownButton } from '../layout/buttonGroup';
+import { MyNavBar } from './styles.js';
 import NavBarSettings from './navBarSettings/index';
+import RightNav from './rightNave';
 
 const NavBar = () => {
-  const [settingsDropDown, setSettingsDropDown] = useState(false)
   return (
     <MyNavBar>
-      <ContainerColumn>
-        <NavBarDropDownBtn onClick={() => setSettingsDropDown(!settingsDropDown)}>
-            <ContainerRow>
-              Jafet Henrique
-              <div>
-                <BsChevronDown />
-              </ div>
-            </ContainerRow>
-        </NavBarDropDownBtn>
-        {settingsDropDown ? <NavBarSettings /> : null}
-      </ContainerColumn>
+      <RightNav />
     </MyNavBar>
   );
 }
