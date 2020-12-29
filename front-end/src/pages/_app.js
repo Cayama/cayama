@@ -1,5 +1,7 @@
 import App from 'next/app'
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { Provider } from 'react-redux';
+import store from '../redux/store/index';
 
 const theme = {
   colors: {
@@ -24,19 +26,23 @@ const theme = {
     textTitle: '#32264D',
     textComplement: '#9C98A6',
     textBase: '#393838',
-    // font2: 500 1.5rem 'Montserrat', sans-serif,
+  },
+  fontFamily: {
+    button: 'Montserrat sans-serif'
   },
 };
 
 const GlobalStyle = createGlobalStyle`
-  html, body {
+  * {
+    padding: 0;
     border: 0;
-    box-sizing: border-box;
-    height: 100vh;
     margin: 0;
-    align-items: center;
-    display: flex;
-    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100vh;
+    width: 100%;
     background-color: ${theme.colors.background};
   }
 
@@ -45,8 +51,8 @@ const GlobalStyle = createGlobalStyle`
     font: ${theme.colors.font1};
   }
 
-  .container {
-    width: 700px;
+  main {
+    margin-top: 23%;
   }
 
   @media ( min-width : 700px ) {
@@ -68,7 +74,9 @@ export default class MyApp extends App {
       <>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
         </ThemeProvider>
       </>
     )

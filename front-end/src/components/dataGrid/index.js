@@ -5,9 +5,13 @@ const ContainerRow = styled.div`
   align-items: center;
 `
 
+const ContainerRowButtons = styled(ContainerRow)`
+  justify-content: space-around;
+`
+
 const ContainerColumn = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export { ContainerRow, ContainerColumn };
+export { ContainerRow, ContainerColumn, ContainerRowButtons };

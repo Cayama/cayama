@@ -1,7 +1,7 @@
-import Head from '../../../infra/components/Head';
+import Head from '../../../infra/components/head';
 import { Title } from '../../../components/foundation/text';
-import Header from '../../../patterns/Header';
-import Footer from '../../../patterns/Footer';
+import Header from '../../../patterns/header';
+import Footer from '../../../patterns/footer';
 
 export default function Home() {
   return (

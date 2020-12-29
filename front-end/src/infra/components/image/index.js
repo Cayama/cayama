@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import NextImage from 'next/image';
 
-function Image({ src, width, height }) {
+function Image({ src, width, height, alt }) {
   return (
-    <NextImage src={src} width={width} height={height} />
+    <NextImage alt={alt} src={src} width={width} height={height} />
   );
 }
 

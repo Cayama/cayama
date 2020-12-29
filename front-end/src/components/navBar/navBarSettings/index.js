@@ -2,12 +2,15 @@ import React from 'react';
 import Link from '../../../infra/components/link';
 import { SettingsContainer } from './styles';
 
-const NavBarSettings = () => {
+const NavBarSettings = ({ data }) => {
+  console.log(data)
   return (
     <SettingsContainer>
-      <Link href='/settings/shippings'>
-        Frete
-      </Link>
+      {data.map(({ url, name }) => (
+        <Link key={name} href={url}>
+          {name}
+        </Link>)
+      )}
     </SettingsContainer>
   );
 }

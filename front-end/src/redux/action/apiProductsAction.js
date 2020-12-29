@@ -1,4 +1,4 @@
-import apiProductsRequest from '../../Services/apiProductsRequest';
+import apiProductsRequest from '../../service/apiProductsRequest';
 
 export const API_REQUEST = 'API_REQUEST';
 export const API_RECEIVE_SUCCESS = 'API_RECEIVE_SUCCESS';
