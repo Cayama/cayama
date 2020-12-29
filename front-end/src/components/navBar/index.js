@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { DropdownButton } from '../layout/buttonGroup';
+import { useSelector } from 'react-redux';
 import { MyNavBar } from './styles.js';
-import NavBarSettings from './navBarSettings/index';
 import RightNav from './rightNave';
 
 const NavBar = () => {
+  const hamburgerOpen = useSelector((state) => state.hamburgerMenuReducer.status);
+  console.log(hamburgerOpen)
   return (
     <MyNavBar>
-      <RightNav />
+      <RightNav open={hamburgerOpen} />
     </MyNavBar>
   );
 }

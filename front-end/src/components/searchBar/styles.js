@@ -24,6 +24,7 @@ const SearchButton = styled.button`
 const SearchContainerRow = styled(ContainerRow)`
   height: 45%;
   width: 62%;
+  margin-left: 1%;
 `;
 
 export { SearchInput, SearchButton, SearchContainerRow };

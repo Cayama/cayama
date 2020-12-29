@@ -14,6 +14,11 @@ const MyHeader = styled.header`
   background-color: white;
   box-shadow: 0px 10px 100px #111;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+
+  @media (max-width: 768px) {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
 `;
 
 const HeaderContainerRow = styled(ContainerRow)`
@@ -21,6 +26,7 @@ const HeaderContainerRow = styled(ContainerRow)`
   display: flex;
   align-itens: center;
   justify-content: space-around;
+  width: 100%;
 `;
 
 export { MyHeader, HeaderContainerRow };

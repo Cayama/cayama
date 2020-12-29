@@ -2,9 +2,9 @@ import { DropdownButton } from '../layout/buttonGroup';
 import NavBarSettings from './navBarSettings/index';
 import { Ul } from './styles';
 
-const RightNav = () => {
+const RightNav = ({ open }) => {
   return (
-    <Ul>
+    <Ul open={open}>
       <li>
         <DropdownButton DropdownOptions={NavBarSettings} />
       </li>
