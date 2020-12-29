@@ -12,8 +12,7 @@ const MyHeader = styled.header`
   padding-bottom: 3px;
   flex-direction: column;
   background-color: white;
-  box-shadow: 0px 10px 100px #111;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.borderColor};
 
   @media (max-width: 768px) {
     padding-right: 5px;

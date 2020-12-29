@@ -40,13 +40,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, div#__next, div#general-container {
-    box-sizing: border-box;
+  html, body {
     height: 100vh;
     width: 100%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
     background-color: ${theme.colors.background};
   }
 
@@ -55,8 +51,8 @@ const GlobalStyle = createGlobalStyle`
     font: ${theme.colors.font1};
   }
 
-  .container {
-    width: 700px;
+  main {
+    margin-top: 23%;
   }
 
   @media ( min-width : 700px ) {
