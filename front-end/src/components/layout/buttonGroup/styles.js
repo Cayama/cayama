@@ -36,4 +36,9 @@ const NavBarDropDownBtn = styled.button`
   }
 `;
 
-export { SearchButtonStyle, TextButtonStyle, CardButtonStyle, NavBarDropDownBtn };
+const DropDownDiv = styled.div`
+  display: block;
+  flex-direction: column;
+`;
+
+export { SearchButtonStyle, TextButtonStyle, CardButtonStyle, NavBarDropDownBtn, DropDownDiv };
