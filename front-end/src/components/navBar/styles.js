@@ -14,11 +14,12 @@ const MyNavBar = styled.nav`
 const StyledBurguer = styled.div`
   width: 2rem;
   height: 2rem;
-
+  display: flex;
   top 15px;
   right: 20px;
   z-index: 20;
-  display: none;
+  justify-content: space-around;
+  flex-flow: column nowrap;
 
   div {
     width: 2rem;
@@ -43,14 +44,21 @@ const StyledBurguer = styled.div`
   }
 
   @media (max-width: 768px) {
-    display: flex;
-    justify-content: space-around;
-    flex-flow: column nowrap;
-    width: 1.6rem;
-    height: 1.6rem;
-
     div {
       width: 1.6rem;
+      margin-right: 5px;
+    }
+    height: 1.4rem;
+  }
+
+  @media (min-width: 1023px) {
+    height: 3.5rem;
+    width: 4.5rem;
+    margin-right: 15px;
+    div {
+      width: 4.5rem;
+      height: 0.5rem;
+      margin-right: 5px;
     }
   }
 `;

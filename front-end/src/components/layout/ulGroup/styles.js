@@ -9,7 +9,7 @@ const UlStyles = styled.ul`
     padding-right: 10px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     flex-flow: column nowrap;
     background: white;
     position: fixed;
@@ -23,10 +23,6 @@ const UlStyles = styled.ul`
 
     li {
       color: black;
-    }
-
-    li:first-of-type {
-      display: none;
     }
   }
 `;

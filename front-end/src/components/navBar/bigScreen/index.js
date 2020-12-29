@@ -1,14 +1,14 @@
 import React from 'react';
 import { MenuListComposition, SimpleMenu } from '../../layout/buttonGroup';
-import Li from '../../layout/liGroup';
+import Hidden from '@material-ui/core/Hidden';
 import navBarStructure from '../navBarSettings/navBarStructure';
 
 function DropDownMenuBigScreen() {
   return (
-    <Li>
+    <Hidden mdDown>
       <SimpleMenu linksDropdownArr={navBarStructure} userName='Jafet Henrique' />
-    </Li>
+    </Hidden>
   );
-}
+};
 
 export default DropDownMenuBigScreen;
