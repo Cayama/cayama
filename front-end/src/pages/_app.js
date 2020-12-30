@@ -1,4 +1,5 @@
 import App from 'next/app'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import store from '../redux/store/index';
@@ -41,7 +42,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body {
-    height: 100vh;
     width: 100%;
     background-color: ${theme.colors.background};
   }
@@ -52,7 +52,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    margin-top: 23%;
+    margin-top: 12vh;
+  }
+
+  header {
+    z-index: 20;
   }
 
   @media ( min-width : 700px ) {

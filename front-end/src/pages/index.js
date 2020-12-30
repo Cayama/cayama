@@ -3,8 +3,8 @@ import Head from '../infra/components/head';
 import { Title } from '../components/foundation/text';
 import Header from '../patterns/header';
 import Footer from '../patterns/footer';
-import { TextMobileStepper } from '../components/carrossel';
-import ShippingCard from '../components/layout/cardGroup';
+import { CarouselComponent, tutorialSteps } from '../components/carrossel';
+import { PromoCard } from '../components/cards';
 
 export default function Home() {
   return (
@@ -12,7 +12,9 @@ export default function Home() {
       <Head title='Home - Cayama' />
       <Header />
       <main>
-        <TextMobileStepper />
+        <CarouselComponent carouselImageArray={tutorialSteps} />
+        <PromoCard />
+
         <Paper>
           <Title>
             Categorias

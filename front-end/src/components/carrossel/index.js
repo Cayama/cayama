@@ -1,9 +1,5 @@
-import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Carousel from 'react-bootstrap/Carousel'
+import { CarouselImage } from './styles';
 
 const tutorialSteps = [
   {
@@ -33,58 +29,20 @@ const tutorialSteps = [
   },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: '100%',
-    flexGrow: 1,
-  },
-  img: {
-    height: '50%',
-    maxWidth: '100%',
-    width: '100%',
-  },
-}));
-
-function TextMobileStepper() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = tutorialSteps.length;
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
+const CarouselComponent = ({ carouselImageArray }) => {
   return (
-    <div className={classes.root}>
-      <img
-        className={classes.img}
-        src={tutorialSteps[activeStep].imgPath}
-        alt={tutorialSteps[activeStep].label}
-      />
-      <MobileStepper
-        variant="dots"
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-            {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-
-          </Button>
-        }
-      />
-    </div>
-  );
+    <Carousel>
+      {carouselImageArray.map(({ imgPath }, index) => (
+        <Carousel.Item key={index} interval={3500}>
+          <CarouselImage
+            className="d-block w-100"
+            src={imgPath}
+            alt="Carousel Image"
+          />
+        </Carousel.Item>
+      ))}
+    </Carousel>
+  )
 }
 
-export { TextMobileStepper };
+export { CarouselComponent, tutorialSteps };
