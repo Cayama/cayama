@@ -14,6 +14,8 @@ import Container from '@material-ui/core/Container';
 import { Copyright } from '../../components/copyRight';
 import SimplerHeader from '../../patterns/header/simplerHeader';
 import Box from '@material-ui/core/Box';
+import InfluencerRegisterOptions from './influencer/index';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,9 +46,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUpUser() {
   const classes = useStyles();
   const [isInfluencer, setIsInfluencer] = useState(false);
+  const [influencerRegister, setInfluencerRegister] = useState({
+    socialMedia: '',
+    contentType: '',
+    socialMediaName: '',
+    influencerLink: '',
+  });
   return (
     <div>
       <SimplerHeader />
@@ -59,6 +67,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <Link href='/register/store'>Registre uma empresa</Link>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -104,7 +113,7 @@ export default function SignUp() {
                   defaultValue="2001-05-24"
                   className={classes.textField}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true,FormControlLabel
                   }}
                 />
               </Grid>
@@ -141,6 +150,25 @@ export default function SignUp() {
                   type="password"
                   id="confirmPassword"
                   autoComplete="current-password"
+                />
+              </Grid>
+              {isInfluencer ?
+                <InfluencerRegisterOptions
+                  setInfluencerRegister={setInfluencerRegister}
+                  influencerRegister={influencerRegister}
+                />
+                :
+                null
+              }
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={isInfluencer}
+                      onChange={() => setIsInfluencer(!isInfluencer)}
+                      name="isInfluencer"
+                    />}
+                  label="Influencer"
                 />
               </Grid>
               <Grid item xs={12}>
