@@ -5,18 +5,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '../../infra/components/link';
+import Link from '../../../infra/components/link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Copyright } from '../../components/copyRight';
-import SimplerHeader from '../../patterns/header/simplerHeader';
+import { Copyright } from '../../../components/copyRight';
+import SimplerHeader from '../../../patterns/header/simplerHeader';
 import Box from '@material-ui/core/Box';
-import InfluencerRegisterOptions from './influencer/index';
-import Switch from '@material-ui/core/Switch';
-import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../components/checkbox';
+import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../../components/checkbox';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,18 +66,18 @@ export default function SignUpUser() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Link href='/register/store'>Registre uma empresa</Link>
+          <Link href='/register'>Registre uma conta pessoal</Link>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="storeName"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="Nome"
+                  id="storeName"
+                  label="Nome da loja"
                   autoFocus
                 />
               </Grid>
@@ -88,34 +86,10 @@ export default function SignUpUser() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="lastName"
-                  label="Sobrenome"
-                  name="lastName"
-                  autoComplete="lname"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="cpf"
-                  label="CPF"
+                  name="cnpj"
+                  label="CNPJ"
                   type="text"
-                  id="cpf"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="date"
-                  label="Birthday"
-                  type="date"
-                  name="birthDate"
-                  defaultValue="2001-05-24"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,FormControlLabel
-                  }}
+                  id="cnpj"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,25 +125,6 @@ export default function SignUpUser() {
                   type="password"
                   id="confirmPassword"
                   autoComplete="current-password"
-                />
-              </Grid>
-              {isInfluencer ?
-                <InfluencerRegisterOptions
-                  setInfluencerRegister={setInfluencerRegister}
-                  influencerRegister={influencerRegister}
-                />
-                :
-                null
-              }
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isInfluencer}
-                      onChange={() => setIsInfluencer(!isInfluencer)}
-                      name="isInfluencer"
-                    />}
-                  label="Influencer"
                 />
               </Grid>
               <Grid item xs={12}>
