@@ -1,21 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { MyNavBar } from './styles.js';
-import Ul from '../../components/layout/ulGroup';
-import DropDownMenuBigScreen from './bigScreen/index';
-import MenuSmallerScreen from './smallerScreen/menuSmallerScreen';
+import MenuBigScreen from './bigScreen/index';
+import MenuSmallerScreen from './smallerScreen/index';
+import Hidden from '@material-ui/core/Hidden';
 
 const NavBar = () => {
   const hamburgerOpen = useSelector((state) => state.hamburgerMenuReducer.status);
 
   return (
     <MyNavBar>
-      <Ul open={hamburgerOpen}>
-        <DropDownMenuBigScreen />
+      <Hidden mdDown>
+        <MenuBigScreen />
+      </Hidden>
+      <Hidden lgUp>
         <MenuSmallerScreen open={hamburgerOpen} />
-      </Ul>
+      </Hidden>
     </MyNavBar>
   );
-}
+};
 
 export default NavBar;

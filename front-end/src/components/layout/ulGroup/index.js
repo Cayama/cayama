@@ -1,12 +1,20 @@
 import React from 'react';
-import { UlStyles } from './styles';
+import { UlStylesBiggerScreenMenu, UlStylesSmallerScreenMenu } from './styles';
 
-const Ul = ({ children, open }) => {
+const UlSmallerScreenMenu = ({ children, open }) => {
   return (
-    <UlStyles open={open}>
+    <UlStylesSmallerScreenMenu open={open}>
       {children}
-    </UlStyles>
+    </UlStylesSmallerScreenMenu>
   );
 };
 
-export default Ul;
+const UlBiggerScreenMenu = ({ children }) => {
+  return (
+    <UlStylesBiggerScreenMenu>
+      {children}
+    </UlStylesBiggerScreenMenu>
+  );
+};
+
+export { UlSmallerScreenMenu, UlBiggerScreenMenu };

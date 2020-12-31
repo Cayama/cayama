@@ -51,7 +51,7 @@ const StyledBurguer = styled.div`
     height: 1.4rem;
   }
 
-  @media (min-width: 1023px) {
+  @media (min-width: 1025px) {
     height: 3.5rem;
     width: 4.5rem;
     margin-right: 15px;

@@ -3,7 +3,7 @@ import { ContainerRow } from '../../components/dataGrid';
 
 const MyHeader = styled.header`
   width: 100%;
-  height: 12%;
+  height: 12vh;
   position: fixed;
   top: 0;
   left: 0;
@@ -28,4 +28,8 @@ const HeaderContainerRow = styled(ContainerRow)`
   width: 100%;
 `;
 
-export { MyHeader, HeaderContainerRow };
+const SimplerHeaderContainerRow = styled(HeaderContainerRow)`
+  height: 100%;
+`;
+
+export { MyHeader, HeaderContainerRow, SimplerHeaderContainerRow };
