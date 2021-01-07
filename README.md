@@ -1,10 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is being done with NextJs, Redux, NodeJs and Express.
+
+In this Project we use some of the best programming practices such as MSC architecture, modularization, some SOLID principles, testing our code and more!
+
+Feel free to contact us in case of any suggestions or doubts. 
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
