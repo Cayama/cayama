@@ -37,7 +37,7 @@ const arrtest3 = [
       variant: 'body2',
     }
   ]},
-  { name:'Jafet3', links: [ 
+  { name:'Jafet3', links: [
     {
       color: 'inherit',
       href: 'https://www.cayama.com.br/',
@@ -94,7 +94,6 @@ const arrtest3 = [
 function Footer({ children }) {
   return (
     <MyFooter>
-      <MultiLinkSimpleAccordion linkArray={arrtest1} inverted={true}/>
       <MultiLinkComplexAccordion linkArray={arrtest3} inverted={false}/>
       <FooterContainer>
         <Typography variant="body1">Together we can go far beyond.</Typography>

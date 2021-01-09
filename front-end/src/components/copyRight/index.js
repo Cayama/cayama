@@ -10,7 +10,7 @@ function Copyright() {
         {'Copyright ©'}
         <Link color="inherit" href="https://cayama.com.br/">
           Cayama Marketplace
-        </Link>{' '}
+        </Link>
         {new Date().getFullYear()}
         {'.'}
       </CopyrightContainer>

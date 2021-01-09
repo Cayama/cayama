@@ -8,7 +8,6 @@ const MyFooter = styled.footer`
   bottom: 0px;
   marginTop: auto;
   padding: 3px 2px;
-  position: fixed;
   width: 100%;
 `;
 
