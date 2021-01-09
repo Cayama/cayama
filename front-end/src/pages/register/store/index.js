@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Link from '../../../infra/components/link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,6 +11,14 @@ import { Copyright } from '../../../components/copyRight';
 import SimplerHeader from '../../../patterns/header/simplerHeader';
 import Box from '@material-ui/core/Box';
 import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../../components/checkbox';
+import { SubmitFormButton } from '../../../components/layout/buttonGroup';
+import {
+  StoreNameInput,
+  CnpjInput,
+  EmailInput,
+  PasswordInput,
+  ConfirmPasswordInput
+} from '../../../components/layout/inputGroup'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,13 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpUser() {
   const classes = useStyles();
-  const [isInfluencer, setIsInfluencer] = useState(false);
-  const [influencerRegister, setInfluencerRegister] = useState({
-    socialMedia: '',
-    contentType: '',
-    socialMediaName: '',
-    influencerLink: '',
-  });
+
   return (
     <div>
       <SimplerHeader />
@@ -68,77 +68,32 @@ export default function SignUpUser() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="storeName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="storeName"
-                  label="Nome da loja"
-                  autoFocus
-                />
+                <StoreNameInput />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="cnpj"
-                  label="CNPJ"
-                  type="text"
-                  id="cnpj"
-                />
+                <CnpjInput />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  autoComplete="email"
-                />
+                <EmailInput />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
+                <PasswordInput />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirme o password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="current-password"
-                />
+                <ConfirmPasswordInput />
               </Grid>
               <Grid item xs={12}>
                 <MoreInfoCheckBox />
                 <PrivacyPolicyCheckBox />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
+            <SubmitFormButton
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              Sign Up
-            </Button>
+              Cadastre
+            </SubmitFormButton>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">

@@ -1,6 +1,7 @@
 import App from 'next/app'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { createMuiTheme, ThemeProvider as MaterialThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 import store from '../redux/store/index';
 
@@ -32,6 +33,8 @@ const theme = {
     button: 'Montserrat sans-serif'
   },
 };
+
+const materialUiTheme = createMuiTheme(theme);
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -77,11 +80,13 @@ export default class MyApp extends App {
     return (
       <>
         <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <Component {...pageProps} />
-          </Provider>
-        </ThemeProvider>
+        <MaterialThemeProvider theme={materialUiTheme}>
+          <ThemeProvider theme={theme}>
+            <Provider store={store}>
+              <Component {...pageProps} />
+            </Provider>
+          </ThemeProvider>
+        </MaterialThemeProvider>
       </>
     )
   }

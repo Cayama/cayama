@@ -106,8 +106,8 @@ function SimpleMenu({ linksDropdownArr, userName }) {
         transformOrigin={{vertical: 'top', horizontal: 'center'}}
       >
         {linksDropdownArr.map(({ url, name }) => (
-          <MenuItem onClick={handleClose}>
-            <Link key={name} href={url}>
+          <MenuItem key={name} onClick={handleClose}>
+            <Link href={url}>
               {name}
             </Link>
           </MenuItem>)
@@ -131,6 +131,26 @@ function ButtonsLink({ variant, color, href, text }) {
   );
 }
 
+const SubmitFormButton = ({ className, color, variant, children }) => {
+  return (
+    <Button
+      type="submit"
+      fullWidth
+      variant={variant}
+      color={color}
+      className={className}
+    >
+      {children}
+    </Button>
+  );
+};
 
-
-export { SearchButton, TextButton, CardButton, DropdownButton, SimpleMenu, ButtonsLink };
+export {
+  SearchButton,
+  TextButton,
+  CardButton,
+  DropdownButton,
+  SimpleMenu,
+  ButtonsLink,
+  SubmitFormButton,
+};

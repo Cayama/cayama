@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from '../../infra/components/link';
 import Grid from '@material-ui/core/Grid';
@@ -14,8 +13,18 @@ import { Copyright } from '../../components/copyRight';
 import SimplerHeader from '../../patterns/header/simplerHeader';
 import Box from '@material-ui/core/Box';
 import InfluencerRegisterOptions from './influencer/index';
-import Switch from '@material-ui/core/Switch';
 import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../components/checkbox';
+import { SubmitFormButton } from '../../components/layout/buttonGroup';
+import {
+  FirstNameInput,
+  LastNameInput,
+  CpfInput,
+  BirthDateInput,
+  EmailInput,
+  PasswordInput,
+  ConfirmPasswordInput,
+  SwitchInput,
+} from '../../components/layout/inputGroup';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -71,86 +80,25 @@ export default function SignUpUser() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Nome"
-                  autoFocus
-                />
+                <FirstNameInput />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Sobrenome"
-                  name="lastName"
-                  autoComplete="lname"
-                />
+                <LastNameInput />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="cpf"
-                  label="CPF"
-                  type="text"
-                  id="cpf"
-                />
+                <CpfInput />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  id="date"
-                  label="Birthday"
-                  type="date"
-                  name="birthDate"
-                  defaultValue="2001-05-24"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,FormControlLabel
-                  }}
-                />
+                <BirthDateInput className={classes.textField} formControlLabel={FormControlLabel} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  autoComplete="email"
-                />
+                <EmailInput />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
+                <PasswordInput />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirme o password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="current-password"
-                />
+                <ConfirmPasswordInput />
               </Grid>
               {isInfluencer ?
                 <InfluencerRegisterOptions
@@ -161,13 +109,10 @@ export default function SignUpUser() {
                 null
               }
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isInfluencer}
-                      onChange={() => setIsInfluencer(!isInfluencer)}
-                      name="isInfluencer"
-                    />}
+                <SwitchInput
+                  checked={isInfluencer}
+                  onChange={setIsInfluencer}
+                  name="isInfluencer"
                   label="Influencer"
                 />
               </Grid>
@@ -176,15 +121,13 @@ export default function SignUpUser() {
                 <PrivacyPolicyCheckBox />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
+            <SubmitFormButton
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              Sign Up
-            </Button>
+              Cadastre
+            </SubmitFormButton>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">

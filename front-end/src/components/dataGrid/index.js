@@ -14,4 +14,10 @@ const ContainerColumn = styled.div`
   flex-direction: column;
 `
 
-export { ContainerRow, ContainerColumn, ContainerRowButtons };
+const ProductsCardSection = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2vw;
+`
+
+export { ContainerRow, ContainerColumn, ContainerRowButtons, ProductsCardSection };

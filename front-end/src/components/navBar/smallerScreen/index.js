@@ -13,7 +13,7 @@ function MenuSmallerScreen({ open }) {
     <SmallerScreenMenuContainer open={open}>
       <SmallerScreenButtonsContainer>
         <ButtonsLink variant='contained' href='/login' text='Entre' color='primary' />
-        <ButtonsLink variant='outlined' href='/register' text='Criar conta' color='secundary' />
+        <ButtonsLink variant='outlined' href='/register' text='Criar conta' color='secondary' />
       </SmallerScreenButtonsContainer>
       <SimpleList
         onClick={() => dispatch(hamburgerMenuAction(!open))}
