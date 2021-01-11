@@ -7,7 +7,7 @@ const ShoppingCart = () => {
     <CartContainer>
       <RiShoppingCartLine color={'black'} size={27} />
     </CartContainer>
-  )
-}
+  );
+};
 
 export default ShoppingCart;

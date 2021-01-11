@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
@@ -11,6 +10,11 @@ import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined'
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import { CardContainer, CardContent, AllPromoCards } from './styles';
 import Link from '../../infra/components/link';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +22,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    alignContent: 'start',
     justifyContent: 'space-around',
     padding: '0.5vh',
   },
@@ -35,32 +38,36 @@ function PromoCard() {
 
   return (
     <AllPromoCards>
-      <CardContainer>
-        <Card className={classes.root} variant="outlined">
-          <MonetizationOnOutlinedIcon fontSize="large" />
-          <CardContent>
-            <Typography className={classes.title} color="textPrimary">
-              Comissão sempre!
-            </Typography>
-            <Link href='/settings/influencer'>
-              <Typography variant='body2' className={classes.link}>Ver mais</Typography>
-            </Link>
-          </CardContent>
-        </Card>
-      </CardContainer>
-      <CardContainer>
-        <Card className={classes.root} variant="outlined">
-          <CreditCardOutlinedIcon fontSize="large" />
-          <CardContent>
-            <Typography className={classes.title} color="textPrimary">
-              12x no cartão!
-            </Typography>
-            <Link href='/settings/payment-details'>
-              <Typography variant='body2' className={classes.link}>Ver mais</Typography>
-            </Link>
-          </CardContent>
-        </Card>
-      </CardContainer>
+      <Hidden>
+        <CardContainer>
+          <Card className={classes.root} variant="outlined">
+            <MonetizationOnOutlinedIcon fontSize="large" />
+            <CardContent>
+              <Typography className={classes.title} color="textPrimary">
+                Comissão sempre!
+              </Typography>
+              <Link href='/settings/influencer'>
+                <Typography variant='body2' className={classes.link}>Ver mais</Typography>
+              </Link>
+            </CardContent>
+          </Card>
+        </CardContainer>
+      </Hidden>
+      <Hidden>
+        <CardContainer>
+          <Card className={classes.root} variant="outlined">
+            <CreditCardOutlinedIcon fontSize="large" />
+            <CardContent>
+              <Typography className={classes.title} color="textPrimary">
+                12x no cartão!
+              </Typography>
+              <Link href='/settings/payment-details'>
+                <Typography variant='body2' className={classes.link}>Ver mais</Typography>
+              </Link>
+            </CardContent>
+          </Card>
+        </CardContainer>
+      </Hidden>
       <Hidden xsDown>
         <CardContainer>
           <Card className={classes.root} variant="outlined">
@@ -93,4 +100,53 @@ function PromoCard() {
   );
 }
 
-export { PromoCard };
+const useStylesProduct = makeStyles({
+  root: {
+    width: '46vw',
+    maxWidth: 230,
+    margin: '0 1vw 1vh 1vw',
+  },
+  media: {
+    height: 140,
+  },
+});
+
+const ProductCard = ({ productName, price, shipping, category, storeName }) => {
+  const classes = useStylesProduct();
+  // const productNameLink = productName.replaceAll(' ', '-').toLowerCase();
+
+  return (
+    <Card className={classes.root}>
+        <Link href={`/${category}/${productName}/${storeName}`}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80"
+              title="Contemplative Reptile"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h4" component="h2">
+                {price}
+              </Typography>
+              {shipping ? 'Frete Grátis' : null}
+              <Typography variant="body2" color="textSecondary" component="p">
+                {productName}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Link>
+      {/* <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions> */}
+    </Card>
+  );
+}
+
+
+
+export { PromoCard, ProductCard };

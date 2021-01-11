@@ -12,6 +12,15 @@ const ContainerRowButtons = styled(ContainerRow)`
 const ContainerColumn = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 5px;
+
 `
 
-export { ContainerRow, ContainerColumn, ContainerRowButtons };
+const ProductsCardSection = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1vw;
+`
+
+export { ContainerRow, ContainerColumn, ContainerRowButtons, ProductsCardSection };
