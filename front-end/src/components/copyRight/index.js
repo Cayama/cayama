@@ -5,16 +5,15 @@ import { CopyrightContainer } from './styles';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      <CopyrightContainer>
-        {'Copyright ©'}
-        <Link color="inherit" href="https://cayama.com.br/">
-          Cayama Marketplace
-        </Link>
-        {new Date().getFullYear()}
-        {'.'}
-      </CopyrightContainer>
-    </Typography>
+    <CopyrightContainer>
+      <Typography variant="body2" color="textSecondary" align="center">Copyright ©</Typography>
+      <Link color="inherit" href="https://cayama.com.br/">
+        Cayama Marketplace
+      </Link>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {`${new Date().getFullYear()}.`}
+      </Typography>
+    </CopyrightContainer>
   );
 }
 

@@ -7,6 +7,7 @@ const CopyrightContainer = styled.div`
   align-itens: center !important;
   text-align: center !important;
   padding: 0 10px 0 10px;
+  width: 300px;
 `;
 
 export { CopyrightContainer };

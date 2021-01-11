@@ -6,6 +6,8 @@ const MyHeader = styled.header`
   height: 12vh;
   position: fixed;
   top: 0;
+  transform: ${props => `translateY(${props.positionHeader})`};
+  transition: transform 0.5s ease-in-out;
   left: 0;
   display: flex;
   padding-left: 10px;

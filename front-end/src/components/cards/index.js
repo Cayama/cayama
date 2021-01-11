@@ -103,8 +103,8 @@ function PromoCard() {
 const useStylesProduct = makeStyles({
   root: {
     width: '46vw',
-    maxWidth: 235,
-    margin: '1vw',
+    maxWidth: 230,
+    margin: '0 1vw 1vh 1vw',
   },
   media: {
     height: 140,

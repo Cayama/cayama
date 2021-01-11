@@ -62,6 +62,26 @@ const GlobalStyle = createGlobalStyle`
     z-index: 20;
   }
 
+  h1 {
+    /* Extra small devices (phones, less than 768px) */
+    font-size: 30px;
+
+    /* Small devices (tablets, 768px and up) */
+    @media (min-width: 768px) {
+      font-size: 40px;
+    }
+
+    /* Medium devices (desktops, 992px and up) */
+    @media (min-width: 992px) {
+      font-size: 40px;
+    }
+
+    /* Large devices (large desktops, 1200px and up) */
+    @media (min-width: 1200px) {
+      font-size: 40px;
+    }
+  }
+
   @media ( min-width : 700px ) {
 
     html, body  {
@@ -75,6 +95,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default class MyApp extends App {
+  componentDidMount() {
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles && jssStyles.parentNode)
+      jssStyles.parentNode.removeChild(jssStyles)
+  }
+
   render() {
     const { Component, pageProps } = this.props
     return (

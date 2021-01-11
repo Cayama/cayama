@@ -12,12 +12,15 @@ const ContainerRowButtons = styled(ContainerRow)`
 const ContainerColumn = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 5px;
+
 `
 
 const ProductsCardSection = styled.section`
   display: flex;
   flex-wrap: wrap;
-  margin: 2vw;
+  justify-content: center;
+  margin: 1vw;
 `
 
 export { ContainerRow, ContainerColumn, ContainerRowButtons, ProductsCardSection };

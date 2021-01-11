@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     width: '60px !important',
     height: '5px !important',
   },
+  icons: {
+    padding: 0,
+  },
 }));
 
 function SimpleAccordion({ title, text }) {
@@ -86,14 +89,14 @@ function MultiLinkComplexAccordion({ linkArray, inverted }) {
       >
       </AccordionSummary>
       <AccordionDetails>
-        {linkArray.map((e) => (
-          <LinkcontainerAccordion>
-            <ContainerColumn>
-              <Typography variant='body1' color='blue'>{e.name}</Typography>
-              <MultiLink linkArray={e.links} />
-            </ContainerColumn>
-          </LinkcontainerAccordion>
+        <LinkcontainerAccordion>
+        {linkArray.map((e, index) => (
+          <ContainerColumn key={index}>
+            <Typography variant='body1' color='primary'>{e.name}</Typography>
+            <MultiLink linkArray={e.links} />
+          </ContainerColumn>
         ))}
+        </LinkcontainerAccordion>
       </AccordionDetails>
     </Accordion>
   );

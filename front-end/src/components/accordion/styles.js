@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const LinkcontainerAccordion = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: 20px 40px 20px 40px;
+  flex-wrap: wrap;
+  padding: 10px 20px 10px 20px;
 `;
 
 export { LinkcontainerAccordion };
