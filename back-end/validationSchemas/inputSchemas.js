@@ -58,11 +58,11 @@ const fieldsObjectManager = {
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   socialMedia: {
-    array: ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter'],
+    array: ['YouTube', 'Instagram', 'Facebook', 'TikTok', 'Twitter', 'Outra'],
     error: 'Mídia Social inserida não esta entre as opções',
   },
   contentType: {
-    array: ['Tecnologia', 'Moda', 'Fitness', 'Saúde'],
+    array: ['Moda', 'Moda Fitness', 'Maquiagem', 'Beleza', 'Life Style', 'Saúde', 'Outra'],
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   fieldSearch: {

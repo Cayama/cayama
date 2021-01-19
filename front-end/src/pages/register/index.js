@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router'
+import { userDataAction } from '../../redux/action/userDataAction';
+import { useDispatch } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,12 +61,23 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpUser() {
   const classes = useStyles();
   const [isInfluencer, setIsInfluencer] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newsAcceptance, setNewsAcceptance] = useState(false);
+  const [privacyAndTerms, setPrivacyAndTerms] = useState(false);
+
   const [influencerRegister, setInfluencerRegister] = useState({
     socialMedia: '',
     contentType: '',
     socialMediaName: '',
     influencerLink: '',
   });
+
   return (
     <div>
       <SimplerHeader />
@@ -80,25 +94,25 @@ export default function SignUpUser() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <FirstNameInput />
+                <FirstNameInput setFirstName={setFirstName}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LastNameInput />
+                <LastNameInput setLastName={setLastName}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CpfInput />
+                <CpfInput setCpf={setCpf} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <BirthDateInput className={classes.textField} formControlLabel={FormControlLabel} />
+                <BirthDateInput setBirthday={setBirthday} className={classes.textField} formControlLabel={FormControlLabel} />
               </Grid>
               <Grid item xs={12}>
-                <EmailInput />
+                <EmailInput setEmail={setEmail} />
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput />
+                <PasswordInput setPassword={setPassword} />
               </Grid>
               <Grid item xs={12}>
-                <ConfirmPasswordInput />
+                <ConfirmPasswordInput setConfirmPassword={setConfirmPassword} />
               </Grid>
               {isInfluencer ?
                 <InfluencerRegisterOptions
@@ -117,8 +131,8 @@ export default function SignUpUser() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <MoreInfoCheckBox />
-                <PrivacyPolicyCheckBox />
+                <MoreInfoCheckBox checked={newsAcceptance} setNewsAcceptance={setNewsAcceptance} />
+                <PrivacyPolicyCheckBox checked={privacyAndTerms} setPrivacyAndTerms={setPrivacyAndTerms} />
               </Grid>
             </Grid>
             <SubmitFormButton

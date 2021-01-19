@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const MyNavBar = styled.nav`
   display: flex;
-  overflow: hidden;
   width: 100%;
   height: 30%;
   justify-content: space-between;
@@ -63,4 +62,10 @@ const StyledBurguer = styled.div`
   }
 `;
 
-export { MyNavBar, StyledBurguer };
+const ShippingAddressContainer = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export { MyNavBar, StyledBurguer, ShippingAddressContainer };

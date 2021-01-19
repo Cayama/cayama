@@ -2,7 +2,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
-const FirstNameInput = () => {
+const FirstNameInput = ({ setFirstName }) => {
   return (
     <TextField
     autoComplete="fname"
@@ -13,11 +13,12 @@ const FirstNameInput = () => {
     id="firstName"
     label="Nome"
     autoFocus
+    onChange={(e) => setFirstName(e.target.value)}
     />
   );
 };
 
-const LastNameInput = () => {
+const LastNameInput = ({ setLastName }) => {
   return (
     <TextField
       variant="outlined"
@@ -27,11 +28,12 @@ const LastNameInput = () => {
       label="Sobrenome"
       name="lastName"
       autoComplete="lname"
+      onChange={(e) => setLastName(e.target.value)}
     />
   );
 };
 
-const CpfInput = () => {
+const CpfInput = ({ setCpf }) => {
   return (
     <TextField
       variant="outlined"
@@ -41,11 +43,12 @@ const CpfInput = () => {
       label="CPF"
       type="text"
       id="cpf"
+      onChange={(e) => setCpf(e.target.value)}
     />
   );
 };
 
-const BirthDateInput = ({ className, formControlLabel }) => {
+const BirthDateInput = ({ className, formControlLabel, setBirthday }) => {
   return (
     <TextField
       id="date"
@@ -57,11 +60,12 @@ const BirthDateInput = ({ className, formControlLabel }) => {
       InputLabelProps={{
         shrink: true,formControlLabel
       }}
+      onChange={(e) => setBirthday(e.target.value)}
     />
   );
 };
 
-const EmailInput = () => {
+const EmailInput = ({ setEmail }) => {
   return (
     <TextField
       variant="outlined"
@@ -71,11 +75,12 @@ const EmailInput = () => {
       label="Email"
       name="email"
       autoComplete="email"
+      onChange={(e) => setEmail(e.target.value)}
     />
   );
 };
 
-const PasswordInput = () => {
+const PasswordInput = ({ setPassword }) => {
   return (
     <TextField
       variant="outlined"
@@ -86,11 +91,12 @@ const PasswordInput = () => {
       type="password"
       id="password"
       autoComplete="current-password"
+      onChange={(e) => setPassword(e.target.value)}
     />
   );
 };
 
-const ConfirmPasswordInput = () => {
+const ConfirmPasswordInput = ({ setConfirmPassword }) => {
   return (
     <TextField
       variant="outlined"
@@ -101,6 +107,7 @@ const ConfirmPasswordInput = () => {
       type="password"
       id="confirmPassword"
       autoComplete="current-password"
+      onChange={(e) => setConfirmPassword(e.target.value)}
     />
   );
 };

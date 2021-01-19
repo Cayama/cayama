@@ -12,8 +12,7 @@ const ContainerRowButtons = styled(ContainerRow)`
 const ContainerColumn = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 5px;
-
+  margin: 0px 10px 0px 10px;
 `
 
 const ProductsCardSection = styled.section`

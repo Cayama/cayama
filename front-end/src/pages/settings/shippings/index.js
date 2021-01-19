@@ -5,7 +5,8 @@ import { MySettingsShipping } from './styles';
 import Footer from '../../../patterns/footer';
 import Header from '../../../patterns/header'
 import Head from '../../../infra/components/head';
-import { TextButton } from '../../../components/layout/buttonGroup';
+import { ShippingCard } from '../../../components/cards';
+
 
 const SettingsShippings = () => {
   const router = useRouter();
@@ -37,8 +38,24 @@ const SettingsShippings = () => {
       <Head title='Fretes' />
       <Header />
       <MySettingsShipping>
-        <span>Melhor Envio</span>
-        <TextButton text='Autorizar' onClick={() => router.push('https://sandbox.melhorenvio.com.br/oauth/authorize?client_id=1119&redirect_uri=https://afb66f75ea16.ngrok.io/settings/shippings&response_type=code&scope=cart-read')}/>
+        <ShippingCard
+          src='https://cayama-upload.s3.amazonaws.com/d4d2cc50c72532aab0d45edd7f787cac-Stella-Artois-275ml.jpg'
+          shippingName="Melhor Envio"
+          authorizationRoute='https://sandbox.melhorenvio.com.br/oauth/authorize?client_id=1119&redirect_uri=https://afb66f75ea16.ngrok.io/settings/shippings/melhor-envio&response_type=code&scope=cart-read'
+          briefing='Melhor envio é uma empresa que gerencia seus fretes com um custo bem abaixo devido ao volume'
+        />
+        <ShippingCard
+          src='https://cayama-upload.s3.amazonaws.com/d4d2cc50c72532aab0d45edd7f787cac-Stella-Artois-275ml.jpg'
+          shippingName="Melhor Envio"
+          authorizationRoute='https://sandbox.melhorenvio.com.br/oauth/authorize?client_id=1119&redirect_uri=https://afb66f75ea16.ngrok.io/settings/shippings/melhor-envio&response_type=code&scope=cart-read'
+          briefing='Melhor envio é uma empresa que gerencia seus fretes com um custo bem abaixo devido ao volume'
+        />
+        <ShippingCard
+          src='https://cayama-upload.s3.amazonaws.com/d4d2cc50c72532aab0d45edd7f787cac-Stella-Artois-275ml.jpg'
+          shippingName="Melhor Envio"
+          authorizationRoute='https://sandbox.melhorenvio.com.br/oauth/authorize?client_id=1119&redirect_uri=https://afb66f75ea16.ngrok.io/settings/shippings/melhor-envio&response_type=code&scope=cart-read'
+          briefing='Melhor envio é uma empresa que gerencia seus fretes com um custo bem abaixo devido ao volume'
+        />
       </MySettingsShipping>
       <Footer />
     </div>

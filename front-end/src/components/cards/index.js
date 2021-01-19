@@ -1,17 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
-import { CardContainer, CardContent, AllPromoCards } from './styles';
+import { CardContainer, CardContent, AllPromoCards, BriefingContainer, ActionsContainer, ShippingTitle } from './styles';
 import Link from '../../infra/components/link';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 
@@ -101,7 +99,7 @@ function PromoCard() {
 }
 
 const useStylesProduct = makeStyles({
-  root: {
+  productCardroot: {
     width: '46vw',
     maxWidth: 230,
     margin: '0 1vw 1vh 1vw',
@@ -116,7 +114,7 @@ const ProductCard = ({ productName, price, shipping, category, storeName }) => {
   // const productNameLink = productName.replaceAll(' ', '-').toLowerCase();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.productCardroot}>
         <Link href={`/${category}/${productName}/${storeName}`}>
           <CardActionArea>
             <CardMedia
@@ -147,6 +145,59 @@ const ProductCard = ({ productName, price, shipping, category, storeName }) => {
   );
 }
 
+const useStylesShipping = makeStyles({
+  shippingCardroot: {
+    width: '46vw',
+    maxWidth: 230,
+    margin: '0 1vw 1vh 1vw',
+    padding: 5,
+  },
+  shippingMedia: {
+    height: 110,
+  },
+});
+
+const ShippingCard = ({ src, shippingName, authorizationRoute, briefing }) => {
+  const classes = useStylesShipping();
+  // const shippingNameLink = shippingName.replaceAll(' ', '-').toLowerCase();
+
+  return (
+    <Card className={classes.shippingCardroot}>
+      <Link href={`/settings/shippings/${shippingName}`}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.shippingMedia}
+            image={src}
+            title={shippingName}
+          />
+          <CardContent>
+            <ShippingTitle>
+              {shippingName}
+            </ShippingTitle>
+            <BriefingContainer>
+              {briefing}
+            </BriefingContainer>
+          </CardContent>
+        </CardActionArea>
+      </Link>
+      <ActionsContainer>
+        <Link href={authorizationRoute}>
+          <Button className={classes.shippingButtons} variant="contained" size="small" color="primary">
+            Autorizar
+          </Button>
+        </Link>
+        <Hidden mdDown>
+          <Link href={`/settings/shippings/${shippingName}`}>
+            <Button size="small" color="primary">
+              Saiba Mais
+            </Button>
+          </Link>
+        </Hidden>
+      </ActionsContainer>
+    </Card>
+  );
+}
 
 
-export { PromoCard, ProductCard };
+
+export { PromoCard, ProductCard, ShippingCard };

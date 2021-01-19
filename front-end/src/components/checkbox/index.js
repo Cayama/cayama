@@ -1,31 +1,42 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-const MoreInfoCheckBox = () => {
+const MoreInfoCheckBox = ({ setNewsAcceptance, checked }) => {
   return (
     <FormControlLabel
-      control={<Checkbox value="allowExtraEmails" color="primary" />}
+      control={
+        <Checkbox
+          onChange={() => setNewsAcceptance(!checked)}
+          value="allowExtraEmails"
+          color="primary"
+        />
+      }
       label="Quero receber informações, propagandas e novidades via email."
     />
   );
 };
 
-const PrivacyPolicyCheckBox = () => {
+const PrivacyPolicyCheckBox = ({ setPrivacyAndTerms, checked }) => {
   return (
     <FormControlLabel
-      control={<Checkbox value="privacyPolicy" color="primary" />}
+      control={
+        <Checkbox
+          onChange={() => setPrivacyAndTerms(!checked)}
+          value="privacyPolicy"
+          color="primary"
+        />
+      }
       label={
         <div>
-            <span>Concordo com as </span>
-            <a href={'/privacy-policy'}>políticas de privacidade</a>
-            <span> e com os </span>
-            <a href={'/terms-of-use'}>termos de uso</a>
-            <span> da Cayama </span>
+          <span>Concordo com as </span>
+          <a href={"/privacy-policy"}>políticas de privacidade</a>
+          <span> e com os </span>
+          <a href={"/terms-of-use"}>termos de uso</a>
+          <span> da Cayama </span>
         </div>
       }
     />
   );
 };
 
-
-export { MoreInfoCheckBox, PrivacyPolicyCheckBox }
+export { MoreInfoCheckBox, PrivacyPolicyCheckBox };
