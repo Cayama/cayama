@@ -82,7 +82,9 @@ const userLogin = rescue(async (req, res, next) => {
 
   const token = createJwtToken(user);
 
-  return res.status(200).json({ token });
+  const userData = { firstName: user.firstName, addresses: user.addresses };
+
+  return res.status(200).json({ token, userData });
 });
 
 const updateUserToInfluencer = rescue(async (req, res, next) => {

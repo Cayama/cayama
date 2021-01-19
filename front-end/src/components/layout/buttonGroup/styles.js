@@ -37,7 +37,7 @@ const NavBarDropDownBtn = styled.button`
 `;
 
 const DropDownDiv = styled.div`
-  display: block;
+  display: flex;
   flex-direction: column;
 `;
 

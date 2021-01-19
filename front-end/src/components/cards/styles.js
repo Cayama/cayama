@@ -21,4 +21,25 @@ const CardContent = styled.div`
   display: flex;
 `;
 
-export { CardContainer, CardContent, AllPromoCards };
+const BriefingContainer = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 66px;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+`;
+
+const ActionsContainer = styled.div`
+  display: flex;
+  margin: 8px;
+  justify-content: space-between;
+`;
+
+const ShippingTitle = styled.h4`
+  @media screen and ( min-width : 700px ) {
+    font-size: 3.2em;
+  }
+`;
+
+export { CardContainer, CardContent, AllPromoCards, BriefingContainer, ActionsContainer, ShippingTitle };

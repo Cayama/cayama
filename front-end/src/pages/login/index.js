@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router'
+import { userDataAction } from '../../redux/action/userDataAction';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -47,6 +51,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [errorLogin, setErrorLogin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useRouter();
+  const dispatch = useDispatch();
+
+  const submitLogin = (e) => {
+    e.preventDefault();
+    return axios
+    .post(process.env.NEXT_PUBLIC_URL_LOGIN, {
+      email,
+      password
+    })
+    .then((res) => {
+      if (!res) return setErrorLogin('Sem conexação')
+      localStorage.setItem('token', res.data.token);
+      console.log(res)
+      dispatch(userDataAction(res.data.userData))
+      return history.push('/');
+    })
+    .catch((res) => console.log(res))
+  }
 
   return (
     <div>
@@ -71,6 +97,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -82,6 +109,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
@@ -89,6 +117,7 @@ export default function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e) => submitLogin(e)}
             >
               Entrar
             </Button>
