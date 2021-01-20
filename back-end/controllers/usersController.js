@@ -66,7 +66,9 @@ const registerUser = rescue(async (req, res, next) => {
 
   const token = createJwtToken(newUser);
 
-  return res.status(201).json({ token });
+  const userData = { firstName, addresses };
+
+  return res.status(201).json({ token, userData });
 });
 
 const userLogin = rescue(async (req, res, next) => {
