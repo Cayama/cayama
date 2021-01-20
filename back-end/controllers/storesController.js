@@ -13,7 +13,7 @@ const { validateSchemas } = require('../services/schemasService');
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-
+  console.log(req.body)
   validateSchemas(next, storeRegisterSchema, {
     storeName,
     email,
@@ -35,7 +35,9 @@ const registerStore = rescue(async (req, res, next) => {
 
   const token = createJwtToken(newStore);
 
-  return res.status(201).json({ token });
+  const userData = { firstName: storeName, addresses: [] };
+
+  return res.status(201).json({ token, userData });
 });
 
 const registerProduct = rescue(async (req, res, next) => {

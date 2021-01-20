@@ -7,7 +7,7 @@ const storesRoutes = Router();
 
 module.exports = (io) => {
   storesRoutes
-    .post(registerStore, redirectMiddleware, controllers.storesController.registerStore)
+    .post(registerStore, controllers.storesController.registerStore)
     .post('/register-product',
       jwtMiddleware,
       multerMiddleware.array('productImages', 10),
