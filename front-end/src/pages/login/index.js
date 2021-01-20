@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [errorLogin, setErrorLogin] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useRouter();
@@ -60,18 +60,22 @@ export default function SignIn() {
   const submitLogin = (e) => {
     e.preventDefault();
     return axios
-    .post(process.env.NEXT_PUBLIC_URL_LOGIN, {
-      email,
-      password
-    })
-    .then((res) => {
-      if (!res) return setErrorLogin('Sem conexação')
-      localStorage.setItem('token', res.data.token);
-      console.log(res)
-      dispatch(userDataAction(res.data.userData))
-      return history.push('/');
-    })
-    .catch((res) => console.log(res))
+      .post(process.env.NEXT_PUBLIC_URL_LOGIN, {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (!res) return setLoginError('Sem conexação')
+        localStorage.setItem('token', res.data.token);
+        console.log(res)
+        dispatch(userDataAction(res.data.userData))
+        return history.push('/');
+      })
+      .catch(({ response }) => {
+        console.log(response)
+        if (!response) return setLoginError('Sem conexação');
+        setLoginError(response.data.err.message);
+      })
   }
 
   return (
@@ -136,6 +140,7 @@ export default function SignIn() {
               </div>
             </Grid>
           </form>
+          {loginError ? <div>{loginError}</div> : null}
         </Paper>
       </Container>
       <Box className={classes.footer} mt={3}>

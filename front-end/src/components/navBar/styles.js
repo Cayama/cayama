@@ -62,10 +62,14 @@ const StyledBurguer = styled.div`
   }
 `;
 
-const ShippingAddressContainer = styled.div`
+const ShippingAddressText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export { MyNavBar, StyledBurguer, ShippingAddressContainer };
+const ShippingAddressContainer = styled.div`
+  width: 15vw;
+`;
+
+export { MyNavBar, StyledBurguer, ShippingAddressContainer, ShippingAddressText };

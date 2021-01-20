@@ -14,11 +14,11 @@ const BiggerScreenMenuContainer = styled.div`
 `;
 
 const BiggerScreenMenuContainerStart = styled.div`
-  width: 20vw;
+  width: 15vw;
 `;
 
 const BiggerScreenMenuContainerCenter = styled.div`
-  width: 40vw;
+  width: 30vw;
 `;
 
 const BiggerScreenMenuContainerEnd = styled.div`
@@ -27,9 +27,16 @@ const BiggerScreenMenuContainerEnd = styled.div`
   justify-content: space-between;
 `;
 
+const LoginRegisterContainer = styled.div`
+  display: flex;
+  width: 20vw;
+  justify-content: space-around;
+`;
+
 export {
   BiggerScreenMenuContainer,
   BiggerScreenMenuContainerEnd,
   BiggerScreenMenuContainerStart,
-  BiggerScreenMenuContainerCenter
+  BiggerScreenMenuContainerCenter,
+  LoginRegisterContainer,
 };

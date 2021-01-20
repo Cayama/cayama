@@ -8,6 +8,7 @@ import {
   BiggerScreenMenuContainerEnd,
   BiggerScreenMenuContainerStart,
   BiggerScreenMenuContainerCenter,
+  LoginRegisterContainer,
 } from './styles';
 
 function MenuBigScreen({ userName }) {
@@ -19,9 +20,12 @@ function MenuBigScreen({ userName }) {
       <BiggerScreenMenuContainerCenter>
       </BiggerScreenMenuContainerCenter>
       <BiggerScreenMenuContainerEnd>
-        <DropDownMenu linksDropdownArr={navBarStructure} userName={userName} />
-        <Link href='/login'>Entre</Link>
-        <Link href='/register'>Criar conta</Link>
+        {userName ? <DropDownMenu linksDropdownArr={navBarStructure} userName={userName} /> :
+          <LoginRegisterContainer>
+            <Link href='/login'>Entre</Link>
+            <Link href='/register'>Criar conta</Link>
+          </LoginRegisterContainer>
+        }
       </BiggerScreenMenuContainerEnd>
     </BiggerScreenMenuContainer>
   );

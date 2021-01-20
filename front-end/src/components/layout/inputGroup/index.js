@@ -57,9 +57,9 @@ const BirthDateInput = ({ className, formControlLabel, setBirthday }) => {
       name="birthDate"
       defaultValue="2001-05-24"
       className={className}
-      InputLabelProps={{
-        shrink: true,formControlLabel
-      }}
+      // InputLabelProps={{
+      //   shrink: true,formControlLabel
+      // }}
       onChange={(e) => setBirthday(e.target.value)}
     />
   );
@@ -126,7 +126,7 @@ const SwitchInput = ({ checked, onChange, name, label }) => {
   );
 };
 
-const StoreNameInput = () => {
+const StoreNameInput = ({ setStoreName }) => {
   return (
     <TextField
       autoComplete="fname"
@@ -137,11 +137,12 @@ const StoreNameInput = () => {
       id="storeName"
       label="Nome da loja"
       autoFocus
+      onChange={(e) => setStoreName(e.target.value)}
     />
   );
 };
 
-const CnpjInput = () => {
+const CnpjInput = ({ setCnpj }) => {
   return (
     <TextField
       variant="outlined"
@@ -151,6 +152,7 @@ const CnpjInput = () => {
       label="CNPJ"
       type="text"
       id="cnpj"
+      onChange={(e) => setCnpj(e.target.value)}
     />
   );
 };
