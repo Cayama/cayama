@@ -1,7 +1,7 @@
 import React from 'react';
 import { DropDownContainer, DropDownContent } from './styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { SimpleList } from '../../components/layout/listGroup'
+import { NavBarDropDown } from '../../components/layout/listGroup'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +18,7 @@ function DropDownMenu({ userName, linksDropdownArr }) {
     <DropDownContainer>
       <div className={classes.button}>{userName} <ExpandMoreIcon /></div>
       <DropDownContent>
-        <SimpleList
+        <NavBarDropDown
           navBarStructure={linksDropdownArr}
         />
       </DropDownContent>

@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router'
+import { userDataAction } from '../../../redux/action/userDataAction';
+import { useDispatch } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '../../../infra/components/link';
 import Grid from '@material-ui/core/Grid';
@@ -49,9 +54,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpUser() {
+export default function SignUpStore() {
   const classes = useStyles();
+  const [registerError, setRegisterError] = useState('');
+  const [storeName, setStoreName] = useState('');
+  const [cnpj, setCnpj] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newsAcceptance, setNewsAcceptance] = useState(false);
+  const [privacyAndTerms, setPrivacyAndTerms] = useState(false);
+  const history = useRouter();
+  const dispatch = useDispatch();
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
+    return axios
+      .post(process.env.NEXT_PUBLIC_URL_STORE_REGISTER, {
+        storeName,
+        cnpj,
+        email,
+        password,
+        confirmPassword,
+        newsAcceptance,
+        privacyAndTerms,
+      })
+      .then((res) => {
+        console.log('1')
+        if (!res) return setLoginError('Sem conexação')
+        localStorage.setItem('token', res.data.token);
+        console.log(res)
+        dispatch(userDataAction(res.data.userData))
+        return history.push('/');
+      })
+      .catch(({ response }) => {
+        console.log('2')
+        console.log(response)
+        if (!response) return setRegisterError('Sem conexação');
+        setRegisterError(response.data.err.message);
+      })
+  }
   return (
     <div>
       <SimplerHeader />
@@ -65,35 +108,40 @@ export default function SignUpUser() {
             Preencha com os dados da sua empresa
           </Typography>
           <Link href='/register'>Registre uma conta pessoal</Link>
+          {registerError ? <div>{registerError}</div> : null}
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <StoreNameInput />
+                <StoreNameInput setStoreName={setStoreName} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CnpjInput />
+                <CnpjInput setCnpj={setCnpj} />
               </Grid>
               <Grid item xs={12}>
-                <EmailInput />
+                <EmailInput setEmail={setEmail} />
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput />
+                <PasswordInput setPassword={setPassword} />
               </Grid>
               <Grid item xs={12}>
-                <ConfirmPasswordInput />
+                <ConfirmPasswordInput setConfirmPassword={setConfirmPassword} />
               </Grid>
               <Grid item xs={12}>
-                <MoreInfoCheckBox />
-                <PrivacyPolicyCheckBox />
+                <MoreInfoCheckBox setNewsAcceptance={setNewsAcceptance} />
+                <PrivacyPolicyCheckBox setPrivacyAndTerms={setPrivacyAndTerms} />
               </Grid>
             </Grid>
-            <SubmitFormButton
+            <Button
+              type="submit"
+              disabled={!privacyAndTerms}
+              fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e) => handleRegister(e)}
             >
               Cadastre
-            </SubmitFormButton>
+            </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">

@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const iconChooser = {
   inboxIcon: <InboxIcon />,
@@ -23,8 +24,12 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-function SimpleList({ onClick, navBarStructure }) {
+function NavBarDropDown({ onClick, navBarStructure }) {
   const classes = useStyles();
+
+  const cleanUser = () => {
+    localStorage.removeItem('token');
+  };
 
   return (
     <div className={classes.root}>
@@ -40,9 +45,16 @@ function SimpleList({ onClick, navBarStructure }) {
             <Divider />
           </div>
         ))}
+        <Divider />
+        <ListItemLink onClick={cleanUser} href='/'>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary='Sair' />
+        </ListItemLink>
       </List>
     </div>
   );
 }
 
-export { SimpleList };
+export { NavBarDropDown };

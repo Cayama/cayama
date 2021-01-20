@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useRouter } from 'next/router'
 import { userDataAction } from '../../redux/action/userDataAction';
 import { useDispatch } from 'react-redux';
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpUser() {
   const classes = useStyles();
+  const [registerError, setRegisterError] = useState('');
   const [isInfluencer, setIsInfluencer] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -70,6 +72,8 @@ export default function SignUpUser() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newsAcceptance, setNewsAcceptance] = useState(false);
   const [privacyAndTerms, setPrivacyAndTerms] = useState(false);
+  const history = useRouter();
+  const dispatch = useDispatch();
 
   const [influencerRegister, setInfluencerRegister] = useState({
     socialMedia: '',
@@ -77,6 +81,36 @@ export default function SignUpUser() {
     socialMediaName: '',
     influencerLink: '',
   });
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
+    return axios
+      .post(process.env.NEXT_PUBLIC_URL_REGISTER, {
+        firstName,
+        lastName,
+        cpf,
+        birthday,
+        email,
+        password,
+        confirmPassword,
+        newsAcceptance,
+        privacyAndTerms,
+        influencerRegister,
+      })
+      .then((res) => {
+        if (!res) return setLoginError('Sem conexação')
+        localStorage.setItem('token', res.data.token);
+        console.log(res)
+        dispatch(userDataAction(res.data.userData))
+        return history.push('/');
+      })
+      .catch(({ response }) => {
+        console.log(response)
+        if (!response) return setRegisterError('Sem conexação');
+        setRegisterError(response.data.err.message);
+      })
+  }
 
   return (
     <div>
@@ -91,6 +125,7 @@ export default function SignUpUser() {
             Preencha com seus dados pessoais
           </Typography>
           <Link href='/register/store'>Registre uma empresa</Link>
+          {registerError ? <div>{registerError}</div> : null}
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -103,7 +138,7 @@ export default function SignUpUser() {
                 <CpfInput setCpf={setCpf} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <BirthDateInput setBirthday={setBirthday} className={classes.textField} formControlLabel={FormControlLabel} />
+                <BirthDateInput setBirthday={setBirthday} className={classes.textField} />
               </Grid>
               <Grid item xs={12}>
                 <EmailInput setEmail={setEmail} />
@@ -135,13 +170,17 @@ export default function SignUpUser() {
                 <PrivacyPolicyCheckBox checked={privacyAndTerms} setPrivacyAndTerms={setPrivacyAndTerms} />
               </Grid>
             </Grid>
-            <SubmitFormButton
+            <Button
+              type="submit"
+              disabled={!privacyAndTerms}
+              fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e) => handleRegister(e)}
             >
               Cadastre
-            </SubmitFormButton>
+            </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
