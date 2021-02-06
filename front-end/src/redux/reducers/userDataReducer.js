@@ -1,7 +1,9 @@
 import { USER_DATA } from '../action/userDataAction';
 
 const INITIAL_STATE = {
-  userData: {}
+  userData: {
+    addresses: [],
+  }
 };
 
 const userDataReducer = (state = INITIAL_STATE, action) => {
