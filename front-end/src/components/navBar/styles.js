@@ -66,6 +66,11 @@ const ShippingAddressText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 25vw;
+
+  @media (max-width: 768px) {
+    width: 50vw;
+  }
 `;
 
 const ShippingAddressContainer = styled.div`

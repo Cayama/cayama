@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Head from '../infra/components/head';
 import Header from '../patterns/header';
 import Footer from '../patterns/footer';

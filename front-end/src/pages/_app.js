@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { createMuiTheme, ThemeProvider as MaterialThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
-import store from '../redux/store/index';
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from '../redux/store/index';
 
 const theme = {
   colors: {
@@ -109,7 +110,9 @@ export default class MyApp extends App {
         <MaterialThemeProvider theme={materialUiTheme}>
           <ThemeProvider theme={theme}>
             <Provider store={store}>
-              <Component {...pageProps} />
+              <PersistGate loading={null} persistor={persistor}>
+                <Component {...pageProps} />
+              </PersistGate>
             </Provider>
           </ThemeProvider>
         </MaterialThemeProvider>

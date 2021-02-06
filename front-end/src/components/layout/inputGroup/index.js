@@ -157,6 +157,84 @@ const CnpjInput = ({ setCnpj }) => {
   );
 };
 
+const ProductNameInput = ({ setProductName }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name="name"
+      label="Nome do produto"
+      type="text"
+      id="name"
+      onChange={(e) => setProductName(e.target.value)}
+    />
+  );
+};
+
+const ProductColorInput = ({ setProductColor }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name="color"
+      label="Cores do produto"
+      type="text"
+      id="color"
+      onChange={(e) => setProductColor(e.target.value)}
+    />
+  );
+};
+
+const ProductBrandInput = ({ setBrand }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name="brand"
+      label="Marca"
+      type="text"
+      id="brand"
+      onChange={(e) => setBrand(e.target.value)}
+    />
+  );
+};
+
+const ProductDescriptionInput = ({ setDescription }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      multiline
+      rows={10}
+      name="description"
+      label="Descrição"
+      type="text"
+      id="description"
+      // onChange={(e) => setDescription(e.target.value)}
+    />
+  );
+};
+
+const ProductSizeInput = ({ setSize, size }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name="size"
+      label="Tamanho"
+      type="text"
+      id="size"
+      value={size}
+      onChange={(e) => setSize(e.target.value)}
+    />
+  );
+};
+
 export {
   FirstNameInput,
   LastNameInput,
@@ -168,4 +246,9 @@ export {
   SwitchInput,
   StoreNameInput,
   CnpjInput,
+  ProductNameInput,
+  ProductColorInput,
+  ProductBrandInput,
+  ProductDescriptionInput,
+  ProductSizeInput,
 };
