@@ -102,7 +102,7 @@ const useStylesProduct = makeStyles({
   productCardroot: {
     width: '46vw',
     maxWidth: 230,
-    margin: '0 1vw 1vh 1vw',
+    margin: '1vw 1vw 1vh 1vw',
   },
   media: {
     height: 140,

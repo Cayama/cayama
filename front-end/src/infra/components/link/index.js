@@ -3,9 +3,9 @@ import NextLink from 'next/link';
 
 import { MyLink } from './styles';
 
-const Link = ({ href, children, onClick }) => {
+const Link = ({ href, children, onClick, color }) => {
   return (
-    <MyLink onClick={onClick}>
+    <MyLink color={color} onClick={onClick}>
       <NextLink href={href}>
         {children}
       </NextLink>
