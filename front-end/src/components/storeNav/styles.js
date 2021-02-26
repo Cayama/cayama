@@ -17,17 +17,4 @@ const StoreNavContent = styled.nav`
   }
 `;
 
-const StoreNavLinksContainer = styled.div`
-  height: 5vh;
-  background-color: red;
-  grid-column-start: 2;
-  grid-column-end: 13;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-const StoreCategoriesContainer = styled.div`
-`;
-
-export { StoreNavContent, StoreNavLinksContainer, StoreCategoriesContainer };
+export { StoreNavContent };

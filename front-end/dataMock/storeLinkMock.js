@@ -1,20 +1,24 @@
 const mockStoreLink = [
   {
-    linkTex: 'Blusa',
+    linkText: 'Blusa',
     path: '/stores/cayama/blusas',
   },
   {
-    linkTex: 'Calça',
+    linkText: 'Calça',
     path: '/stores/cayama/calças',
   },
   {
-    linkTex: 'Tênis',
+    linkText: 'Tênis',
     path: '/stores/cayama/tenis',
   },
   {
-    linkTex: 'Bermudas',
+    linkText: 'Bermudas',
     path: '/stores/cayama/bermudas',
-  }
+  },
+  // {
+  //   linkText: 'Meias',
+  //   path: '/stores/cayama/meias',
+  // }
 ];
 
 export default mockStoreLink;

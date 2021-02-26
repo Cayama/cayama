@@ -6,7 +6,7 @@ const StoreNavLinksContainer = styled.div`
   grid-column-end: 13;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: ${(props) => props.justifyContent};
 `;
 
 const StoreCategoriesContainer = styled.div`

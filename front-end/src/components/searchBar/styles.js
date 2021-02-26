@@ -8,6 +8,7 @@ const SearchInput = styled.input`
   width: 90%;
   border-radius: 5px 0 0 5px;
   padding-left: 20px;
+  padding-right 5px;
 `;
 
 const SearchButton = styled.button`
