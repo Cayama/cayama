@@ -30,7 +30,7 @@ function Header({ children }) {
         <Link href='/'>
           <Image alt="logo" src='/img/logoCayama.png' width="100%" height="30%" />
         </Link>
-        <SearchBar />
+        <SearchBar placeholderText="Buscar produtos" />
         <ShoppingCart />
         <BurguerNav />
       </HeaderContainerRow>

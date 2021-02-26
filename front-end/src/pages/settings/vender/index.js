@@ -13,7 +13,14 @@ import {
 } from '../../../components/layout/inputGroup';
 import { DropDownSelect } from '../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
-import { RegisterProductSection, RegisterProductContent, AddSizeButton, InputWithX, SizeText } from './styles';
+import {
+  RegisterProductSection,
+  RegisterProductContent,
+  AddSizeButton,
+  InputWithX,
+  SizeText,
+  RegisterProductButton,
+} from './styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 function RegisterProductPage() {
@@ -124,6 +131,11 @@ function RegisterProductPage() {
               <Grid container item spacing={2}>
                 <Grid item xs={12} sm={12}>
                   <ProductDescriptionInput />
+                </Grid>
+              </Grid>
+              <Grid container item spacing={2} justify="center">
+                <Grid item xs={12} sm={6}>
+                  <RegisterProductButton>Cadastrar</RegisterProductButton>
                 </Grid>
               </Grid>
             </Grid>

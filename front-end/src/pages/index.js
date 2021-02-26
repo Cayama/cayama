@@ -6,6 +6,9 @@ import { CarouselComponent, tutorialSteps } from '../components/carrossel';
 import { PromoCard, ProductCard } from '../components/cards';
 import { ProductsCardSection } from '../components/dataGrid';
 import { HomePageTitles } from '../components/titles';
+import { ProductsSectionDisplay } from '../components/productsSectionDisplay';
+
+import productsMock from '../../dataMock/productsMock';
 
 export default function Home() {
   return (
@@ -18,36 +21,18 @@ export default function Home() {
         <HomePageTitles>
           Produtos em destaque
         </HomePageTitles>
-        <ProductsCardSection>
-          <ProductCard
-            price='R$250,00'
-            productName='Bola de Futebol'
-            shipping={false}
-            category='esporte'
-            storeName='cayama'
-          />
-          <ProductCard
-            price='R$350,00'
-            productName='Óculos Escuro'
-            shipping={true}
-            category='moda-masculina'
-            storeName='cayama'
-          />
-          <ProductCard
-            price='R$100,00'
-            productName='Chinelo Havaianas'
-            shipping={true}
-            category='moda-masculina'
-            storeName='cayama'
-          />
-          <ProductCard
-            price='R$100,00'
-            productName='Chinelo Havaianas'
-            shipping={true}
-            category='moda-masculina'
-            storeName='cayama'
-          />
-        </ProductsCardSection>
+        <ProductsSectionDisplay productsArray={productsMock} />
+        {/* <ProductsCardSection>
+          {productsMock.map(({ price, productName, shipping, category,storeName }) => (
+            <ProductCard
+              price={price}
+              productName={productName}
+              shipping={shipping}
+              category={category}
+              storeName={storeName}
+            />
+          ))}
+        </ProductsCardSection> */}
       </main>
       <Footer />
     </div>
