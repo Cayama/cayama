@@ -1,15 +1,15 @@
 import React from 'react';
 import Link from '../../infra/components/link';
 import { StoreCategoriesContainer, StoreNavLinksContainer } from './styles';
-import DropDownStores from '../dropDownStores';
+import DropDownCustomizable from '../dropDownCustomizable';
 
 function StoreNavLinks({ storeLinksArray }) {
   if (storeLinksArray.length > 4) {
     return (
       <StoreNavLinksContainer justifyContent='start'>
-        <DropDownStores storeLinksArray={storeLinksArray}>
+        <DropDownCustomizable linksArray={storeLinksArray}>
           Categorias
-        </DropDownStores>
+        </DropDownCustomizable>
       </StoreNavLinksContainer>
     )
   };

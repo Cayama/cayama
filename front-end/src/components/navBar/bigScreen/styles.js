@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const BiggerScreenMenuContainer = styled.div`
   list-style: none;
-  width: 100vw;
+  width: 60vw;
   margin: 0 2vw 0 2vw;
   display: flex;
   flex-flow: row nowrap;
