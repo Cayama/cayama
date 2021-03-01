@@ -3,13 +3,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { DropDownStoreContainer, DropDownStoreLinksContent, DropDownStoreContent } from './styles';
 import Link from '../../infra/components/link';
 
-function DropDownStores({ children, storeLinksArray }) {
+function DropDownCustomizable({ children, linksArray }) {
   return (
     <DropDownStoreContainer>
       <DropDownStoreContent>
         <div>{children} <ExpandMoreIcon /></div>
         <DropDownStoreLinksContent>
-          {storeLinksArray.map(({ linkText, path }, index) => (
+          {linksArray.map(({ linkText, path }, index) => (
             <Link key={index} color='white' href={path}>{linkText}</Link>
           ))}
         </DropDownStoreLinksContent>
@@ -18,4 +18,4 @@ function DropDownStores({ children, storeLinksArray }) {
   );
 }
 
-export default DropDownStores;
+export default DropDownCustomizable;

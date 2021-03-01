@@ -5,6 +5,9 @@ import MenuBigScreen from './bigScreen/index';
 import MenuSmallerScreen from './smallerScreen/index';
 import Hidden from '@material-ui/core/Hidden';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import DropDownCustomizable from '../dropDownCustomizable';
+
+import cayamaLinksMock from '../../../dataMock/cayamaLinksMock';
 
 const NavBar = () => {
   const [token, setToken] = useState('');
@@ -21,6 +24,9 @@ const NavBar = () => {
       <ShippingAddressContainer>
         {addresses && addresses.length > 0 ? (<ShippingAddressText><LocationOnOutlinedIcon /> {firstName}: {addresses[0].street} {addresses[0].number}</ShippingAddressText>) : null}
       </ShippingAddressContainer>
+      <DropDownCustomizable linksArray={cayamaLinksMock}>
+        Categorias
+      </DropDownCustomizable>
       <Hidden mdDown>
         <MenuBigScreen userName={firstName} />
       </Hidden>
