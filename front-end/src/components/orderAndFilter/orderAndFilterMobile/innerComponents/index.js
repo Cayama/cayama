@@ -7,7 +7,7 @@ import {
   CloseIconContainer,
   TitleAndFilter,
 } from './styles';
-import NestedList from '../../../listGroup';
+import NestedList from '../../../lists';
 
 function OrderAndFilter({ title, icon, structure }) {
   const [isEnabled, setIsEnabled] = useState(false)

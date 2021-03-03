@@ -9,6 +9,7 @@ import { SearchProductListPageContainer } from './styles';
 import firstLetterUpercase from '../../../utils/firstLetterUpercase';
 import OrderAndFilterMobile from '../../../components/orderAndFilter/orderAndFilterMobile';
 import FilterWeb from '../../../components/orderAndFilter/filterWeb';
+import OrderWeb from '../../../components/orderAndFilter/orderWeb';
 
 import productsMock from '../../../../dataMock/productsMock';
 
@@ -29,7 +30,12 @@ function SearchProductListPage() {
           <Hidden mdDown>
             <FilterWeb search={search} />
           </Hidden>
-          <ProductsSectionDisplay productsArray={productsMock} />
+          <div>
+            <Hidden mdDown>
+              <OrderWeb />
+            </Hidden>
+            <ProductsSectionDisplay productsArray={productsMock} />
+          </div>
         </SearchProductListPageContainer>
       </main>
       <Footer />

@@ -41,4 +41,19 @@ const DropDownDiv = styled.div`
   flex-direction: column;
 `;
 
-export { SearchButtonStyle, TextButtonStyle, CardButtonStyle, NavBarDropDownBtn, DropDownDiv };
+const FilterPriceIconContainer = styled.div`
+  @media (max-width: 768px) {
+    margin: 0 0 0 40px;
+  }
+  margin: 0 0 0 20px;
+  cursor: pointer;
+`;
+
+export {
+  SearchButtonStyle,
+  TextButtonStyle,
+  CardButtonStyle,
+  NavBarDropDownBtn,
+  DropDownDiv,
+  FilterPriceIconContainer,
+};
