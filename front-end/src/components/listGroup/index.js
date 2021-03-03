@@ -1,78 +1,62 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import Hidden from '@material-ui/core/Hidden';
+import Divider from '@material-ui/core/Divider';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { NestedListContainer, SubStructureText } from './styles';
+import { ListItemContent } from '../layout/listGroup'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
+const SubStructureItems = ({ subStructure }) => {
+  return (
+    <div>
+      {subStructure.map(({ name, onClick }) => {
+          return (
+            <ListItemContent key={name}>
+              <SubStructureText>{name}</SubStructureText>
+            </ListItemContent>
+          )
+        })}
+    </div>
+  )
+}
 
-function NestedList() {
-  const classes = useStyles();
-  const [open, setOpen] = useState(true);
+const NestedItem = ({ name, subStructure }) => {
+  const [open, setOpen] = useState(false);
+  // console.log(structure)
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   return (
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Nested List Items
-        </ListSubheader>
-      }
-      className={classes.root}
-    >
-      <ListItem button>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItem>
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItem>
-        </List>
-      </Collapse>
-    </List>
+    <div>
+      <ListItemContent key={name} onClick={handleClick}>
+        {name} {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </ListItemContent>
+      {open ? <SubStructureItems subStructure={subStructure} /> : null}
+    </div>
+  );
+};
+
+function NestedList({ title, structure }) {
+  return (
+    <NestedListContainer>
+      <div>
+        <Divider />
+        {structure.map(({ name, subStructure }) => {
+          if (Array.isArray(subStructure)) {
+            return (
+              <NestedItem name={name} subStructure={subStructure} />
+            )
+          }
+          return (
+            <ListItemContent key={name}>
+              {name}
+            </ListItemContent>
+          )
+        })}
+      </div>
+    </NestedListContainer>
   );
 }
 

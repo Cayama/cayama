@@ -15,10 +15,10 @@ const mockStoreLink = [
     linkText: 'Bermudas',
     path: '/stores/cayama/bermudas',
   },
-  // {
-  //   linkText: 'Meias',
-  //   path: '/stores/cayama/meias',
-  // }
+  {
+    linkText: 'Meias',
+    path: '/stores/cayama/meias',
+  }
 ];
 
 export default mockStoreLink;

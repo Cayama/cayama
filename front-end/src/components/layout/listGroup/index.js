@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { ListItemContainer } from './styles';
 
 const iconChooser = {
   inboxIcon: <InboxIcon />,
@@ -45,7 +46,6 @@ function NavBarDropDown({ onClick, navBarStructure }) {
             <Divider />
           </div>
         ))}
-        <Divider />
         <ListItemLink onClick={cleanUser} href='/'>
           <ListItemIcon>
             <ExitToAppIcon />
@@ -55,6 +55,17 @@ function NavBarDropDown({ onClick, navBarStructure }) {
       </List>
     </div>
   );
+};
+
+const ListItemContent = ({ children, onClick }) => {
+  return (
+    <div>
+        <ListItemContainer onClick={onClick}>
+          {children}
+        </ListItemContainer>
+        <Divider />
+    </div>
+  );
 }
 
-export { NavBarDropDown };
+export { NavBarDropDown, ListItemContent };
