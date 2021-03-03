@@ -20,7 +20,7 @@ const LinksToClickContainer = styled.div`
     display: ${(props) => props.isEnabled ? 'flex' : 'none'};
     position: absolute;
     flex-direction: column;
-    background-color: black;
+    background-color: white;
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -34,4 +34,15 @@ const CloseIconContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export { OrderAndFilterContainer, IconsContainer, LinksToClickContainer, CloseIconContainer }
+const TitleAndFilter = styled.h2`
+  color: black;
+  margin: 30px 0 45px 15px;
+`;
+
+export {
+  OrderAndFilterContainer,
+  IconsContainer,
+  LinksToClickContainer,
+  CloseIconContainer,
+  TitleAndFilter,
+}

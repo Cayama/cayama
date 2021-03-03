@@ -5,7 +5,9 @@ import {
   IconsContainer,
   LinksToClickContainer,
   CloseIconContainer,
+  TitleAndFilter,
 } from './styles';
+import NestedList from '../../../listGroup';
 
 function OrderAndFilter({ title, icon, structure }) {
   const [isEnabled, setIsEnabled] = useState(false)
@@ -16,13 +18,15 @@ function OrderAndFilter({ title, icon, structure }) {
       </IconsContainer>
       <LinksToClickContainer isEnabled={isEnabled}>
         <CloseIconContainer onClick={() => setIsEnabled(!isEnabled)}>
-          <CloseIcon fontSize="large" />
+          <CloseIcon fontSize="large" color="primary" />
         </CloseIconContainer>
-        <div>{structure[0].name}</div>
-        <div>aaaaa</div>
+        <TitleAndFilter>
+          {title} por:
+        </TitleAndFilter>
+        <NestedList title={title} structure={structure} />
       </LinksToClickContainer>
     </OrderAndFilterContainer>
   );
-}
+};
 
 export default OrderAndFilter;

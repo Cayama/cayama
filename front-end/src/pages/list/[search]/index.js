@@ -1,21 +1,15 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import ImportExportOutlinedIcon from '@material-ui/icons/ImportExportOutlined';
-import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
+import Hidden from '@material-ui/core/Hidden';
 import Head from '../../../infra/components/head';
 import Header from '../../../patterns/header';
 import Footer from '../../../patterns/footer';
 import { ProductsSectionDisplay } from '../../../components/productsSectionDisplay';
-import {
-  SearchProductListPageContainer,
-  SearchProductListPageFilterSection,
-  SearchTitleContainer,
-} from './styles';
-import { VerticalDivider } from '../../../components/divider';
-import { H1FirstLetterUppercase } from '../../../components/layout/h1Group';
+import { SearchProductListPageContainer } from './styles';
 import firstLetterUpercase from '../../../utils/firstLetterUpercase';
-import OrderAndFilter from '../../../components/orderAndFilter';
-import { searchProductListPageOrderStructure, searchProductListPageFilterStructure } from './structure';
+import OrderAndFilterMobile from '../../../components/orderAndFilter/orderAndFilterMobile';
+import FilterWeb from '../../../components/orderAndFilter/filterWeb';
+
 import productsMock from '../../../../dataMock/productsMock';
 
 function SearchProductListPage() {
@@ -29,24 +23,12 @@ function SearchProductListPage() {
       <Header />
       <main>
         <SearchProductListPageContainer>
-          <SearchProductListPageFilterSection>
-            <OrderAndFilter
-              title='Ordenar'
-              icon={<ImportExportOutlinedIcon />}
-              structure={searchProductListPageOrderStructure}
-            />
-
-            <VerticalDivider />
-
-            <OrderAndFilter
-              title='Filtrar'
-              icon={<FilterListOutlinedIcon />}
-              structure={searchProductListPageFilterStructure}
-            />
-          </SearchProductListPageFilterSection>
-          <SearchTitleContainer>
-            <H1FirstLetterUppercase>{search}</H1FirstLetterUppercase>
-          </SearchTitleContainer>
+          <Hidden mdUp>
+            <OrderAndFilterMobile search={search} />
+          </Hidden>
+          <Hidden mdDown>
+            <FilterWeb search={search} />
+          </Hidden>
           <ProductsSectionDisplay productsArray={productsMock} />
         </SearchProductListPageContainer>
       </main>

@@ -3,15 +3,15 @@ const kkk = () => console.log('lol');
 const searchProductListPageOrderStructure = [
   {
     name: 'Mais relevantes',
-    action: kkk,
+    onClick: kkk,
   },
   {
     name: 'Menor preço',
-    action: kkk,
+    onClick: kkk,
   },
   {
     name: 'Maior preço',
-    action: kkk,
+    onClick: kkk,
   }
 ];
 
@@ -21,7 +21,7 @@ const searchProductListPageFilterStructure = [
     subStructure: [
       {
         name: 'Grátis',
-        action: kkk,
+        onClick: kkk,
       },
     ],
   },
@@ -30,7 +30,7 @@ const searchProductListPageFilterStructure = [
     subStructure: [
       {
         name: 'Sem juros',
-        action: kkk,
+        onClick: kkk,
       },
     ],
   },
@@ -39,11 +39,11 @@ const searchProductListPageFilterStructure = [
     subStructure: [
       {
         name: 'Novo',
-        action: kkk,
+        onClick: kkk,
       },
       {
         name: 'Usado',
-        action: kkk,
+        onClick: kkk,
       },
     ],
   },
@@ -52,7 +52,7 @@ const searchProductListPageFilterStructure = [
     subStructure: [
       {
         name: 'Até ...',
-        action: kkk,
+        onClick: kkk,
       },
     ],
   },
