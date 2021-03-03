@@ -1,3 +1,6 @@
+import Slider from '@material-ui/core/Slider';
+
+
 const kkk = () => console.log('lol');
 
 const searchProductListPageOrderStructure = [
@@ -43,15 +46,6 @@ const searchProductListPageFilterStructure = [
       },
       {
         name: 'Usado',
-        onClick: kkk,
-      },
-    ],
-  },
-  {
-    name: 'Preço',
-    subStructure: [
-      {
-        name: 'Até ...',
         onClick: kkk,
       },
     ],

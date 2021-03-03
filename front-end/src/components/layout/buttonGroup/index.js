@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { BsChevronDown } from 'react-icons/bs';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Image from '../../../infra/components/image';
 import Link from '../../../infra/components/link';
-import { SearchButtonStyle, TextButtonStyle, CardButtonStyle, NavBarDropDownBtn, DropDownDiv } from './styles';
+import {
+  SearchButtonStyle,
+  TextButtonStyle,
+  CardButtonStyle,
+  NavBarDropDownBtn,
+  DropDownDiv,
+  FilterPriceIconContainer,
+} from './styles';
 import { ContainerRow, ContainerColumn } from '../../dataGrid';
 import { ButtonText } from '../../foundation/text';
 import React from 'react';
@@ -145,6 +153,14 @@ const SubmitFormButton = ({ className, color, variant, children }) => {
   );
 };
 
+const PriceFilterButton = ({ onClick }) => {
+  return (
+    <FilterPriceIconContainer onClick={onClick}>
+      <ArrowForwardIcon />
+    </FilterPriceIconContainer>
+  )
+}
+
 export {
   SearchButton,
   TextButton,
@@ -153,4 +169,5 @@ export {
   SimpleMenu,
   ButtonsLink,
   SubmitFormButton,
+  PriceFilterButton,
 };

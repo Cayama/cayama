@@ -26,8 +26,14 @@ const H3SingleFilter = styled.h3`
   font-weight: bold;
 `;
 
-const FilterAction = styled.div`
+const FilterClickAction = styled.div`
   cursor: pointer;
+`;
+
+const PriceFilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export {
@@ -36,5 +42,6 @@ export {
   FilterWebContainer,
   SingleFilterContainer,
   H3SingleFilter,
-  FilterAction,
+  FilterClickAction,
+  PriceFilterContainer,
 };

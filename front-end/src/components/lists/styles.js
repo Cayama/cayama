@@ -8,4 +8,7 @@ const SubStructureText = styled.span`
   margin: 0 0 0 25px;
 `;
 
-export { NestedListContainer, SubStructureText };
+export {
+  NestedListContainer,
+  SubStructureText,
+};
