@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone'
 import Head from '../../../infra/components/head';
 import Header from '../../../patterns/header';
@@ -22,13 +23,24 @@ import {
   RegisterProductButton,
 } from './styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import getToken from '../../../utils/getToken';
 
 function RegisterProductPage() {
+  const [registerProductError, setRegisterProductError] = useState(null);
+  const [registerProductSuccessMessage, setRegisterProductSuccessfulMessage] = useState(null);
   const [categoriesArray, setCategoriesArray] = useState([]);
-  const [allProductSizes, setAllProductSizes] = useState([]);
   const [size, setSize] = useState('');
+  const [allProductSizes, setAllProductSizes] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
+  const [productColor, setProductColor] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productBrand, setProductBrand] = useState('');
+  const [price, setPrice] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [stockQuantity, setStockQuantity] = useState('');
+  const [description, setDescription] = useState('');
+  const token = getToken();
 
   const setSizeFunction = (value) => {
     setSize(value);
@@ -46,6 +58,64 @@ function RegisterProductPage() {
     setAllProductSizes(newAllProductSizes);
   };
 
+  const handleUpload = () => {
+    const formData = new FormData();
+
+    productImages.forEach((file) => {
+      formData.append("productImages", file);
+    });
+
+    formData.append("productName", productName);
+    formData.append("price", 10);
+    formData.append("stockQuantity", 1);
+    formData.append("description", description);
+    formData.append("category", 'Moda');
+
+    return formData;
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    return axios
+      .post(process.env.NEXT_PUBLIC_API_URL_REGISTER_PRODUCT,
+        // {
+        //   productImages,
+        //   // productSizeTableImage,
+        //   productColor,
+        //   productName,
+        //   productBrand,
+        //   price,
+        //   categories,
+        //   stockQuantity,
+        //   description,
+        // },
+        handleUpload(),
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        if (!res) return setRegisterProductError('Sem conexação.')
+        console.log(res)
+        return setRegisterProductSuccessfulMessage('Produto Cadastrado com sucesso!');
+      })
+      .catch(({ response }) => {
+        console.log(response)
+        if (!response) return setRegisterProductError('Sem conexação.');
+        setRegisterProductError('Não foi possivel cadastrar o produto.');
+      })
+  }
+
+  console.log("productImages", productImages)
+  // console.log("productSizeTableImage", productSizeTableImage)
+  // console.log("productColor", productColor)
+  // console.log("productName", productName)
+  // console.log("productBrand", productBrand)
+  // console.log("price", price)
+  // console.log("categories", categories)
+  // console.log("stockQuantity", stockQuantity)
+  // console.log("description", description)
+
   return (
     <div>
       <Head title='Cadastre seu produto' />
@@ -56,17 +126,17 @@ function RegisterProductPage() {
           <RegisterProductContent>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <ProductNameInput />
+                <ProductNameInput setProductName={setProductName} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <ProductBrandInput />
+                <ProductBrandInput setProductBrand={setProductBrand} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <ProductColorInput />
+                <ProductColorInput setProductColor={setProductColor} />
               </Grid>
               {categoriesArray.length === 0 ?
                 <Grid item xs={12} sm={6}>
-                  <Link href="register-category">Cadastre Categorias para sua loja</Link>
+                  <Link href="/register-category">Cadastre Categorias para sua loja</Link>
                 </Grid>
                 :
                 <Grid item xs={12} sm={6}>
@@ -85,9 +155,9 @@ function RegisterProductPage() {
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
-                {allProductSizes.map((size) => {
+                {allProductSizes.map((size, index) => {
                   return (
-                    <Grid item>
+                    <Grid item key={index}>
                       <InputWithX onClick={(e) => removeSize(e.currentTarget.textContent)}>
                         <SizeText>
                           {size}
@@ -130,12 +200,13 @@ function RegisterProductPage() {
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12} sm={12}>
-                  <ProductDescriptionInput />
+                  <ProductDescriptionInput setDescription={setDescription} />
                 </Grid>
               </Grid>
               <Grid container item spacing={2} justify="center">
                 <Grid item xs={12} sm={6}>
-                  <RegisterProductButton>Cadastrar</RegisterProductButton>
+                  <RegisterProductButton onClick={handleRegister}>Cadastrar</RegisterProductButton>
+                  <button onClick={handleUpload}>kkk</button>
                 </Grid>
               </Grid>
             </Grid>

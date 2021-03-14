@@ -187,7 +187,7 @@ const ProductColorInput = ({ setProductColor }) => {
   );
 };
 
-const ProductBrandInput = ({ setBrand }) => {
+const ProductBrandInput = ({ setProductBrand }) => {
   return (
     <TextField
       variant="outlined"
@@ -197,7 +197,7 @@ const ProductBrandInput = ({ setBrand }) => {
       label="Marca"
       type="text"
       id="brand"
-      onChange={(e) => setBrand(e.target.value)}
+      onChange={(e) => setProductBrand(e.target.value)}
     />
   );
 };
@@ -214,7 +214,7 @@ const ProductDescriptionInput = ({ setDescription }) => {
       label="Descrição"
       type="text"
       id="description"
-      // onChange={(e) => setDescription(e.target.value)}
+      onChange={(e) => setDescription(e.target.value)}
     />
   );
 };

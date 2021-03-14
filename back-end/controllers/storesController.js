@@ -13,7 +13,7 @@ const { validateSchemas } = require('../services/schemasService');
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   validateSchemas(next, storeRegisterSchema, {
     storeName,
     email,
@@ -49,7 +49,7 @@ const registerProduct = rescue(async (req, res, next) => {
     description,
     // videosPath = ["hahahahah"],
   } = req.body;
-
+  // console.log(req.files)
   const { _id } = req.user;
 
   const keys = req.files.map((product) => product.key);

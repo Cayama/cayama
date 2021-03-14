@@ -86,7 +86,7 @@ export default function SignUpUser() {
     e.preventDefault();
     if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
     return axios
-      .post(process.env.NEXT_PUBLIC_URL_REGISTER, {
+      .post(process.env.NEXT_PUBLIC_API_URL_REGISTER, {
         firstName,
         lastName,
         cpf,

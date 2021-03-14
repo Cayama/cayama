@@ -30,6 +30,7 @@ function NavBarDropDown({ onClick, navBarStructure }) {
 
   const cleanUser = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('persist:root');
   };
 
   return (

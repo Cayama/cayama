@@ -60,7 +60,7 @@ export default function SignIn() {
   const submitLogin = (e) => {
     e.preventDefault();
     return axios
-      .post(process.env.NEXT_PUBLIC_URL_LOGIN, {
+      .post(process.env.NEXT_PUBLIC_API_URL_LOGIN, {
         email,
         password,
       })
