@@ -8,7 +8,7 @@ const {
   userInfluencerSchema,
   updateRegisterInfoSchema,
 } = require('../validationSchemas/usersSchemas/index');
-
+const { mailer } = require('../utils/index');
 const { validateSchemas } = require('../services/schemasService');
 
 const registerUser = rescue(async (req, res, next) => {
@@ -67,7 +67,7 @@ const registerUser = rescue(async (req, res, next) => {
   const token = createJwtToken(newUser);
 
   const userData = { firstName, addresses };
-
+  mailer();
   return res.status(201).json({ token, userData });
 });
 

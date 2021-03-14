@@ -16,7 +16,7 @@ const storageTypes = {
         file.key = `${hash.toString('hex')}-${file.originalname.split(' ').join('-')}`;
 
         file.location = `${process.env.APP_URL}/files/${file.key}`;
-
+        console.log(file)
         return callback(null, file.key);
       });
     },

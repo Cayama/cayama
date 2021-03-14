@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import Hidden from '@material-ui/core/Hidden';
 import Head from '../../../infra/components/head';
@@ -15,6 +17,23 @@ import productsMock from '../../../../dataMock/productsMock';
 
 function SearchProductListPage() {
   const { query: { search } } = useRouter();
+  const [searchError, setSearchError] = useState(null);
+  // const { productsArray } = useSelector((state) => state.productsDataReducer.userData);
+
+  useEffect(() => {
+    return axios.post(`${process.env.NEXT_PUBLIC_API_URL_SEARCH_PRODUCT_BY_TEXT}?searchText=${search}`)
+    .then((res) => {
+      if (!res) return setSearchError('Sem conexação')
+      console.log(res)
+      // dispatch(userDataAction(res.data.userData))
+      return history.push('/');
+    })
+    .catch(({ response }) => {
+      console.log(response)
+      if (!response) return setSearchError('Sem conexação');
+      setSearchError("Nenhum produto encontrado"); // Não quero que o cliente veja erro do site
+    })
+  }, [])
 
   if (!search) return <div>Loading...</div>
 

@@ -71,7 +71,7 @@ export default function SignUpStore() {
     e.preventDefault();
     if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
     return axios
-      .post(process.env.NEXT_PUBLIC_URL_STORE_REGISTER, {
+      .post(process.env.NEXT_PUBLIC_API_URL_STORE_REGISTER, {
         storeName,
         cnpj,
         email,
