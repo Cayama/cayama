@@ -6,57 +6,44 @@ import Header from '../../../patterns/header';
 import Footer from '../../../patterns/footer';
 import Link from '../../../infra/components/link';
 import {
-  ProductNameInput,
-  ProductColorInput,
-  ProductBrandInput,
   ProductDescriptionInput,
-  ProductSizeInput,
+  CustomInput,
+  PriceInput,
 } from '../../../components/layout/inputGroup';
 import { DropDownSelect } from '../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
 import {
   RegisterProductSection,
   RegisterProductContent,
-  AddSizeButton,
-  InputWithX,
-  SizeText,
   RegisterProductButton,
 } from './styles';
-import DeleteIcon from '@material-ui/icons/Delete';
 import getToken from '../../../utils/getToken';
+import formatNumbersToBRL from '../../../utils/formatNumbersToBRL';
+import CustomPropertyAdd from '../../../components/customPropertyAdd';
 
 function RegisterProductPage() {
   const [registerProductError, setRegisterProductError] = useState(null);
   const [registerProductSuccessMessage, setRegisterProductSuccessfulMessage] = useState(null);
   const [categoriesArray, setCategoriesArray] = useState([]);
-  const [size, setSize] = useState('');
-  const [allProductSizes, setAllProductSizes] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [videosPath, setVideosPath] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
-  const [productColor, setProductColor] = useState('');
+  const [color, setColor] = useState('');
   const [productName, setProductName] = useState('');
-  const [productBrand, setProductBrand] = useState('');
+  const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
+  const [formatedPrice, setFormatedPrice] = useState('');
   const [categories, setCategories] = useState([]);
   const [stockQuantity, setStockQuantity] = useState('');
   const [description, setDescription] = useState('');
   const token = getToken();
+  const setPriceFunction = (value) => {
+    const formatedPriceString = formatNumbersToBRL(value)
 
-  const setSizeFunction = (value) => {
-    setSize(value);
-  };
-
-  const addSize = () => {
-    const newAllProductSizes = [...allProductSizes];
-    newAllProductSizes.push(size);
-    setAllProductSizes(newAllProductSizes);
-    setSize('');
+    setFormatedPrice(formatedPriceString)
+    return setPrice(formatedPriceString)
   }
-
-  const removeSize = (value) => {
-    const newAllProductSizes = allProductSizes.filter((size) => size !== value);
-    setAllProductSizes(newAllProductSizes);
-  };
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -64,13 +51,16 @@ function RegisterProductPage() {
     productImages.forEach((file) => {
       formData.append("productImages", file);
     });
-
+    formData.append("productSizeTableImage", productSizeTableImage)
     formData.append("productName", productName);
-    formData.append("price", 10);
-    formData.append("stockQuantity", 1);
+    formData.append("price", price);
+    formData.append("stockQuantity", stockQuantity);
     formData.append("description", description);
     formData.append("category", 'Moda');
-
+    formData.append("brand", brand);
+    formData.append("sizes", sizes);
+    formData.append("color", color);
+    formData.append("videosPath", videosPath);
     return formData;
   }
 
@@ -78,17 +68,6 @@ function RegisterProductPage() {
     e.preventDefault();
     return axios
       .post(process.env.NEXT_PUBLIC_API_URL_REGISTER_PRODUCT,
-        // {
-        //   productImages,
-        //   // productSizeTableImage,
-        //   productColor,
-        //   productName,
-        //   productBrand,
-        //   price,
-        //   categories,
-        //   stockQuantity,
-        //   description,
-        // },
         handleUpload(),
         {
           headers: { authorization: token }
@@ -106,16 +85,6 @@ function RegisterProductPage() {
       })
   }
 
-  console.log("productImages", productImages)
-  // console.log("productSizeTableImage", productSizeTableImage)
-  // console.log("productColor", productColor)
-  // console.log("productName", productName)
-  // console.log("productBrand", productBrand)
-  // console.log("price", price)
-  // console.log("categories", categories)
-  // console.log("stockQuantity", stockQuantity)
-  // console.log("description", description)
-
   return (
     <div>
       <Head title='Cadastre seu produto' />
@@ -126,13 +95,13 @@ function RegisterProductPage() {
           <RegisterProductContent>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <ProductNameInput setProductName={setProductName} />
+                <CustomInput name="productName" id="productName" label="Nome do produto" setInput={setProductName} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <ProductBrandInput setProductBrand={setProductBrand} />
+                <CustomInput name="brand" id="brand" label="Marca" setInput={setBrand} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <ProductColorInput setProductColor={setProductColor} />
+                <CustomInput name="color" id="color" label="Cores" setInput={setColor} />
               </Grid>
               {categoriesArray.length === 0 ?
                 <Grid item xs={12} sm={6}>
@@ -146,30 +115,16 @@ function RegisterProductPage() {
                   />
                 </Grid>
               }
-              <Grid alignItems="center" container item spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <ProductSizeInput size={size} setSize={setSizeFunction} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <AddSizeButton onClick={addSize}>Adicionar Tamanho</AddSizeButton>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <PriceInput value={formatedPrice} label="Preço" setPrice={setPriceFunction} />
               </Grid>
-              <Grid container item spacing={2}>
-                {allProductSizes.map((size, index) => {
-                  return (
-                    <Grid item key={index}>
-                      <InputWithX onClick={(e) => removeSize(e.currentTarget.textContent)}>
-                        <SizeText>
-                          {size}
-                        </SizeText>
-                        <div>
-                          <DeleteIcon />
-                        </div>
-                      </InputWithX>
-                    </Grid>
-                  )
-                })}
+              <Grid item xs={12} sm={6}>
+                <CustomInput name="stockQuantity" id="stockQuantity" label="Quantidade" setInput={setStockQuantity} />
               </Grid>
+              <CustomPropertyAdd name="size" id="size" addButtonText="Adicionar Tamanho" label="Tamanho" />
+
+              <CustomPropertyAdd name="reviews" id="reviews" addButtonText="Adicionar Reviews" label="Link Reviews" />
+
               <Grid item xs={12} sm={12}>
                 <span>Imagens</span>
                 <DropzoneArea

@@ -219,21 +219,37 @@ const ProductDescriptionInput = ({ setDescription }) => {
   );
 };
 
-const ProductSizeInput = ({ setSize, size }) => {
+const CustomInput = ({ name, id, setInput, input, label }) => {
   return (
     <TextField
       variant="outlined"
       required
       fullWidth
-      name="size"
-      label="Tamanho"
+      name={name}
+      label={label}
       type="text"
-      id="size"
-      value={size}
-      onChange={(e) => setSize(e.target.value)}
+      id={id}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
     />
   );
 };
+
+const PriceInput = ({ value, setPrice, label }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name="price"
+      label={label}
+      type="text"
+      id="price"
+      value={value}
+      onChange={(e) => setPrice(e.target.value)}
+    />
+  );
+}
 
 export {
   FirstNameInput,
@@ -250,5 +266,6 @@ export {
   ProductColorInput,
   ProductBrandInput,
   ProductDescriptionInput,
-  ProductSizeInput,
+  CustomInput,
+  PriceInput,
 };
