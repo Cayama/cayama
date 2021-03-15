@@ -47,14 +47,16 @@ const registerProduct = rescue(async (req, res, next) => {
     category,
     stockQuantity = 1,
     description,
-    // videosPath = ["hahahahah"],
+    brand,
+    color,
+    sizes,
+    videosPath = [],
   } = req.body;
   // console.log(req.files)
   const { _id } = req.user;
 
   const keys = req.files.map((product) => product.key);
   const urls = req.files.map((product) => product.location);
-  let videosPath;
   videosPath = ['asdasdasdasdasdasdasd']; // até o front estar pronto => videosPath precisa ser um array
 
   validateSchemas(next, productRegisterSchema, {
