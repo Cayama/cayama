@@ -57,7 +57,6 @@ const registerProduct = rescue(async (req, res, next) => {
 
   const keys = req.files.map((product) => product.key);
   const urls = req.files.map((product) => product.location);
-  videosPath = ['asdasdasdasdasdasdasd']; // até o front estar pronto => videosPath precisa ser um array
 
   validateSchemas(next, productRegisterSchema, {
     productName,
@@ -80,6 +79,9 @@ const registerProduct = rescue(async (req, res, next) => {
     urls,
     videosPath,
     keys,
+    brand,
+    color,
+    sizes,
   });
 
   return res.status(201).json(addNewProduct);
