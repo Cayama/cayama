@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Router from 'next/router'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
-import { CardContainer, CardContent, AllPromoCards, BriefingContainer, ActionsContainer, ShippingTitle } from './styles';
+import {
+  CardContainer,
+  CardContent,
+  AllPromoCards,
+  BriefingContainer,
+  ActionsContainer,
+  ShippingTitle,
+  SuccessMessageCardContainer,
+  CheckIconContainer,
+  SuccessMessageCardContent,
+  SuccessMessageCardLinks,
+  ButtonContainer,
+} from './styles';
 import Link from '../../infra/components/link';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import { useTheme } from 'styled-components';
 
 
 const useStyles = makeStyles({
@@ -200,14 +215,41 @@ const ShippingCard = ({ src, shippingName, authorizationRoute, briefing }) => {
 }
 
 const SuccessMessageCard = ({ messages }) => {
+  const timeOut = setTimeout(() => {
+    Router.reload(window.location.pathname);
+  }, 5000)
+
+  const addNewProduct = () => {
+    clearTimeout(timeOut);
+    Router.reload(window.location.pathname)
+  }
+
+  const initialPage = () => {
+    clearTimeout(timeOut);
+  }
   return (
-    <div>{messages}</div>
+    <SuccessMessageCardContainer>
+      <SuccessMessageCardContent>
+        <CheckIconContainer>
+          <CheckCircleIcon fontSize="inherit" htmlColor="green" />
+        </CheckIconContainer>
+        {messages}
+      </SuccessMessageCardContent>
+      <SuccessMessageCardLinks>
+        <ButtonContainer>
+          <Link href="/settings/vender"><Button onClick={addNewProduct} color="primary" variant="contained">Novo Produto</Button></Link>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Link href="/"><Button onClick={initialPage} color="secondary" variant="contained">Página Principal</Button></Link>
+        </ButtonContainer>
+      </SuccessMessageCardLinks>
+    </SuccessMessageCardContainer>
   )
 }
 
 const ErrorMessageCard = ({ messages }) => {
   return (
-    <div>{messages}</div>
+  <div>{messages.map(({ context: { key } }) => (<div>{key}</div>))}</div>
   )
 }
 

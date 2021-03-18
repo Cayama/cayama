@@ -42,7 +42,7 @@ const cnpjSchema = Joi.string()
 const influencerLinkSchema = Joi.string().min(3).max(30).trim()
   .required();
 
-const productPriceSchema = Joi.string().regex(/^\s*(?:[1-9]\d{0,2}(?:\.\d{3})*|0),\d{2}$/).required();
+const productPriceSchema = Joi.string().regex(/\d+(?:\.\d{3})*?,\d{2}/).required();
 
 const productStockQuantitySchema = Joi.number().integer().positive().required();
 

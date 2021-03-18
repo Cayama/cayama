@@ -24,11 +24,10 @@ import CustomPropertyAdd from '../../../components/customPropertyAdd';
 
 function RegisterProductPage() {
   const [submited, setSubmited] = useState(false);
-  const [registerProductError, setRegisterProductError] = useState(null);
+  const [noConnectionError, setNoConnectionError] = useState(null);
   const [registerProductMessage, setRegisterProductMessage] = useState(null);
   const [categoriesArray, setCategoriesArray] = useState([]);
   const [sizes, setSizes] = useState([]);
-
   const [reviews, setReviews] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
@@ -40,7 +39,9 @@ function RegisterProductPage() {
   const [categories, setCategories] = useState([]);
   const [stockQuantity, setStockQuantity] = useState('');
   const [description, setDescription] = useState('');
+
   const token = getToken();
+
   const setPriceFunction = (value) => {
     const formatedPriceString = formatNumbersToBRL(value)
 
@@ -74,21 +75,20 @@ function RegisterProductPage() {
         }
       )
       .then((res) => {
-        if (!res) return setRegisterProductError('Sem conexação.')
-        setSubmited(true)
+        if (!res) return setNoConnectionError('Sem conexação.')
         console.log(res)
-        return setRegisterProductMessage({
+        setRegisterProductMessage({
           type: 'successfullProductRegister',
           messages: 'Produto Cadastrado com sucesso!',
-        }
-          );
+        });
+        return setSubmited(true);
       })
       .catch(({ response }) => {
         console.log(response)
-        if (!response) return setRegisterProductError('Sem conexação.');
+        if (!response) return setNoConnectionError('Sem conexação.');
         setRegisterProductMessage({
             type: 'failedProductRegister',
-            messages: ['Não foi possivel cadastrar o produto.'],
+            messages: response.data.err.details,
         });
         return setSubmited(true)
       })
@@ -185,7 +185,9 @@ function RegisterProductPage() {
                   {submited ?
                     <HandleSubmissionMessage objectController={registerProductMessage} />
                     :
-                    null }
+                    null
+                  }
+                  {noConnectionError ? noConnectionError : null}
                 </Grid>
               </Grid>
             </Grid>
