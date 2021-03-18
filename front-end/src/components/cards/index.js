@@ -199,6 +199,17 @@ const ShippingCard = ({ src, shippingName, authorizationRoute, briefing }) => {
   );
 }
 
+const SuccessMessageCard = ({ messages }) => {
+  return (
+    <div>{messages}</div>
+  )
+}
+
+const ErrorMessageCard = ({ messages }) => {
+  return (
+    <div>{messages}</div>
+  )
+}
 
 
-export { PromoCard, ProductCard, ShippingCard };
+export { PromoCard, ProductCard, ShippingCard, SuccessMessageCard, ErrorMessageCard };

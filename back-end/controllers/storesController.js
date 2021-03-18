@@ -49,14 +49,14 @@ const registerProduct = rescue(async (req, res, next) => {
     description,
     brand,
     color,
-    sizes,
-    videosPath = [],
+    sizes = [],
+    reviews = [],
   } = req.body;
-  // console.log(req.files)
+
   const { _id } = req.user;
 
-  const keys = req.files.map((product) => product.key);
-  const urls = req.files.map((product) => product.location);
+  const keys = (req.files || []).map((product) => product.key);
+  const urls = (req.files || []).map((product) => product.location);
 
   validateSchemas(next, productRegisterSchema, {
     productName,
@@ -64,9 +64,12 @@ const registerProduct = rescue(async (req, res, next) => {
     category: { field: 'categories', value: category },
     stockQuantity,
     description,
-    videosPath,
+    reviews,
     keys,
     urls,
+    brand,
+    color,
+    sizes,
   });
 
   const addNewProduct = await storesService.addNewProduct({
@@ -77,7 +80,7 @@ const registerProduct = rescue(async (req, res, next) => {
     stockQuantity,
     description,
     urls,
-    videosPath,
+    reviews,
     keys,
     brand,
     color,

@@ -17,6 +17,7 @@ import productsMock from '../../../../dataMock/productsMock';
 
 function SearchProductListPage() {
   const { query: { search } } = useRouter();
+  const [productsArray, setProductsArray] = useState([]);
   const [searchError, setSearchError] = useState(null);
   // const { productsArray } = useSelector((state) => state.productsDataReducer.userData);
 

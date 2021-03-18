@@ -18,8 +18,8 @@ function OrderWeb() {
     <OrderWebContainer>
       <OrderWebPhrase>Ordenar por:</OrderWebPhrase>
       <div>
-        <OrderWebClickContainer>
-          <span onClick={handleClick}>{orderType}</span>
+        <OrderWebClickContainer onClick={handleClick}>
+          <span>{orderType}</span>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </OrderWebClickContainer>
         {open ?
