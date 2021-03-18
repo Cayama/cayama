@@ -28,7 +28,9 @@ function Header({ children }) {
     <MyHeader positionHeader={positionHeader}>
       <HeaderContainerRow>
         <Link href='/'>
-          <Image alt="logo" src='/img/logoCayama.png' width="100%" height="30%" />
+          <div>
+            <Image alt="logo" src='/img/logoCayama.png' width="100%" height="30%" />
+          </div>
         </Link>
         <SearchBar placeholderText="Buscar produtos" />
         <ShoppingCart />

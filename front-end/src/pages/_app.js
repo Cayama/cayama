@@ -20,10 +20,10 @@ const theme = {
     primary: '#020887',
     primaryDark: '#01295F',
     primaryDarker: '#031D44',
-    secundaryLight: '#EDAE49',
-    secundary: '#FF9914',
-    secundaryDark: '#D64933',
-    secundaryDarker: '#BF3100',
+    secondaryLight: '#EDAE49',
+    secondary: '#FF9914',
+    secondaryDark: '#D64933',
+    secondaryDarker: '#BF3100',
     titleInPrimary: '#FFFFFF',
     textInPrimary: '#D4C2FF',
     textTitle: '#32264D',
@@ -35,7 +35,14 @@ const theme = {
   },
 };
 
-const materialUiTheme = createMuiTheme(theme);
+const muiTheme = {
+  pallete: {
+    primary: '#020887',
+    secondary: '#FF9914',
+  }
+}
+
+const materialUiTheme = createMuiTheme(muiTheme);
 
 const GlobalStyle = createGlobalStyle`
   * {
