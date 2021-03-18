@@ -61,7 +61,8 @@ function RegisterProductPage() {
     formDataArray(formData, sizes, "sizes[]")
     formData.append("color", color);
     formDataArray(formData, reviews, "reviews[]")
-    formData.append("productSizeTableImage", productSizeTableImage);
+    formDataArray(formData, productSizeTableImage, "productSizeTableImage")
+    // formData.append("productSizeTableImage", productSizeTableImage);
     return formData;
   }
 

@@ -20,6 +20,8 @@ module.exports = Joi.object({
   description: productDescriptionSchema,
   reviews: arrayReviewLinksSchema,
   sizes: arrayReviewLinksSchema,
-  keys: arrayLinksSchema,
-  urls: arrayLinksSchema,
+  productsImgKeys: arrayLinksSchema,
+  productsImgUrls: arrayLinksSchema,
+  productSizeTableImgKeys: arrayLinksSchema,
+  productSizeTableImgUrls: arrayLinksSchema,
 });
