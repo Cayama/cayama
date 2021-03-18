@@ -13,10 +13,13 @@ const {
 module.exports = Joi.object({
   productName: registerNameSchema,
   price: productPriceSchema,
+  brand: registerNameSchema,
+  color: productDescriptionSchema,
   category: fieldsExistenceSchema,
   stockQuantity: productStockQuantitySchema,
   description: productDescriptionSchema,
-  videosPath: arrayReviewLinksSchema,
+  reviews: arrayReviewLinksSchema,
+  sizes: arrayReviewLinksSchema,
   keys: arrayLinksSchema,
   urls: arrayLinksSchema,
 });

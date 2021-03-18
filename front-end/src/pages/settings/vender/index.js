@@ -10,6 +10,7 @@ import {
   CustomInput,
   PriceInput,
 } from '../../../components/layout/inputGroup';
+import HandleSubmissionMessage from '../../../components/handleSubmissionMessage';
 import { DropDownSelect } from '../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
 import {
@@ -17,16 +18,18 @@ import {
   RegisterProductContent,
   RegisterProductButton,
 } from './styles';
-import getToken from '../../../utils/getToken';
+import { getToken, formDataArray } from '../../../utils/index';
 import formatNumbersToBRL from '../../../utils/formatNumbersToBRL';
 import CustomPropertyAdd from '../../../components/customPropertyAdd';
 
 function RegisterProductPage() {
+  const [submited, setSubmited] = useState(false);
   const [registerProductError, setRegisterProductError] = useState(null);
-  const [registerProductSuccessMessage, setRegisterProductSuccessfulMessage] = useState(null);
+  const [registerProductMessage, setRegisterProductMessage] = useState(null);
   const [categoriesArray, setCategoriesArray] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const [videosPath, setVideosPath] = useState([]);
+
+  const [reviews, setReviews] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
   const [color, setColor] = useState('');
@@ -47,20 +50,17 @@ function RegisterProductPage() {
 
   const handleUpload = () => {
     const formData = new FormData();
-
-    productImages.forEach((file) => {
-      formData.append("productImages", file);
-    });
-    formData.append("productSizeTableImage", productSizeTableImage)
+    formDataArray(formData, productImages, "productImages")
     formData.append("productName", productName);
     formData.append("price", price);
     formData.append("stockQuantity", stockQuantity);
     formData.append("description", description);
-    formData.append("category", 'Moda');
     formData.append("brand", brand);
-    formData.append("sizes", sizes);
+    formData.append("category", 'Moda');
+    formDataArray(formData, sizes, "sizes[]")
     formData.append("color", color);
-    formData.append("videosPath", videosPath);
+    formDataArray(formData, reviews, "reviews[]")
+    formData.append("productSizeTableImage", productSizeTableImage);
     return formData;
   }
 
@@ -75,13 +75,22 @@ function RegisterProductPage() {
       )
       .then((res) => {
         if (!res) return setRegisterProductError('Sem conexação.')
+        setSubmited(true)
         console.log(res)
-        return setRegisterProductSuccessfulMessage('Produto Cadastrado com sucesso!');
+        return setRegisterProductMessage({
+          type: 'successfullProductRegister',
+          messages: 'Produto Cadastrado com sucesso!',
+        }
+          );
       })
       .catch(({ response }) => {
         console.log(response)
         if (!response) return setRegisterProductError('Sem conexação.');
-        setRegisterProductError('Não foi possivel cadastrar o produto.');
+        setRegisterProductMessage({
+            type: 'failedProductRegister',
+            messages: ['Não foi possivel cadastrar o produto.'],
+        });
+        return setSubmited(true)
       })
   }
 
@@ -121,10 +130,22 @@ function RegisterProductPage() {
               <Grid item xs={12} sm={6}>
                 <CustomInput name="stockQuantity" id="stockQuantity" label="Quantidade" setInput={setStockQuantity} />
               </Grid>
-              <CustomPropertyAdd name="size" id="size" addButtonText="Adicionar Tamanho" label="Tamanho" />
-
-              <CustomPropertyAdd name="reviews" id="reviews" addButtonText="Adicionar Reviews" label="Link Reviews" />
-
+              <CustomPropertyAdd
+                name="size"
+                id="size"
+                addButtonText="Adicionar Tamanho"
+                label="Tamanho"
+                setInputsArray={setSizes}
+                inputsArray={sizes}
+              />
+              <CustomPropertyAdd
+                name="reviews"
+                id="reviews"
+                addButtonText="Adicionar Reviews"
+                label="Link Reviews"
+                setInputsArray={setReviews}
+                inputsArray={reviews}
+              />
               <Grid item xs={12} sm={12}>
                 <span>Imagens</span>
                 <DropzoneArea
@@ -161,7 +182,10 @@ function RegisterProductPage() {
               <Grid container item spacing={2} justify="center">
                 <Grid item xs={12} sm={6}>
                   <RegisterProductButton onClick={handleRegister}>Cadastrar</RegisterProductButton>
-                  <button onClick={handleUpload}>kkk</button>
+                  {submited ?
+                    <HandleSubmissionMessage objectController={registerProductMessage} />
+                    :
+                    null }
                 </Grid>
               </Grid>
             </Grid>

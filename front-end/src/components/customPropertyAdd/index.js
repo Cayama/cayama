@@ -10,24 +10,23 @@ import {
   CustomInput,
 } from '../../components/layout/inputGroup';
 
-function CustomPropertyAdd({ addButtonText, label, name, id }) {
+function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inputsArray }) {
   const [inputName, setInputName] = useState('');
-  const [allInputs, setAllInputs] = useState([]);
 
   const setInputFunction = (value) => {
     setInputName(value);
   };
 
   const addInput = () => {
-    const newAllInputs = [...allInputs];
+    const newAllInputs = [...inputsArray];
     newAllInputs.push(inputName);
-    setAllInputs(newAllInputs);
+    setInputsArray(newAllInputs);
     setInputName('');
   }
 
   const removeInput = (value) => {
-    const newAllInputs = allInputs.filter((input) => input !== value);
-    setAllInputs(newAllInputs);
+    const newAllInputs = inputsArray.filter((input) => input !== value);
+    setInputsArray(newAllInputs);
   };
 
   return (
@@ -41,7 +40,7 @@ function CustomPropertyAdd({ addButtonText, label, name, id }) {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        {allInputs.map((inputName, index) => {
+        {inputsArray.map((inputName, index) => {
           return (
             <Grid item key={index}>
               <InputWithX onClick={(e) => removeInput(e.currentTarget.textContent)}>
