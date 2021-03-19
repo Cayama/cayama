@@ -249,7 +249,7 @@ const SuccessMessageCard = ({ messages }) => {
 
 const ErrorMessageCard = ({ messages }) => {
   return (
-  <div>{messages.map(({ context: { key } }) => (<div>{key}</div>))}</div>
+  <div>{messages.map(({ context: { key } }) => (<div key={key}>{key}</div>))}</div>
   )
 }
 

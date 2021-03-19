@@ -4,7 +4,7 @@ const { SECRET } = process.env;
 
 module.exports = (userObj) => {
   const jwtConfig = {
-    expiresIn: '60s',
+    expiresIn: '10s',
     algorithm: 'HS256',
   };
 

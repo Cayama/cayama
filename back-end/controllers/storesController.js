@@ -76,7 +76,7 @@ const registerProduct = rescue(async (req, res, next) => {
     brand,
     color,
     sizes,
-  });
+  }, 'failedProductRegister');
 
   const addNewProduct = await storesService.addNewProduct({
     sellerId: _id,

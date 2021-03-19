@@ -14,13 +14,18 @@ module.exports = rescue(async (req, _res, next) => {
 
   if (error) return next(Boom.unauthorized(error));
 
-  const decoded = jwt.verify(token, SECRET);
+  try {
+    const decoded = jwt.verify(token, SECRET);
 
-  const user = await usersModel.getUserByEmail(decoded.user.email);
+    const user = await usersModel.getUserByEmail(decoded.user.email);
 
-  if (!user) return next(Boom.notFound('Usuário não encontrado'));
+    if (!user) return next(Boom.notFound('Usuário não encontrado'));
 
-  req.user = user;
+    req.user = user;
 
-  return next();
+    return next();
+  } catch (err) {
+    err.type = 'jwtExpired';
+    next(Boom.unauthorized(err));
+  }
 });
