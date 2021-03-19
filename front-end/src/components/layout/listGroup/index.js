@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { ListItemContainer } from './styles';
+import { cleanUser } from '../../../utils/index';
 
 const iconChooser = {
   inboxIcon: <InboxIcon />,
@@ -25,13 +28,10 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-function NavBarDropDown({ onClick, navBarStructure }) {
+function NavBarDropDown({ onClick, navBarStructure, firstName }) {
   const classes = useStyles();
-
-  const cleanUser = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('persist:root');
-  };
+  const dispatch = useDispatch();
+  const history = useRouter();
 
   return (
     <div className={classes.root}>
@@ -47,12 +47,23 @@ function NavBarDropDown({ onClick, navBarStructure }) {
             <Divider />
           </div>
         ))}
-        <ListItemLink onClick={cleanUser} href='/'>
-          <ListItemIcon>
-            <ExitToAppIcon />
-          </ListItemIcon>
-          <ListItemText primary='Sair' />
-        </ListItemLink>
+        {firstName ?
+          (
+            <div>
+              <ListItemLink onClick={() => {
+                cleanUser(dispatch, history, '/');
+                if (onClick) return onClick();
+              }}>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText primary='Sair' />
+              </ListItemLink>
+            </div>
+          )
+          :
+          null
+        }
       </List>
     </div>
   );

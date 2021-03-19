@@ -22,17 +22,6 @@ export default function Home() {
           Produtos em destaque
         </HomePageTitles>
         <ProductsSectionDisplay productsArray={productsMock} />
-        {/* <ProductsCardSection>
-          {productsMock.map(({ price, productName, shipping, category,storeName }) => (
-            <ProductCard
-              price={price}
-              productName={productName}
-              shipping={shipping}
-              category={category}
-              storeName={storeName}
-            />
-          ))}
-        </ProductsCardSection> */}
       </main>
       <Footer />
     </div>

@@ -1,4 +1,4 @@
-import { USER_DATA } from '../action/userDataAction';
+import { USER_DATA, USER_SIGN_OUT } from '../action/userDataAction';
 
 const INITIAL_STATE = {
   userData: {
@@ -8,10 +8,17 @@ const INITIAL_STATE = {
 
 const userDataReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case USER_DATA: return {
-      ...state,
-      userData: { ...state.userData, ...action.userData },
-    };
+    case USER_SIGN_OUT:
+      return {
+        userData: {
+          addresses: [],
+        }
+      };
+    case USER_DATA:
+      return {
+        ...state,
+        userData: { ...state.userData, ...action.userData },
+      };
     default: return state;
   }
 };
