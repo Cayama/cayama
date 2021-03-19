@@ -31,7 +31,7 @@ const NavBar = () => {
         <MenuBigScreen userName={firstName} />
       </Hidden>
       <Hidden lgUp>
-        <MenuSmallerScreen open={hamburgerOpen} />
+        <MenuSmallerScreen userName={firstName} open={hamburgerOpen} />
       </Hidden>
     </MyNavBar>
   );

@@ -16,7 +16,7 @@ const BurguerNav = () => {
 
   return (
     <Hidden lgUp>
-      <ClickAwayListener onClickAway={() => { dispatch(hamburgerMenuAction(false)); setOpen(false) }}>
+      {/* <ClickAwayListener onClickAway={() => { dispatch(hamburgerMenuAction(false)); setOpen(false) }}> */}
         <StyledBurguer
           open={open}
           onClick={() => { dispatch(hamburgerMenuAction(!open)); setOpen(!open);}}
@@ -25,7 +25,7 @@ const BurguerNav = () => {
           <div />
           <div />
         </StyledBurguer>
-      </ClickAwayListener>
+      {/* </ClickAwayListener> */}
     </Hidden>
   )
 }

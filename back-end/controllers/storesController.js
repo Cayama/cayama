@@ -54,9 +54,13 @@ const registerProduct = rescue(async (req, res, next) => {
   } = req.body;
 
   const { _id } = req.user;
+  console.log(req.files);
+  const { productImages, productSizeTableImage } = req.files;
+  const productsImgKeys = (productImages || []).map((product) => product.key);
+  const productsImgUrls = (productImages || []).map((product) => product.location);
 
-  const keys = (req.files || []).map((product) => product.key);
-  const urls = (req.files || []).map((product) => product.location);
+  const productSizeTableImgKeys = (productSizeTableImage || []).map((product) => product.key);
+  const productSizeTableImgUrls = (productSizeTableImage || []).map((product) => product.location);
 
   validateSchemas(next, productRegisterSchema, {
     productName,
@@ -65,8 +69,10 @@ const registerProduct = rescue(async (req, res, next) => {
     stockQuantity,
     description,
     reviews,
-    keys,
-    urls,
+    productsImgKeys,
+    productsImgUrls,
+    productSizeTableImgKeys,
+    productSizeTableImgUrls,
     brand,
     color,
     sizes,
@@ -79,12 +85,14 @@ const registerProduct = rescue(async (req, res, next) => {
     category,
     stockQuantity,
     description,
-    urls,
     reviews,
-    keys,
     brand,
     color,
     sizes,
+    productsImgKeys,
+    productsImgUrls,
+    productSizeTableImgKeys,
+    productSizeTableImgUrls,
   });
 
   return res.status(201).json(addNewProduct);

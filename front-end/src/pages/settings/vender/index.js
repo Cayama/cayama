@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useVerifyExpiredToken } from '../../../customHooks/index';
 import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone'
 import Head from '../../../infra/components/head';
@@ -40,11 +41,12 @@ function RegisterProductPage() {
   const [stockQuantity, setStockQuantity] = useState('');
   const [description, setDescription] = useState('');
 
+  useVerifyExpiredToken()
+
   const token = getToken();
 
   const setPriceFunction = (value) => {
     const formatedPriceString = formatNumbersToBRL(value)
-
     setFormatedPrice(formatedPriceString)
     return setPrice(formatedPriceString)
   }
@@ -61,7 +63,7 @@ function RegisterProductPage() {
     formDataArray(formData, sizes, "sizes[]")
     formData.append("color", color);
     formDataArray(formData, reviews, "reviews[]")
-    formData.append("productSizeTableImage", productSizeTableImage);
+    formDataArray(formData, productSizeTableImage, "productSizeTableImage")
     return formData;
   }
 

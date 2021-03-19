@@ -1,5 +1,5 @@
-import App from 'next/app'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import App from 'next/app';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { createMuiTheme, ThemeProvider as MaterialThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
@@ -104,9 +104,8 @@ const GlobalStyle = createGlobalStyle`
 
 export default class MyApp extends App {
   componentDidMount() {
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles && jssStyles.parentNode)
-      jssStyles.parentNode.removeChild(jssStyles)
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles);
   }
 
   render() {

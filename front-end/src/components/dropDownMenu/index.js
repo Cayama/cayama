@@ -14,11 +14,13 @@ const useStyles = makeStyles((theme) => ({
 
 function DropDownMenu({ userName, linksDropdownArr }) {
   const classes = useStyles();
+
   return (
     <DropDownContainer>
       <div className={classes.button}>{userName} <ExpandMoreIcon /></div>
       <DropDownContent>
         <NavBarDropDown
+          firstName={userName}
           navBarStructure={linksDropdownArr}
         />
       </DropDownContent>
