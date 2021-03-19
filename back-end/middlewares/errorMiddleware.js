@@ -9,6 +9,7 @@ module.exports = (err, _req, res, _next) => {
         message,
         details: err.details,
         stack: err.stack,
+        type: err.type,
       },
     });
   }

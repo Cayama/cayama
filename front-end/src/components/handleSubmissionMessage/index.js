@@ -8,7 +8,9 @@ function HandleSubmissionMessage({ objectController: { type, messages } }) {
     case 'successfullProductRegister':
       return <SuccessMessageCard messages={messages} />;
     case 'failedProductRegister':
-      return <ErrorMessageCard messages={messages} />
+      return <ErrorMessageCard messages={messages} />;
+    default:
+      return <ErrorMessageCard messages={[{context: { key: 'Algo deu errado' }}]} />
   }
 }
 

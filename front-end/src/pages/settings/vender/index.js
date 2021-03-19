@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Router from 'next/router'
+import useRouterFunction from '../../../infra/components/useRouter';
 import { useVerifyExpiredToken } from '../../../customHooks/index';
 import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone'
@@ -86,13 +88,14 @@ function RegisterProductPage() {
         return setSubmited(true);
       })
       .catch(({ response }) => {
-        console.log(response)
+        console.log(response);
         if (!response) return setNoConnectionError('Sem conexação.');
+        if (response.data.err.type === 'jwtExpired') return Router.reload(window.location.pathname);
         setRegisterProductMessage({
-            type: 'failedProductRegister',
+            type: response.data.err.type,
             messages: response.data.err.details,
         });
-        return setSubmited(true)
+        return setSubmited(true);
       })
   }
 
