@@ -7,6 +7,7 @@ const shippingRoutes = require('./shippingRoutes');
 const addressesRoutes = require('./addressesRoutes');
 const bankRoutes = require('./bankRoutes');
 const influencerRoutes = require('./influencerRoutes');
+const categoriesRoutes = require('./categoriesRoutes');
 
 module.exports = {
   usersRoutes,
@@ -18,4 +19,5 @@ module.exports = {
   addressesRoutes,
   bankRoutes,
   influencerRoutes,
+  categoriesRoutes,
 };

@@ -93,6 +93,69 @@ const ButtonContainer = styled.div`
   margin: 10px;
 `;
 
+const AnnouncementIconContent = styled.div`
+  margin: 0 0 10px 0;
+`;
+
+const AnnouncementTitleH2 = styled.h2`
+  font-size: 2.5rem;
+`;
+
+const IconOnlyCardContainer = styled.div`
+  margin: 10px 10px 10px 10px;
+`;
+
+const CustomCard = styled.div`
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 rgba(0,0,0,.05), 0 1px 2px 0 rgba(0,0,0,.15);
+  font-family: "Proxima Nova",-apple-system,"Helvetica Neue",Helvetica,"Roboto",Arial,sans-serif;
+`;
+
+const CustomCardContent = styled.div`
+  padding: 30px 25px 30px 25px;
+`;
+
+const CustomCategoryCardContainer = styled.div`
+  padding: 30px 25px 30px 25px;
+  cursor: pointer;
+  border-bottom: 1px solid black;
+  &:hover {
+    background-color: #ededed;
+  }
+`;
+
+const CategoryCardContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CardWithSearchInputContainer = styled.div`
+  width: 50vw;
+
+  @media (max-width: 768px) {
+    width 95vw;
+  }
+`;
+
+const InputButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 30px 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const InputContainer = styled.div`
+  width: 82%;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+`;
+
 export {
   CardContainer,
   CardContent,
@@ -105,4 +168,14 @@ export {
   SuccessMessageCardContent,
   SuccessMessageCardLinks,
   ButtonContainer,
+  AnnouncementIconContent,
+  AnnouncementTitleH2,
+  IconOnlyCardContainer,
+  CustomCard,
+  CardWithSearchInputContainer,
+  CustomCardContent,
+  InputButtonContainer,
+  InputContainer,
+  CustomCategoryCardContainer,
+  CategoryCardContent,
 };

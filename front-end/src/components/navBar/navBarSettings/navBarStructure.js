@@ -22,7 +22,7 @@ const navBarStructure = [
   },
   {
     name: 'Vender',
-    url: '/settings/vender',
+    url: '/settings/anuncie',
     icon: <StorefrontOutlinedIcon />,
   },
   {

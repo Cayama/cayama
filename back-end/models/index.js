@@ -7,6 +7,7 @@ const cartModel = require('./cartModel');
 const addressesModel = require('./addressesModel');
 const bankModel = require('./bankModel');
 const influencerModel = require('./influencerModel');
+const categoriesModel = require('./categoriesModel');
 
 module.exports = {
   userModel,
@@ -18,4 +19,5 @@ module.exports = {
   addressesModel,
   bankModel,
   influencerModel,
+  categoriesModel,
 };

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Router from 'next/router'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import { CustomInput } from '../layout/inputGroup';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
@@ -21,12 +23,21 @@ import {
   SuccessMessageCardContent,
   SuccessMessageCardLinks,
   ButtonContainer,
+  AnnouncementIconContent,
+  AnnouncementTitleH2,
+  IconOnlyCardContainer,
+  CustomCard,
+  CardWithSearchInputContainer,
+  CustomCardContent,
+  InputButtonContainer,
+  InputContainer,
+  CustomCategoryCardContainer,
+  CategoryCardContent,
 } from './styles';
 import Link from '../../infra/components/link';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import { useTheme } from 'styled-components';
 
 
 const useStyles = makeStyles({
@@ -219,13 +230,14 @@ const SuccessMessageCard = ({ messages }) => {
     Router.reload(window.location.pathname);
   }, 5000)
 
-  const addNewProduct = () => {
+  const addNewProduct = (path) => {
     clearTimeout(timeOut);
-    Router.reload(window.location.pathname)
+    Router.push(path)
   }
 
-  const initialPage = () => {
+  const initialPage = (path) => {
     clearTimeout(timeOut);
+    Router.push(path)
   }
   return (
     <SuccessMessageCardContainer>
@@ -237,21 +249,102 @@ const SuccessMessageCard = ({ messages }) => {
       </SuccessMessageCardContent>
       <SuccessMessageCardLinks>
         <ButtonContainer>
-          <Link href="/settings/vender"><Button onClick={addNewProduct} color="primary" variant="contained">Novo Produto</Button></Link>
+          <Button onClick={() => addNewProduct("/settings/anuncie")} color="primary" variant="contained">Novo Produto</Button>
         </ButtonContainer>
         <ButtonContainer>
-          <Link href="/"><Button onClick={initialPage} color="secondary" variant="contained">Página Principal</Button></Link>
+          <Button onClick={() => initialPage("/")} color="secondary" variant="contained">Página Principal</Button>
         </ButtonContainer>
       </SuccessMessageCardLinks>
     </SuccessMessageCardContainer>
-  )
+  );
 }
 
 const ErrorMessageCard = ({ messages }) => {
   return (
   <div>{messages.map(({ context: { key } }) => (<div key={key}>{key}</div>))}</div>
+  );
+}
+
+const useStylesIconCardOnly = makeStyles({
+  root: {
+    width: '46vw',
+    maxWidth: 190,
+    height: 200,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    zIndex: 11,
+  }
+});
+
+const IconOnlyCard = ({ icon, title, href }) => {
+  const classes = useStylesIconCardOnly();
+  return (
+    <IconOnlyCardContainer className={classes.container}>
+      <Link href={href}>
+        <Card className={classes.root} variant="outlined">
+          <AnnouncementIconContent>
+            {icon}
+          </AnnouncementIconContent>
+          <AnnouncementTitleH2>{title}</AnnouncementTitleH2>
+        </Card>
+      </Link>
+    </IconOnlyCardContainer>
+  );
+}
+
+const CardWithSearchCategoryInput = ({ setInput, inputValue, onClick }) => {
+  return (
+    <CardWithSearchInputContainer>
+      <CustomCard>
+        <CustomCardContent>
+          <h2>Nome do produto</h2>
+          <InputButtonContainer>
+            <InputContainer>
+              <CustomInput
+                name="searchProductCategory"
+                id="searchProductCategory"
+                setInput={setInput}
+                input={inputValue}
+                label="Nome do produto"
+              />
+            </InputContainer>
+            <Button onClick={onClick} variant="contained" style={{ backgroundColor: '#1A8FE3', color: 'white' }}>
+              Começar
+            </Button>
+          </InputButtonContainer>
+        </CustomCardContent>
+      </CustomCard>
+    </CardWithSearchInputContainer>
+  )
+}
+
+const CategoriesCard = ({ categoryName, typeOfAnnouncement, path }) => {
+  return (
+    <Link href={`/register/${typeOfAnnouncement}/${path}?category=${categoryName}`}>
+      <CustomCard>
+        <CustomCategoryCardContainer>
+          <CategoryCardContent>
+            <h3>{categoryName}</h3>
+            <ArrowForwardIosIcon />
+          </CategoryCardContent>
+        </CustomCategoryCardContainer>
+      </CustomCard>
+    </Link>
   )
 }
 
 
-export { PromoCard, ProductCard, ShippingCard, SuccessMessageCard, ErrorMessageCard };
+export {
+  PromoCard,
+  ProductCard,
+  ShippingCard,
+  SuccessMessageCard,
+  ErrorMessageCard,
+  IconOnlyCard,
+  CardWithSearchCategoryInput,
+  CategoriesCard,
+};
