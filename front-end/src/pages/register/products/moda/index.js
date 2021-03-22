@@ -12,6 +12,7 @@ import {
   ProductDescriptionInput,
   CustomInput,
   PriceInput,
+  DisabledInput,
 } from '../../../../components/layout/inputGroup';
 import HandleSubmissionMessage from '../../../../components/handleSubmissionMessage';
 import { DropDownSelect } from '../../../../components/layout/selectGroup';
@@ -39,18 +40,19 @@ function RegisterProductPage() {
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
   const [formatedPrice, setFormatedPrice] = useState('');
-  const [category, setCategory] = useState([]);
+  // const [category, setCategory] = useState([]);
   const [stockQuantity, setStockQuantity] = useState('');
   const [description, setDescription] = useState('');
 
-  const history = useRouterFunction();
+  const { query: { category } } = useRouterFunction();
+
   useVerifyExpiredToken()
   const token = getToken();
 
   const getCategory = () => {
-    const pathNameSplited = history.pathname.split('/');
-    const category = pathNameSplited[pathNameSplited.length - 1];
-    console.log(category)
+    // const pathNameSplited = history.pathname.split('/');
+    // const category = pathNameSplited[pathNameSplited.length - 1];
+    // console.log(category)
     return category
   }
 
@@ -68,7 +70,7 @@ function RegisterProductPage() {
     formData.append("stockQuantity", stockQuantity);
     formData.append("description", description);
     formData.append("brand", brand);
-    formData.append("category", getCategory());
+    formData.append("category", category);
     formDataArray(formData, sizes, "sizes[]")
     formData.append("color", color);
     formDataArray(formData, reviews, "reviews[]")
@@ -136,6 +138,9 @@ function RegisterProductPage() {
                   />
                 </Grid>
               }
+              <Grid item xs={12} sm={6}>
+                <DisabledInput value={category} label="Categoria Cayama" />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <PriceInput value={formatedPrice} label="Preço" setPrice={setPriceFunction} />
               </Grid>

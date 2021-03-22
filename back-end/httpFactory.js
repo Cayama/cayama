@@ -10,6 +10,7 @@ const {
   addressesRoutes,
   bankRoutes,
   influencerRoutes,
+  categoriesRoutes,
 } = require('./routes/index');
 const { errorMiddleware } = require('./middlewares/index');
 
@@ -26,6 +27,7 @@ module.exports = (app, io) => {
   app.use('/addresses', addressesRoutes(io));
   app.use('/bank', bankRoutes(io));
   app.use('/influencer', influencerRoutes(io));
+  app.use('/categories', categoriesRoutes(io));
   app.use('/test', (req, res) => res.json({ message: 'Chegou aqui' }));
 
   app.all('*', (_req, res) => res.status(404).json({ message: 'page not found' }));

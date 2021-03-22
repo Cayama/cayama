@@ -15,13 +15,14 @@ const CayamaCategorySearchRegister = () => {
   const { query: { typeOfAnnouncement } } = useRouterFunction();
 
   const searchForCategory = () => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL_SEARCH_CATEGORY_BY_PRODUCT_NAME}?productName=${productName}`)
-      .then((response) => {
-        setCatergoriesArray(categoriesCayamaMock)
-      })
-      .catch((response) => {
+    // axios.get(`${process.env.NEXT_PUBLIC_API_URL_SEARCH_CATEGORY_BY_PRODUCT_NAME}?productName=${productName}`)
+    //   .then((response) => {
+    //     setCatergoriesArray(categoriesCayamaMock)
+    //   })
+    //   .catch((response) => {
 
-      })
+    //   })
+    setCatergoriesArray(categoriesCayamaMock)
   }
 
   return (

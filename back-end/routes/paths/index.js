@@ -7,6 +7,7 @@ const shippingPaths = require('./shippingPaths');
 const addressesPaths = require('./addressesPaths');
 const bankPaths = require('./bankPaths');
 const influencerPaths = require('./influencerPaths');
+const categoriesPaths = require('./categoriesPaths');
 
 module.exports = {
   usersPaths,
@@ -18,4 +19,5 @@ module.exports = {
   addressesPaths,
   bankPaths,
   influencerPaths,
+  categoriesPaths,
 };

@@ -54,7 +54,7 @@ const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 
 const fieldsObjectManager = {
   categories: {
-    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas'],
+    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas'],
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   socialMedia: {

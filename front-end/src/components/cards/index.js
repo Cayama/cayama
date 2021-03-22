@@ -324,7 +324,7 @@ const CardWithSearchCategoryInput = ({ setInput, inputValue, onClick }) => {
 
 const CategoriesCard = ({ categoryName, typeOfAnnouncement, path }) => {
   return (
-    <Link href={`/register/${typeOfAnnouncement}/${path}`}>
+    <Link href={`/register/${typeOfAnnouncement}/${path}?category=${categoryName}`}>
       <CustomCard>
         <CustomCategoryCardContainer>
           <CategoryCardContent>

@@ -255,6 +255,19 @@ const PriceInput = ({ value, setPrice, label }) => {
   );
 }
 
+const DisabledInput = ({ label, value }) => {
+  return (
+    <TextField
+      disabled
+      id="outlined-disabled"
+      label={label}
+      defaultValue={value}
+      variant="outlined"
+      fullWidth
+    />
+  );
+}
+
 export {
   FirstNameInput,
   LastNameInput,
@@ -272,4 +285,5 @@ export {
   ProductDescriptionInput,
   CustomInput,
   PriceInput,
+  DisabledInput,
 };
