@@ -1,4 +1,8 @@
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 

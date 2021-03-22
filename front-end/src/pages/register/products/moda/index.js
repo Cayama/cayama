@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router'
-import useRouterFunction from '../../../infra/components/useRouter';
-import { useVerifyExpiredToken } from '../../../customHooks/index';
+import useRouterFunction from '../../../../infra/components/useRouter';
+import { useVerifyExpiredToken } from '../../../../customHooks/index';
 import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone'
-import Head from '../../../infra/components/head';
-import Header from '../../../patterns/header';
-import Footer from '../../../patterns/footer';
-import Link from '../../../infra/components/link';
+import Head from '../../../../infra/components/head';
+import Header from '../../../../patterns/header';
+import Footer from '../../../../patterns/footer';
+import Link from '../../../../infra/components/link';
 import {
   ProductDescriptionInput,
   CustomInput,
   PriceInput,
-} from '../../../components/layout/inputGroup';
-import HandleSubmissionMessage from '../../../components/handleSubmissionMessage';
-import { DropDownSelect } from '../../../components/layout/selectGroup';
+} from '../../../../components/layout/inputGroup';
+import HandleSubmissionMessage from '../../../../components/handleSubmissionMessage';
+import { DropDownSelect } from '../../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
 import {
   RegisterProductSection,
   RegisterProductContent,
   RegisterProductButton,
 } from './styles';
-import { getToken, formDataArray } from '../../../utils/index';
-import formatNumbersToBRL from '../../../utils/formatNumbersToBRL';
-import CustomPropertyAdd from '../../../components/customPropertyAdd';
+import { getToken, formDataArray } from '../../../../utils/index';
+import formatNumbersToBRL from '../../../../utils/formatNumbersToBRL';
+import CustomPropertyAdd from '../../../../components/customPropertyAdd';
 
 function RegisterProductPage() {
   const [submited, setSubmited] = useState(false);
@@ -39,13 +39,20 @@ function RegisterProductPage() {
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
   const [formatedPrice, setFormatedPrice] = useState('');
-  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState([]);
   const [stockQuantity, setStockQuantity] = useState('');
   const [description, setDescription] = useState('');
 
+  const history = useRouterFunction();
   useVerifyExpiredToken()
-
   const token = getToken();
+
+  const getCategory = () => {
+    const pathNameSplited = history.pathname.split('/');
+    const category = pathNameSplited[pathNameSplited.length - 1];
+    console.log(category)
+    return category
+  }
 
   const setPriceFunction = (value) => {
     const formatedPriceString = formatNumbersToBRL(value)
@@ -61,7 +68,7 @@ function RegisterProductPage() {
     formData.append("stockQuantity", stockQuantity);
     formData.append("description", description);
     formData.append("brand", brand);
-    formData.append("category", 'Moda');
+    formData.append("category", getCategory());
     formDataArray(formData, sizes, "sizes[]")
     formData.append("color", color);
     formDataArray(formData, reviews, "reviews[]")
