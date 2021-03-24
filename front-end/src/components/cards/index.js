@@ -150,11 +150,11 @@ const ProductCard = ({ productName, price, shipping, category, storeName }) => {
               title="Contemplative Reptile"
             />
             <CardContent>
-              <Typography gutterBottom variant="h4" component="h2">
+              <Typography gutterBottom variant="h5" component="h2">
                 {price}
               </Typography>
               {shipping ? 'Frete Grátis' : null}
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body1" color="textSecondary" component="p">
                 {productName}
               </Typography>
             </CardContent>

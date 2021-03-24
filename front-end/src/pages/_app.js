@@ -70,36 +70,36 @@ const GlobalStyle = createGlobalStyle`
     z-index: 20;
   }
 
-  h1 {
-    /* Extra small devices (phones, less than 768px) */
-    font-size: 30px;
+  // h1 {
+  //   /* Extra small devices (phones, less than 768px) */
+  //   font-size: 30px;
 
-    /* Small devices (tablets, 768px and up) */
-    @media (min-width: 768px) {
-      font-size: 40px;
-    }
+  //   /* Small devices (tablets, 768px and up) */
+  //   @media (min-width: 768px) {
+  //     font-size: 40px;
+  //   }
 
-    /* Medium devices (desktops, 992px and up) */
-    @media (min-width: 992px) {
-      font-size: 40px;
-    }
+  //   /* Medium devices (desktops, 992px and up) */
+  //   @media (min-width: 992px) {
+  //     font-size: 40px;
+  //   }
 
-    /* Large devices (large desktops, 1200px and up) */
-    @media (min-width: 1200px) {
-      font-size: 40px;
-    }
-  }
+  //   /* Large devices (large desktops, 1200px and up) */
+  //   @media (min-width: 1200px) {
+  //     font-size: 40px;
+  //   }
+  // }
 
-  @media ( min-width : 700px ) {
+  // @media ( min-width : 700px ) {
 
-    html, body  {
-      font-size: 62.5%;
-    }
+  //   html, body  {
+  //     font-size: 62.5%;
+  //   }
 
-    .container {
-      width: 100%;
-    }
-  }
+  //   .container {
+  //     width: 100%;
+  //   }
+  // }
 `;
 
 export default class MyApp extends App {
