@@ -5,6 +5,8 @@ const {
   emailSchema,
   birthDateSchema,
   cpfSchema,
+  newsAcceptanceSchema,
+  privacyAndTermsSchema,
 } = require('../inputSchemas');
 
 module.exports = Joi.object({
@@ -15,4 +17,6 @@ module.exports = Joi.object({
   confirmPassword: Joi.ref('password'),
   cpf: cpfSchema,
   birthDate: birthDateSchema,
+  newsAcceptance: newsAcceptanceSchema,
+  privacyAndTerms: privacyAndTermsSchema,
 });

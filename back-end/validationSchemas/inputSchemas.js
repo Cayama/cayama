@@ -52,6 +52,9 @@ const arrayLinksSchema = Joi.array().items(Joi.string()).required();
 
 const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 
+const newsAcceptanceSchema = Joi.boolean();
+const privacyAndTermsSchema = Joi.boolean().truthy();
+
 const fieldsObjectManager = {
   categories: {
     array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas'],
@@ -206,4 +209,6 @@ module.exports = {
   arrayOfObjectsSchema,
   newValueSchema,
   fieldsExistenceSchema,
+  newsAcceptanceSchema,
+  privacyAndTermsSchema,
 };

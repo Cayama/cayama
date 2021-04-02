@@ -22,6 +22,8 @@ const registerUser = rescue(async (req, res, next) => {
     birthDate,
     addresses = [],
     influencer = {},
+    newsAcceptance = false,
+    privacyAndTerms,
   } = req.body;
 
   validateSchemas(next, userRegisterSchema, {
@@ -32,6 +34,8 @@ const registerUser = rescue(async (req, res, next) => {
     confirmPassword,
     cpf,
     birthDate,
+    newsAcceptance,
+    privacyAndTerms,
   });
 
   const userExists = await usersService.getUserByEmail(email);
@@ -62,6 +66,8 @@ const registerUser = rescue(async (req, res, next) => {
     birthDate,
     addresses,
     influencer,
+    newsAcceptance,
+    privacyAndTerms,
   });
 
   const token = createJwtToken(newUser);

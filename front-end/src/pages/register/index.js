@@ -66,7 +66,7 @@ export default function SignUpUser() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [cpf, setCpf] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthDate, setBirthDate] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -90,7 +90,7 @@ export default function SignUpUser() {
         firstName,
         lastName,
         cpf,
-        birthday,
+        birthDate,
         email,
         password,
         confirmPassword,
@@ -138,7 +138,7 @@ export default function SignUpUser() {
                 <CpfInput setCpf={setCpf} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <BirthDateInput setBirthday={setBirthday} className={classes.textField} />
+                <BirthDateInput setBirthday={setBirthDate} className={classes.textField} />
               </Grid>
               <Grid item xs={12}>
                 <EmailInput setEmail={setEmail} />
