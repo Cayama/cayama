@@ -1,13 +1,22 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware, multerMiddleware } = require('../middlewares/index');
-const { productPaths: { registerProduct, deleteProduct, getProductByField, updateProduct } } = require('./paths/index');
+const {
+  productPaths: {
+    registerProduct,
+    deleteProduct,
+    getProductByField,
+    updateProduct,
+    getProductById
+  }
+} = require('./paths/index');
 
 const productRoutes = Router();
 
 module.exports = (io) => {
     productRoutes
       .get(getProductByField, controllers.productController.getProductByField)
+      .get(getProductById, controllers.productController.getProductById)
       .post(
         registerProduct,
         jwtMiddleware,

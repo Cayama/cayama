@@ -74,8 +74,6 @@ const deleteProduct = rescue(async (req, res, next) => {
 const getProductById = rescue(async (req, res, next) => {
   const { productId } = req.body;
 
-  validateSchemas(next, productIdSchema, productId)
-
   const product = await productService.getProductById(productId, next);
 
   return res.status(200).json({ product });

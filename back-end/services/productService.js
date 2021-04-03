@@ -1,6 +1,7 @@
 const { productModel } = require('../models/index');
 const {
   productRegisterSchema,
+  productIdSchema,
 } = require('../validationSchemas/productSchema/index');
 const { validateSchemas } = require('../services/schemasService');
 const { deleteImage } = require('../utils/index');
@@ -11,7 +12,8 @@ const registerProduct = async (productObj) => {
     return newProduct;
 };
 
-const getProductById = async (productId) => {
+const getProductById = async (productId, next) => {
+  validateSchemas(next, productIdSchema, productId)
   const newProduct = await productModel.getProductById(productId);
   return newProduct;
 }

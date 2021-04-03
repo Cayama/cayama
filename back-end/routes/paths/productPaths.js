@@ -1,11 +1,13 @@
 const registerProduct = '/register';
 const deleteProduct = '/delete';
-const getProductByField = '/find';
+const getProductByField = '/findByField';
 const updateProduct = '/update';
+const getProductById = '/findById';
 
 module.exports = {
   registerProduct,
   deleteProduct,
   getProductByField,
   updateProduct,
+  getProductById,
 };
