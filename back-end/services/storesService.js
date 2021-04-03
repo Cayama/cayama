@@ -10,10 +10,10 @@ const registerStore = async (storeObj) => {
   return store;
 };
 
-const addNewProduct = async (productObj) => {
-  const newProduct = await storesModel.addNewProduct(productObj);
-  return newProduct;
-};
+// const addNewProduct = async (productObj) => {
+//   const newProduct = await storesModel.addNewProduct(productObj);
+//   return newProduct;
+// };
 
 const updatedProducts = async (userId, newProductsArray) => {
   const newProducts = await storesModel.updatedProducts(userId, newProductsArray);
@@ -23,6 +23,6 @@ const updatedProducts = async (userId, newProductsArray) => {
 module.exports = {
   getStoreByCnpj,
   registerStore,
-  addNewProduct,
+  // addNewProduct,
   updatedProducts,
 };

@@ -11,6 +11,7 @@ const {
   bankRoutes,
   influencerRoutes,
   categoriesRoutes,
+  productRoutes
 } = require('./routes/index');
 const { errorMiddleware } = require('./middlewares/index');
 
@@ -20,6 +21,7 @@ module.exports = (app, io) => {
 
   app.use('/user', usersRoutes(io));
   app.use('/store', storesRoutes(io));
+  app.use('/product', productRoutes(io));
   app.use('/purchase', purchaseRoutes(io));
   app.use('/plataform', plataformRoutes(io));
   app.use('/cart', cartRoutes(io));

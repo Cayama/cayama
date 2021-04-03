@@ -40,63 +40,63 @@ const registerStore = rescue(async (req, res, next) => {
   return res.status(201).json({ token, userData });
 });
 
-const registerProduct = rescue(async (req, res, next) => {
-  const {
-    productName,
-    price,
-    category,
-    stockQuantity = 1,
-    description,
-    brand,
-    color,
-    sizes = [],
-    reviews = [],
-  } = req.body;
+// const registerProduct = rescue(async (req, res, next) => {
+//   const {
+//     productName,
+//     price,
+//     category,
+//     stockQuantity = 1,
+//     description,
+//     brand,
+//     color,
+//     sizes = [],
+//     reviews = [],
+//   } = req.body;
 
-  const { _id } = req.user;
-  console.log(req.files);
-  const { productImages, productSizeTableImage } = req.files;
-  const productsImgKeys = (productImages || []).map((product) => product.key);
-  const productsImgUrls = (productImages || []).map((product) => product.location);
+//   const { _id } = req.user;
+//   console.log(req.files);
+//   const { productImages, productSizeTableImage } = req.files;
+//   const productsImgKeys = (productImages || []).map((product) => product.key);
+//   const productsImgUrls = (productImages || []).map((product) => product.location);
 
-  const productSizeTableImgKeys = (productSizeTableImage || []).map((product) => product.key);
-  const productSizeTableImgUrls = (productSizeTableImage || []).map((product) => product.location);
+//   const productSizeTableImgKeys = (productSizeTableImage || []).map((product) => product.key);
+//   const productSizeTableImgUrls = (productSizeTableImage || []).map((product) => product.location);
 
-  validateSchemas(next, productRegisterSchema, {
-    productName,
-    price,
-    category: { field: 'categories', value: category },
-    stockQuantity,
-    description,
-    reviews,
-    productsImgKeys,
-    productsImgUrls,
-    productSizeTableImgKeys,
-    productSizeTableImgUrls,
-    brand,
-    color,
-    sizes,
-  }, 'failedProductRegister');
+//   validateSchemas(next, productRegisterSchema, {
+//     productName,
+//     price,
+//     category: { field: 'categories', value: category },
+//     stockQuantity,
+//     description,
+//     reviews,
+//     productsImgKeys,
+//     productsImgUrls,
+//     productSizeTableImgKeys,
+//     productSizeTableImgUrls,
+//     brand,
+//     color,
+//     sizes,
+//   }, 'failedProductRegister');
 
-  const addNewProduct = await storesService.addNewProduct({
-    sellerId: _id,
-    productName,
-    price,
-    category,
-    stockQuantity,
-    description,
-    reviews,
-    brand,
-    color,
-    sizes,
-    productsImgKeys,
-    productsImgUrls,
-    productSizeTableImgKeys,
-    productSizeTableImgUrls,
-  });
+//   const addNewProduct = await storesService.addNewProduct({
+//     sellerId: _id,
+//     productName,
+//     price,
+//     category,
+//     stockQuantity,
+//     description,
+//     reviews,
+//     brand,
+//     color,
+//     sizes,
+//     productsImgKeys,
+//     productsImgUrls,
+//     productSizeTableImgKeys,
+//     productSizeTableImgUrls,
+//   });
 
-  return res.status(201).json(addNewProduct);
-});
+//   return res.status(201).json(addNewProduct);
+// });
 
 const deleteProduct = rescue(async (req, res, next) => {
   const { _id, email } = req.user;
@@ -139,6 +139,6 @@ const updateProduct = rescue(async (req, res, next) => {});
 module.exports = {
   updateProduct,
   registerStore,
-  registerProduct,
+  // registerProduct,
   deleteProduct,
 };

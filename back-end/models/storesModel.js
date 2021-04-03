@@ -15,12 +15,12 @@ const registerStore = async (storeObj) => {
   return newStore.ops[0];
 };
 
-const addNewProduct = async (productObj) => {
-  const db = await connection();
-  const newProduct = await db.collection('products').insertOne(productObj);
+// const addNewProduct = async (productObj) => {
+//   const db = await connection();
+//   const newProduct = await db.collection('products').insertOne(productObj);
 
-  return newProduct.ops[0];
-};
+//   return newProduct.ops[0];
+// };
 
 const updatedProducts = async (userId, newProductsArray) => {
   const db = await connection();
@@ -37,6 +37,6 @@ const updatedProducts = async (userId, newProductsArray) => {
 module.exports = {
   getStoreByCnpj,
   registerStore,
-  addNewProduct,
+  // addNewProduct,
   updatedProducts,
 };

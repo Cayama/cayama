@@ -1,0 +1,24 @@
+const { Router } = require('express');
+const controllers = require('../controllers/index');
+const { jwtMiddleware, multerMiddleware } = require('../middlewares/index');
+const { productPaths: { registerProduct, deleteProduct, getProductByField } } = require('./paths/index');
+
+const productRoutes = Router();
+
+module.exports = (io) => {
+    productRoutes
+      .get(getProductByField, controllers.productController.getProductByField)
+      .post(
+        registerProduct,
+        jwtMiddleware,
+        multerMiddleware.fields([
+          { name: 'productImages', maxCount: 10 },
+          { name: 'productSizeTableImage', maxCount: 1 },
+        ]),
+        controllers.productController.registerProduct
+      )
+        .delete(deleteProduct, jwtMiddleware, controllers.productController.deleteProduct)
+    //   .put(deliveryCheck, jwtMiddleware, controllers.purchaseController.deliveryCheck)
+    return productRoutes;
+  };
+  

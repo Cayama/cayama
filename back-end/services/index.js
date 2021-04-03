@@ -8,6 +8,7 @@ const addressesService = require('./addressesService');
 const bankService = require('./bankService');
 const influencerService = require('./influencerService');
 const categoriesService = require('./categoriesService');
+const productService = require('./productService');
 
 module.exports = {
   plataformService,
@@ -20,4 +21,5 @@ module.exports = {
   bankService,
   influencerService,
   categoriesService,
+  productService,
 };

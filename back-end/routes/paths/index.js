@@ -8,6 +8,7 @@ const addressesPaths = require('./addressesPaths');
 const bankPaths = require('./bankPaths');
 const influencerPaths = require('./influencerPaths');
 const categoriesPaths = require('./categoriesPaths');
+const productPaths = require('./productPaths');
 
 module.exports = {
   usersPaths,
@@ -20,4 +21,5 @@ module.exports = {
   bankPaths,
   influencerPaths,
   categoriesPaths,
+  productPaths,
 };

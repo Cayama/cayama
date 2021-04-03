@@ -8,13 +8,13 @@ const storesRoutes = Router();
 module.exports = (io) => {
   storesRoutes
     .post(registerStore, controllers.storesController.registerStore)
-    .post('/register-product',
-      jwtMiddleware,
-      multerMiddleware.fields([
-        { name: 'productImages', maxCount: 10 },
-        { name: 'productSizeTableImage', maxCount: 1 },
-      ]),
-      controllers.storesController.registerProduct)
+    // .post('/register-product',
+    //   jwtMiddleware,
+    //   multerMiddleware.fields([
+    //     { name: 'productImages', maxCount: 10 },
+    //     { name: 'productSizeTableImage', maxCount: 1 },
+    //   ]),
+    //   controllers.storesController.registerProduct)
     .delete('/product/:id', jwtMiddleware, controllers.storesController.deleteProduct);
 
   return storesRoutes;
