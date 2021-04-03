@@ -26,13 +26,13 @@ const getProductByField = async (PAGE_SIZE, skip, field, fieldValue) => {
   return  products;
 }
   
-const updatedProducts = async (userId, newProductsArray) => {
+const updateProduct = async (productId, product) => {
   const db = await connection();
   const newProducts = await db.collection('products')
-    .findOneAndUpdate(
-      { _id: ObjectId(userId) },
-      { $set: { products: newProductsArray } },
-      { returnOriginal: false },
+    .findOneAndReplace(
+      { _id: ObjectId(productId) },
+      { ...product },
+      { returnOriginal: false, }
     );
 
   return newProducts.value;
@@ -47,7 +47,7 @@ const deleteProductById = async (productId) => {
   
   module.exports = {
     registerProduct,
-    updatedProducts,
+    updateProduct,
     getProductById,
     deleteProductById,
     getProductByField,

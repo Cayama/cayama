@@ -66,7 +66,7 @@ const deleteProduct = rescue(async (req, res, next) => {
   const { _id: userId, email } = req.user;
   const { id: productId } = req.query;
 
-  const { message } = await productService.deleteProduct(email, userId, productId, next);
+  const { message } = await productService.deleteProduct(userId, productId, next);
 
   return res.status(200).json({ message });
 });
@@ -82,11 +82,17 @@ const getProductById = rescue(async (req, res, next) => {
 });
 
 const getProductByField = rescue(async (req, res, next) => {
-   const { page } = req.query;
-   const { field, fieldValue } = req.body;
-   const products = await productService.getProductByField(page, field, fieldValue);
+  const { page } = req.query;
+  const { field, fieldValue } = req.body;
+  const products = await productService.getProductByField(page, field, fieldValue);
+  
+  return res.status(200).json({ products });
+});
 
-   return res.status(200).json({ products });
+const updateProduct = rescue(async (req, res, next) => {
+  const updatedProduct = await productService.updateProduct(req.body, req.user, req.files, next)
+
+  return res.status(201).json(updatedProduct);
 });
 
 module.exports = {
@@ -94,4 +100,5 @@ module.exports = {
   deleteProduct,
   getProductById,
   getProductByField,
+  updateProduct
 }
