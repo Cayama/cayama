@@ -34,7 +34,7 @@ const deleteProduct = async (userId, productId, next) => {
 
   const productToDelete = await productModel.getProductById(productId);
   
-  deleteImage(productToDelete)
+  deleteImage(productToDelete);
 
   await productModel.deleteProductById(productId);
 
