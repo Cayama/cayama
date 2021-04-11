@@ -136,7 +136,11 @@ const useStylesProduct = makeStyles({
   },
 });
 
-const ProductCard = ({ productName, price, shipping, category, storeName }) => {
+const ProductCard = ({
+  productData: {
+    productName, price, shipping, category, storeName = 'cayama', productsImgUrls,
+  }
+}) => {
   const classes = useStylesProduct();
   // const productNameLink = productName.replaceAll(' ', '-').toLowerCase();
 
@@ -146,12 +150,12 @@ const ProductCard = ({ productName, price, shipping, category, storeName }) => {
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80"
-              title="Contemplative Reptile"
+              image={productsImgUrls[0]}
+              title={productName}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                {price}
+                R$ {price}
               </Typography>
               {shipping ? 'Frete Grátis' : null}
               <Typography variant="body1" color="textSecondary" component="p">

@@ -16,11 +16,11 @@ const getProductById = async (productId) => {
   return newProduct;
 }
 
-const getProductByField = async (page, field, fieldValue) => {
+const getProductsByField = async (page, field, fieldValue) => {
   const PAGE_SIZE = 15;
   const pageInt = parseInt(page);
   const skip = (pageInt - 1) * PAGE_SIZE;
-  const products = await productModel.getProductByField(PAGE_SIZE, skip, field, fieldValue);
+  const products = await productModel.getProductsByField(PAGE_SIZE, skip, field, fieldValue);
 
   return products;
 };
@@ -119,5 +119,5 @@ module.exports = {
   deleteProduct,
   getProductById,
   updateProduct,
-  getProductByField,
+  getProductsByField,
 };

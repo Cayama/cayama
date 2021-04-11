@@ -81,10 +81,10 @@ const getProductById = rescue(async (req, res, next) => {
   return res.status(200).json({ product });
 });
 
-const getProductByField = rescue(async (req, res, next) => {
+const getProductsByField = rescue(async (req, res, next) => {
   const { page } = req.query;
   const { field, fieldValue } = req.body;
-  const products = await productService.getProductByField(page, field, fieldValue);
+  const products = await productService.getProductsByField(page, field, fieldValue);
   
   return res.status(200).json({ products });
 });
@@ -99,6 +99,6 @@ module.exports = {
   registerProduct,
   deleteProduct,
   getProductById,
-  getProductByField,
+  getProductsByField,
   updateProduct
 }

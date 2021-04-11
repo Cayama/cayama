@@ -15,7 +15,7 @@ const getProductById = async (productId) => {
   return product
 }
 
-const getProductByField = async (PAGE_SIZE, skip, field, fieldValue) => {
+const getProductsByField = async (PAGE_SIZE, skip, field, fieldValue) => {
   const db = await connection();
   const products = await db.collection('products').aggregate([
     { $match: { [field]: fieldValue } },
@@ -50,5 +50,5 @@ const deleteProductById = async (productId) => {
     updateProduct,
     getProductById,
     deleteProductById,
-    getProductByField,
+    getProductsByField,
   };
