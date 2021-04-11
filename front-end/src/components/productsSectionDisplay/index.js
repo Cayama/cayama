@@ -5,14 +5,10 @@ import { ProductCard } from '../cards';
 function ProductsSectionDisplay({ productsArray  }) {
   return (
     <ProductsCardSection>
-      {productsArray.map(({ _id, price, productName, shipping, category, storeName }) => (
+      {productsArray.map((productData) => (
         <ProductCard
-          key={_id}
-          price={price}
-          productName={productName}
-          shipping={shipping}
-          category={category}
-          storeName={storeName}
+          key={productData._id}
+          productData={productData}
         />
       ))}
     </ProductsCardSection>
