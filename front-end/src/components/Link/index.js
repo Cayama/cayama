@@ -18,7 +18,7 @@ function MultiLink({ linkArray }) {
     <LinkContainer>
       {linkArray.map(({ variant, color, href, text }) => (
         <Link key={href} href={href}>
-          <Typography variant={variant} color={color}>{text}</Typography>
+          <span>{text}</span>
         </Link>
       ))}
     </LinkContainer>

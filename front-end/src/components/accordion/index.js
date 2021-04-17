@@ -90,12 +90,12 @@ function MultiLinkComplexAccordion({ linkArray, inverted }) {
       </AccordionSummary>
       <AccordionDetails>
         <LinkcontainerAccordion>
-        {linkArray.map((e, index) => (
-          <ContainerColumn key={index}>
-            <Typography variant='body1' color='primary'>{e.name}</Typography>
-            <MultiLink linkArray={e.links} />
-          </ContainerColumn>
-        ))}
+          {linkArray.map((e, index) => (
+            <ContainerColumn key={index}>
+              <h4 variant='body1' color='primary'>{e.name}</h4>
+              <MultiLink linkArray={e.links} />
+            </ContainerColumn>
+          ))}
         </LinkcontainerAccordion>
       </AccordionDetails>
     </Accordion>
