@@ -6,7 +6,7 @@ const MyFooter = styled.footer`
   bottom: 0;
   left: 0;
   bottom: 0px;
-  marginTop: auto;
+  margin: 10px 0 0 0;
   padding: 3px 2px;
   width: 100%;
 `;
@@ -16,6 +16,7 @@ const FooterContainer = styled(ContainerRow)`
   justify-content: center;
   align-itens: center;
   width: 100%;
+  margin: 10px 0 0 0;
 `;
 
 export { MyFooter, FooterContainer };

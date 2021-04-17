@@ -14,8 +14,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../../../infra/components/image';
-import { ToolbarContainer, CopyrightContainer } from './styles';
-import { Copyright } from '../../../components/copyRight'
+import { ToolbarContainer } from './styles';
 import Footer from '../../../patterns/footer';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   link: {
+    cursor: "pointer",
     margin: theme.spacing(1, 1.5),
   },
   heroContent: {
@@ -68,52 +68,33 @@ const tiers = [
     title: 'Free',
     price: '0',
     description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-    buttonText: 'Sign up for free',
+    buttonText: 'Cadastre de graça',
     buttonVariant: 'outlined',
   },
   {
     title: 'Pro',
-    subheader: 'Most popular',
-    price: '15',
+    subheader: 'Mais popular',
+    price: '49,97',
     description: [
       '20 users included',
       '10 GB of storage',
       'Help center access',
       'Priority email support',
     ],
-    buttonText: 'Get started',
+    buttonText: 'Comece agora',
     buttonVariant: 'contained',
   },
   {
     title: 'Enterprise',
-    price: '30',
+    price: '89,97',
     description: [
       '50 users included',
       '30 GB of storage',
       'Help center access',
       'Phone & email support',
     ],
-    buttonText: 'Get started',
+    buttonText: 'Comece agora',
     buttonVariant: 'outlined',
-  },
-];
-
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
-  },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
   },
 ];
 
@@ -128,17 +109,17 @@ export default function Pricing() {
             <ToolbarContainer>
                 <Image alt="logo" src='/img/logoCayama.png' width="150%" height="45%" />
                 <nav>
-                  <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                  Detalhes
+                  <Link variant="button" color="textPrimary" href={process.env.NEXT_PUBLIC_PATH_STORE_PLAN_DETAILS} className={classes.link}>
+                    Detalhes
                   </Link>
-                  <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                  Sobre nós
+                  <Link variant="button" color="textPrimary" href={process.env.NEXT_PUBLIC_PATH_ABOUT_US} className={classes.link}>
+                    Sobre nós
                   </Link>
-                  <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                  Fale Conosco
+                  <Link variant="button" color="textPrimary" href={process.env.NEXT_PUBLIC_PATH_TALK_TO_US} className={classes.link}>
+                    Fale Conosco
                   </Link>
                 </nav>
-                <Button href="#" color="primary" variant="outlined" className={`${classes.link} button`}>
+                <Button href={process.env.NEXT_PUBLIC_PATH_LOGIN} color="primary" variant="outlined" className={`${classes.link} button`}>
                     Login
                 </Button>
             </ToolbarContainer>
@@ -172,7 +153,7 @@ export default function Pricing() {
                 <CardContent>
                   <div className={classes.cardPricing}>
                     <Typography component="h2" variant="h3" color="textPrimary">
-                      ${tier.price}
+                      R${tier.price}
                     </Typography>
                     <Typography variant="h6" color="textSecondary">
                       /mês
@@ -196,35 +177,7 @@ export default function Pricing() {
           ))}
         </Grid>
       </Container>
-      {/* Footer */}
-      <Container maxWidth="md" component="footer" className={classes.footer}>
-        {/* <Grid container spacing={4} justify="space-evenly">
-          {footers.map((footer) => (
-            <Grid item xs={6} sm={3} key={footer.title}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
-                {footer.title}
-              </Typography>
-              <ul>
-                {footer.description.map((item) => (
-                  <li key={item}>
-                    <Link href="#" variant="subtitle1" color="textSecondary">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
-        </Grid> */}
-        {/* <Footer /> */}
-        {/* <Box mt={5}> */}
-        {/* <CopyrightContainer>
-          <Copyright />
-        </CopyrightContainer> */}
-        {/* </Box> */}
-      </Container>
       <Footer />
-      {/* End footer */}
     </React.Fragment>
   );
 }
