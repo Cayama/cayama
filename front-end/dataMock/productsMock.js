@@ -6,6 +6,7 @@ const productsMock = [
     shipping: false,
     category: 'esporte',
     storeName: 'cayama',
+    productsImgUrls: [],
   },
   {
     _id: '2',
@@ -14,6 +15,7 @@ const productsMock = [
     shipping: true,
     category: 'moda-masculina',
     storeName: 'cayama',
+    productsImgUrls: [],
   },
   {
     _id: '3',
@@ -22,6 +24,7 @@ const productsMock = [
     shipping: true,
     category: 'moda-masculina',
     storeName: 'cayama',
+    productsImgUrls: [],
   },
   {
     _id: '4',
@@ -30,6 +33,7 @@ const productsMock = [
     shipping: true,
     category: 'moda-masculina',
     storeName: 'cayama',
+    productsImgUrls: [],
   },
 ];
 
