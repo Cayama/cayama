@@ -161,6 +161,27 @@ const PriceFilterButton = ({ onClick }) => {
   )
 }
 
+const useStylesCayamaButton = makeStyles((theme) => ({
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const CayamaPrimaryButton = ({ onClick, children }) => {
+  const classes = useStylesCayamaButton()
+  return (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={onClick}
+      className={classes.button}
+    >
+      {children}
+    </Button>
+  )
+}
+
 export {
   SearchButton,
   TextButton,
@@ -170,4 +191,5 @@ export {
   ButtonsLink,
   SubmitFormButton,
   PriceFilterButton,
+  CayamaPrimaryButton,
 };
