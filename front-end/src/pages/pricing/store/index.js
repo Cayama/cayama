@@ -107,7 +107,7 @@ export default function Pricing() {
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
             <ToolbarContainer>
-                <Image alt="logo" src='/img/logoCayama.png' width="150%" height="45%" />
+                <Link href={process.env.NEXT_PUBLIC_PATH_ROOT} className={classes.link}><Image alt="logo" src='/img/logoCayama.png' width="150%" height="45%" /></Link>
                 <nav>
                   <Link variant="button" color="textPrimary" href={process.env.NEXT_PUBLIC_PATH_STORE_PLAN_DETAILS} className={classes.link}>
                     Detalhes
