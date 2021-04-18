@@ -223,7 +223,7 @@ const ProductDescriptionInput = ({ setDescription }) => {
   );
 };
 
-const CustomInput = ({ name, id, setInput, input, label }) => {
+const CustomInput = ({ name, id, setInput, input, label, disabled = false }) => {
   return (
     <TextField
       variant="outlined"
@@ -234,6 +234,7 @@ const CustomInput = ({ name, id, setInput, input, label }) => {
       type="text"
       id={id}
       value={input}
+      disabled={disabled}
       onChange={(e) => setInput(e.target.value)}
     />
   );

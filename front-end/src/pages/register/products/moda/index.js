@@ -25,6 +25,10 @@ import {
 import { getToken, formDataArray } from '../../../../utils/index';
 import formatNumbersToBRL from '../../../../utils/formatNumbersToBRL';
 import CustomPropertyAdd from '../../../../components/customPropertyAdd';
+import { 
+  PageContainerSection,
+  PageContentDiv,
+} from '../../../../components/dataGrid';
 
 function RegisterProductPage() {
   const [submited, setSubmited] = useState(false);
@@ -113,9 +117,9 @@ function RegisterProductPage() {
       <Head title='Cadastre seu produto' />
       <Header />
       <main>
-        <RegisterProductSection>
+        <PageContainerSection>
           <h1>Cadastre seu produto</h1>
-          <RegisterProductContent>
+          <PageContentDiv>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <CustomInput name="productName" id="productName" label="Nome do produto" setInput={setProductName} />
@@ -208,8 +212,8 @@ function RegisterProductPage() {
                 </Grid>
               </Grid>
             </Grid>
-          </RegisterProductContent>
-        </RegisterProductSection>
+          </PageContentDiv>
+        </PageContainerSection>
       </main>
       <Footer />
     </div>

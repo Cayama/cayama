@@ -182,6 +182,25 @@ const CayamaPrimaryButton = ({ onClick, children }) => {
   )
 }
 
+const CayamaSecondaryButton = ({ onClick, children }) => {
+  const classes = useStylesCayamaButton()
+  return (
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={onClick}
+      className={classes.button}
+    >
+      {children}
+    </Button>
+  )
+}
+
+const SaveDataButton = ({ disabled, onClick }) => !disabled ? 
+  <CayamaSecondaryButton onClick={onClick}>Salvar</CayamaSecondaryButton>
+  :
+  null
+
 export {
   SearchButton,
   TextButton,
@@ -192,4 +211,6 @@ export {
   SubmitFormButton,
   PriceFilterButton,
   CayamaPrimaryButton,
+  CayamaSecondaryButton,
+  SaveDataButton,
 };
