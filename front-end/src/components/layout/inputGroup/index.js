@@ -206,7 +206,7 @@ const ProductBrandInput = ({ setProductBrand }) => {
   );
 };
 
-const ProductDescriptionInput = ({ setDescription }) => {
+const ProductDescriptionInput = ({ setDescription, defaultValue, fieldToUseRef }) => {
   return (
     <TextField
       variant="outlined"
@@ -218,12 +218,30 @@ const ProductDescriptionInput = ({ setDescription }) => {
       label="Descrição"
       type="text"
       id="description"
-      onChange={(e) => setDescription(e.target.value)}
+      defaultValue={defaultValue}
+      onChange={(e) => setDescription(fieldToUseRef, e.target.value)}
     />
   );
 };
 
-const CustomInput = ({ name, id, setInput, input, label, disabled = false }) => {
+const CustomInputWithUseRef = ({ name, id, setInput, defaultValue, label, disabled = false, fieldToUseRef }) => {
+  return (
+    <TextField
+      variant="outlined"
+      required
+      fullWidth
+      name={name}
+      label={label}
+      type="text"
+      id={id}
+      defaultValue={defaultValue}
+      disabled={disabled}
+      onChange={(e) => setInput(fieldToUseRef, e.target.value)}
+    />
+  );
+};
+
+const CustomInputWithUseState = ({ name, id, setInput, input, label, disabled = false }) => {
   return (
     <TextField
       variant="outlined"
@@ -235,7 +253,7 @@ const CustomInput = ({ name, id, setInput, input, label, disabled = false }) => 
       id={id}
       value={input}
       disabled={disabled}
-      onChange={(e) => setInput(e.target.value)}
+      onChange={(e) => setInput(fieldToUseRef, e.target.value)}
     />
   );
 };
@@ -284,7 +302,8 @@ export {
   ProductColorInput,
   ProductBrandInput,
   ProductDescriptionInput,
-  CustomInput,
+  CustomInputWithUseRef,
   PriceInput,
   DisabledInput,
+  CustomInputWithUseState,
 };

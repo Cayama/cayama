@@ -7,7 +7,7 @@ import {
 } from './styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-  CustomInput,
+  CustomInputWithUseState,
 } from '../../components/layout/inputGroup';
 
 function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inputsArray }) {
@@ -33,7 +33,13 @@ function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inp
     <Grid container item spacing={2}>
       <Grid alignItems="center" container item spacing={2}>
         <Grid item xs={12} sm={6}>
-          <CustomInput name={name} id={id} label={label} input={inputName} setInput={setInputFunction} />
+          <CustomInputWithUseState
+            name={name}
+            id={id}
+            label={label}
+            input={inputName}
+            setInput={setInputFunction}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
         <AddButton onClick={addInput}>{addButtonText}</AddButton>

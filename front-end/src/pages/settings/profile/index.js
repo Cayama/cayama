@@ -21,7 +21,12 @@ function Profile() {
         <PageContainerSection>
           <h3>Meus Dados</h3>
           <EditableUserData email="jafetguerra@hotmail.com" />
-          <EditableUserPersonalData />
+          <EditableUserPersonalData 
+            phone="31996471888"
+            firstName="Jafet Henrique"
+            lastName="Guerra Fagunde"
+            cpf="12900211638"
+          />
           <EditableCardsData />
           <EditableShippingData />
         </PageContainerSection>
