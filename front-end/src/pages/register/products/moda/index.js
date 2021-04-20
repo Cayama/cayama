@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Router from 'next/router'
 import useRouterFunction from '../../../../infra/components/useRouter';
 import { useVerifyExpiredToken } from '../../../../customHooks/index';
@@ -10,25 +10,20 @@ import Footer from '../../../../patterns/footer';
 import Link from '../../../../infra/components/link';
 import {
   ProductDescriptionInput,
-  CustomInput,
+  CustomInputWithUseRef,
+  CustomInputWithUseState,
   PriceInput,
   DisabledInput,
 } from '../../../../components/layout/inputGroup';
+import { handleUseRef } from '../../../../utils/index';
 import HandleSubmissionMessage from '../../../../components/handleSubmissionMessage';
 import { DropDownSelect } from '../../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
-import {
-  RegisterProductSection,
-  RegisterProductContent,
-  RegisterProductButton,
-} from './styles';
+import { RegisterProductButton } from './styles';
 import { getToken, formDataArray } from '../../../../utils/index';
 import formatNumbersToBRL from '../../../../utils/formatNumbersToBRL';
 import CustomPropertyAdd from '../../../../components/customPropertyAdd';
-import { 
-  PageContainerSection,
-  PageContentDiv,
-} from '../../../../components/dataGrid';
+import { PageContainerSection, PageContentDiv } from '../../../../components/dataGrid';
 
 function RegisterProductPage() {
   const [submited, setSubmited] = useState(false);
@@ -39,16 +34,17 @@ function RegisterProductPage() {
   const [reviews, setReviews] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
-  const [color, setColor] = useState('');
-  const [productName, setProductName] = useState('');
-  const [brand, setBrand] = useState('');
-  const [price, setPrice] = useState('');
   const [formatedPrice, setFormatedPrice] = useState('');
-  // const [category, setCategory] = useState([]);
-  const [stockQuantity, setStockQuantity] = useState('');
-  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState([]);
 
-  const { query: { category } } = useRouterFunction();
+  const color = useRef(''); 
+  const productName = useRef('');
+  const brand = useRef('');
+  const price = useRef(''); 
+  const stockQuantity = useRef('');
+  const description = useRef('');
+
+  // const { query: { category } } = useRouterFunction();
 
   useVerifyExpiredToken()
   const token = getToken();
@@ -57,13 +53,13 @@ function RegisterProductPage() {
     // const pathNameSplited = history.pathname.split('/');
     // const category = pathNameSplited[pathNameSplited.length - 1];
     // console.log(category)
-    return category
+    return category;
   }
 
   const setPriceFunction = (value) => {
-    const formatedPriceString = formatNumbersToBRL(value)
-    setFormatedPrice(formatedPriceString)
-    return setPrice(formatedPriceString)
+    const formatedPriceString = formatNumbersToBRL(value);
+    setFormatedPrice(formatedPriceString);
+    return handleUseRef(price, formatedPriceString);
   }
 
   const handleUpload = () => {
@@ -122,13 +118,13 @@ function RegisterProductPage() {
           <PageContentDiv>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <CustomInput name="productName" id="productName" label="Nome do produto" setInput={setProductName} />
+                <CustomInputWithUseRef name="productName" id="productName" label="Nome do produto" setInput={handleUseRef} defaultValue={productName.current} fieldToUseRef={productName} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CustomInput name="brand" id="brand" label="Marca" setInput={setBrand} />
+                <CustomInputWithUseRef name="brand" id="brand" label="Marca" setInput={handleUseRef} defaultValue={brand.current} fieldToUseRef={brand} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CustomInput name="color" id="color" label="Cores" setInput={setColor} />
+                <CustomInputWithUseRef name="color" id="color" label="Cores" setInput={handleUseRef} defaultValue={color.current} fieldToUseRef={color} />
               </Grid>
               {categoriesArray.length === 0 ?
                 <Grid item xs={12} sm={6}>
@@ -149,7 +145,7 @@ function RegisterProductPage() {
                 <PriceInput value={formatedPrice} label="Preço" setPrice={setPriceFunction} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CustomInput name="stockQuantity" id="stockQuantity" label="Quantidade" setInput={setStockQuantity} />
+                <CustomInputWithUseRef name="stockQuantity" id="stockQuantity" label="Quantidade" setInput={handleUseRef} defaultValue={stockQuantity.current} fieldToUseRef={stockQuantity}/>
               </Grid>
               <CustomPropertyAdd
                 name="size"
@@ -197,7 +193,7 @@ function RegisterProductPage() {
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12} sm={12}>
-                  <ProductDescriptionInput setDescription={setDescription} />
+                  <ProductDescriptionInput setDescription={handleUseRef} defaultValue={description.current} fieldToUseRef={description} />
                 </Grid>
               </Grid>
               <Grid container item spacing={2} justify="center">

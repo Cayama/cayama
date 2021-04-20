@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Footer from '../../../../patterns/footer';
 import SimplerHeader from '../../../../patterns/header/simplerHeader';
@@ -6,12 +6,12 @@ import useRouterFunction from '../../../../infra/components/useRouter';
 import { CardWithSearchCategoryInput } from '../../../../components/cards';
 import CategoriesToChoose from '../../../../components/categoriesToChoose';
 import { CayamaCategorySearchMain, CayamaCategorySearchH1 } from './styles';
-
+import { handleUseRef } from '../../../../utils/index';
 import categoriesCayamaMock from '../../../../../dataMock/categoriesCayamaMock';
 
 const CayamaCategorySearchRegister = () => {
   const [catergoriesArray, setCatergoriesArray] = useState(null);
-  const [productName, setProductName] = useState('');
+  const productName = useRef('');
   const { query: { typeOfAnnouncement } } = useRouterFunction();
 
   const searchForCategory = () => {
@@ -31,8 +31,9 @@ const CayamaCategorySearchRegister = () => {
       <CayamaCategorySearchMain>
         <CayamaCategorySearchH1>Identifique seu produto</CayamaCategorySearchH1>
         <CardWithSearchCategoryInput
-          setInput={setProductName}
-          inputValue={productName}
+          setInput={handleUseRef}
+          defaultValue={productName.current}
+          fieldToUseRef={productName}
           onClick={searchForCategory}
         />
         {catergoriesArray ? <CategoriesToChoose typeOfAnnouncement={typeOfAnnouncement} productName={productName} categoriesArray={catergoriesArray} /> : null}

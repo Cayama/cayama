@@ -4,6 +4,7 @@ import formDataArray from './formDataArray';
 import getToken from './getToken';
 import cleanUser from './cleanUser';
 import verifyExpiredToken from './verifyExpiredToken';
+import handleUseRef from './handleUseRef';
 
 export {
   firstLetterUpercase,
@@ -12,4 +13,5 @@ export {
   getToken,
   cleanUser,
   verifyExpiredToken,
+  handleUseRef,
 }
