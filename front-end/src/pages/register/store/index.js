@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import { userDataAction } from '../../../redux/action/userDataAction';
@@ -17,12 +17,14 @@ import SimplerHeader from '../../../patterns/header/simplerHeader';
 import Box from '@material-ui/core/Box';
 import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../../components/checkbox';
 import { SubmitFormButton } from '../../../components/layout/buttonGroup';
+import { handleUseRef } from '../../../utils/index';
 import {
   StoreNameInput,
   CnpjInput,
   EmailInput,
   PasswordInput,
-  ConfirmPasswordInput
+  ConfirmPasswordInput,
+  CustomInputWithUseRef
 } from '../../../components/layout/inputGroup'
 
 const useStyles = makeStyles((theme) => ({
@@ -57,13 +59,23 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpStore() {
   const classes = useStyles();
   const [registerError, setRegisterError] = useState('');
-  const [storeName, setStoreName] = useState('');
-  const [cnpj, setCnpj] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [storeName, setStoreName] = useState('');
+  // const [cnpj, setCnpj] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
+
+  const storeName = useRef('');
+  const cnpj = useRef('');
+  const email = useRef('');
+  const password = useRef('');
+  const confirmPassword = useRef('');
+  // const newsAcceptance = useRef(false);
   const [newsAcceptance, setNewsAcceptance] = useState(false);
+
+  
   const [privacyAndTerms, setPrivacyAndTerms] = useState(false);
+
   const history = useRouter();
   const dispatch = useDispatch();
 
@@ -72,13 +84,13 @@ export default function SignUpStore() {
     if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
     return axios
       .post(process.env.NEXT_PUBLIC_API_URL_STORE_REGISTER, {
-        storeName,
-        cnpj,
-        email,
-        password,
-        confirmPassword,
-        newsAcceptance,
-        privacyAndTerms,
+        storeName: storeName.current,
+        cnpj: cnpj.current,
+        email: email.current,
+        password: password.current,
+        confirmPassword: confirmPassword.current,
+        newsAcceptance: newsAcceptance.current,
+        privacyAndTerms: privacyAndTerms.current,
       })
       .then((res) => {
         console.log('1')
@@ -112,23 +124,28 @@ export default function SignUpStore() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <StoreNameInput setStoreName={setStoreName} />
+              <CustomInputWithUseRef name="storeName" id="storeName" label="Nome da Loja" setInput={handleUseRef} defaultValue={storeName.current} fieldToUseRef={storeName}/>
+                {/* <StoreNameInput setStoreName={setStoreName} /> */}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CnpjInput setCnpj={setCnpj} />
+              <CustomInputWithUseRef name="cnpj" id="cnpj" label="CNPJ" setInput={handleUseRef} defaultValue={cnpj.current} fieldToUseRef={cnpj}/>
+                {/* <CnpjInput setCnpj={setCnpj} /> */}
               </Grid>
               <Grid item xs={12}>
-                <EmailInput setEmail={setEmail} />
+                <CustomInputWithUseRef name="email" id="email" label="Email" setInput={handleUseRef} defaultValue={email.current} fieldToUseRef={email}/>
+                {/* <EmailInput setEmail={setEmail} /> */}
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput setPassword={setPassword} />
+              <CustomInputWithUseRef name="password" id="password" label="Password" setInput={handleUseRef} defaultValue={password.current} fieldToUseRef={password}/>
+                {/* <PasswordInput setPassword={setPassword} /> */}
               </Grid>
               <Grid item xs={12}>
-                <ConfirmPasswordInput setConfirmPassword={setConfirmPassword} />
+                <CustomInputWithUseRef name="confirmPassword" id="confirmPassword" label="Confirme o password" setInput={handleUseRef} defaultValue={confirmPassword.current} fieldToUseRef={confirmPassword}/>
+                {/* <ConfirmPasswordInput setConfirmPassword={setConfirmPassword} /> */}
               </Grid>
               <Grid item xs={12}>
-                <MoreInfoCheckBox setNewsAcceptance={setNewsAcceptance} />
-                <PrivacyPolicyCheckBox setPrivacyAndTerms={setPrivacyAndTerms} />
+                <MoreInfoCheckBox setNewsAcceptance={setNewsAcceptance} checked={newsAcceptance} />
+                <PrivacyPolicyCheckBox setPrivacyAndTerms={setPrivacyAndTerms} checked={privacyAndTerms} />
               </Grid>
             </Grid>
             <Button

@@ -65,14 +65,14 @@ function RegisterProductPage() {
   const handleUpload = () => {
     const formData = new FormData();
     formDataArray(formData, productImages, "productImages")
-    formData.append("productName", productName);
-    formData.append("price", price);
-    formData.append("stockQuantity", stockQuantity);
-    formData.append("description", description);
-    formData.append("brand", brand);
+    formData.append("productName", productName.current);
+    formData.append("price", price.current);
+    formData.append("stockQuantity", stockQuantity.current);
+    formData.append("description", description.current);
+    formData.append("brand", brand.current);
     formData.append("category", category);
     formDataArray(formData, sizes, "sizes[]")
-    formData.append("color", color);
+    formData.append("color", color.current);
     formDataArray(formData, reviews, "reviews[]")
     formDataArray(formData, productSizeTableImage, "productSizeTableImage")
     return formData;

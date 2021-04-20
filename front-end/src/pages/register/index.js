@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import { userDataAction } from '../../redux/action/userDataAction';
@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import InfluencerRegisterOptions from './influencer/index';
 import { MoreInfoCheckBox, PrivacyPolicyCheckBox } from '../../components/checkbox';
 import { SubmitFormButton } from '../../components/layout/buttonGroup';
+import { handleUseRef } from '../../utils/index'; 
 import {
   FirstNameInput,
   LastNameInput,
@@ -28,6 +29,7 @@ import {
   PasswordInput,
   ConfirmPasswordInput,
   SwitchInput,
+  CustomInputWithUseRef
 } from '../../components/layout/inputGroup';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,25 +65,34 @@ export default function SignUpUser() {
   const classes = useStyles();
   const [registerError, setRegisterError] = useState('');
   const [isInfluencer, setIsInfluencer] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [cpf, setCpf] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [cpf, setCpf] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
+
+  const firstName = useRef('')
+  const lastName = useRef('')
+  const cpf = useRef('')
+  // const birthDate = useRef('')
+  const email = useRef('')
+  const password = useRef('')
+  const confirmPassword = useRef('')
+
   const [newsAcceptance, setNewsAcceptance] = useState(false);
   const [privacyAndTerms, setPrivacyAndTerms] = useState(false);
   const history = useRouter();
   const dispatch = useDispatch();
-
+  
   const [influencerRegister, setInfluencerRegister] = useState({
     socialMedia: '',
     contentType: '',
     socialMediaName: '',
     influencerLink: '',
   });
-
+  console.log(influencerRegister)
   const handleRegister = (e) => {
     e.preventDefault();
     if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
@@ -129,25 +140,25 @@ export default function SignUpUser() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <FirstNameInput setFirstName={setFirstName}/>
+              <CustomInputWithUseRef name="firstName" id="firstName" label="Nome" setInput={handleUseRef} defaultValue={firstName.current} fieldToUseRef={firstName}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LastNameInput setLastName={setLastName}/>
+              <CustomInputWithUseRef name="lastName" id="lastName" label="Sobrenome" setInput={handleUseRef} defaultValue={lastName.current} fieldToUseRef={lastName}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <CpfInput setCpf={setCpf} />
+              <CustomInputWithUseRef name="cpf" id="cpf" label="CPF" setInput={handleUseRef} defaultValue={cpf.current} fieldToUseRef={cpf}/>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <BirthDateInput setBirthday={setBirthDate} className={classes.textField} />
               </Grid>
               <Grid item xs={12}>
-                <EmailInput setEmail={setEmail} />
+                <CustomInputWithUseRef name="email" id="email" label="Email" setInput={handleUseRef} defaultValue={email.current} fieldToUseRef={email}/>
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput setPassword={setPassword} />
+                <CustomInputWithUseRef name="password" id="password" label="Password" setInput={handleUseRef} defaultValue={password.current} fieldToUseRef={password}/>
               </Grid>
               <Grid item xs={12}>
-                <ConfirmPasswordInput setConfirmPassword={setConfirmPassword} />
+                <CustomInputWithUseRef name="confirmPassword" id="confirmPassword" label="Confirme o password" setInput={handleUseRef} defaultValue={confirmPassword.current} fieldToUseRef={confirmPassword}/>
               </Grid>
               {isInfluencer ?
                 <InfluencerRegisterOptions
@@ -166,8 +177,8 @@ export default function SignUpUser() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <MoreInfoCheckBox checked={newsAcceptance} setNewsAcceptance={setNewsAcceptance} />
-                <PrivacyPolicyCheckBox checked={privacyAndTerms} setPrivacyAndTerms={setPrivacyAndTerms} />
+              <MoreInfoCheckBox setNewsAcceptance={setNewsAcceptance} checked={newsAcceptance} />
+                <PrivacyPolicyCheckBox setPrivacyAndTerms={setPrivacyAndTerms} checked={privacyAndTerms} />
               </Grid>
             </Grid>
             <Button
