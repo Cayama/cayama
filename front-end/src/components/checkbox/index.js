@@ -2,6 +2,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const MoreInfoCheckBox = ({ setNewsAcceptance, checked }) => {
+  console.log(checked)
   return (
     <FormControlLabel
       control={
@@ -17,6 +18,7 @@ const MoreInfoCheckBox = ({ setNewsAcceptance, checked }) => {
 };
 
 const PrivacyPolicyCheckBox = ({ setPrivacyAndTerms, checked }) => {
+  console.log(checked)
   return (
     <FormControlLabel
       control={
