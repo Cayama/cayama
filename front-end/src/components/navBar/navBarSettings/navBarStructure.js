@@ -7,7 +7,7 @@ import PhoneIphoneOutlinedIcon from '@material-ui/icons/PhoneIphoneOutlined';
 const navBarStructure = [
   {
     name: 'Minha Conta',
-    url: '/settings/minha-conta',
+    url: '/settings/profile',
     icon: <HomeOutlinedIcon />
   },
   {

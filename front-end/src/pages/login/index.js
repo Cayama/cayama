@@ -67,12 +67,12 @@ export default function SignIn() {
       .then((res) => {
         if (!res) return setLoginError('Sem conexação')
         localStorage.setItem('token', res.data.token);
-        console.log(res)
-        dispatch(userDataAction(res.data.userData))
+        console.log(res);
+        dispatch(userDataAction(res.data));
         return history.push('/');
       })
       .catch(({ response }) => {
-        console.log(response)
+        console.log(response);
         if (!response) return setLoginError('Sem conexação');
         setLoginError(response.data.err.message);
       })

@@ -13,7 +13,7 @@ const { validateSchemas } = require('../services/schemasService');
 
 const registerStore = rescue(async (req, res, next) => {
   const { storeName, email, password, confirmPassword, cnpj } = req.body;
-  console.log(req.body);
+
   validateSchemas(next, storeRegisterSchema, {
     storeName,
     email,
@@ -26,18 +26,20 @@ const registerStore = rescue(async (req, res, next) => {
 
   if (storeExists) next(Boom.conflict('Loja já cadastrada'));
 
-  const newStore = await storesService.registerStore({
-    storeName,
-    email,
+  const { password: userPasswordFromDB, ...newStore } = await storesService.registerStore({
+    storeData: {
+      storeName,
+      cnpj,
+    },
+    addresses: [],
+    personalData: {},
+    accountData: { email },
     password,
-    cnpj,
   });
 
   const token = createJwtToken(newStore);
 
-  const userData = { firstName: storeName, addresses: [] };
-
-  return res.status(201).json({ token, userData });
+  return res.status(201).json({ token, ...newStore });
 });
 
 // const registerProduct = rescue(async (req, res, next) => {

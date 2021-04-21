@@ -1,10 +1,10 @@
 import { userSignOutAction } from '../redux/action/userDataAction';
 
 const cleanUser = (dispatch, history, path) => {
-  dispatch(userSignOutAction());
-  localStorage.removeItem('persist:root');
+  history.push(path);
   localStorage.removeItem('token');
-  return history.push(path);
+  localStorage.removeItem('persist:root');
+  return dispatch(userSignOutAction());
 };
 
 export default cleanUser;

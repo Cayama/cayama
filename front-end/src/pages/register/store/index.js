@@ -97,7 +97,7 @@ export default function SignUpStore() {
         if (!res) return setLoginError('Sem conexação')
         localStorage.setItem('token', res.data.token);
         console.log(res)
-        dispatch(userDataAction(res.data.userData))
+        dispatch(userDataAction(res.data))
         return history.push('/');
       })
       .catch(({ response }) => {
