@@ -1,9 +1,10 @@
 const Boom = require('boom');
 
 module.exports = (err, _req, res, _next) => {
-  console.log("error middleware");
+  console.log('error middleware');
   if (Boom.isBoom(err)) {
     const { statusCode, error, message } = err.output.payload;
+
     return res.status(statusCode).json({
       err: {
         error,

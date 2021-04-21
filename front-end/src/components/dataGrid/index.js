@@ -46,6 +46,39 @@ const PageContentDiv = styled.div`
   }
 `;
 
+const PageContentDivFullMobileScreen = styled.div`
+  width: ${(props) => props.width ? props.width : "70vw"};
+  background-color: ${({ theme }) => theme.colors.boxBase};
+  border-radius: 4px;
+  padding: 20px;
+  margin: 0px 0 50px 0;
+
+  @media screen and (max-width: 415px) {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px 0 30px 0;
+  }
+`;
+
+const PageCenteredOnScreen = styled.div`
+  position: fixed;
+  top: 25vh;
+  left: 12.5vw;
+
+  @media screen and (max-width: 415px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+`;
+
+const EditDataHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export {
   ContainerRow,
   ContainerColumn,
@@ -53,4 +86,7 @@ export {
   ProductsCardSection,
   PageContainerSection,
   PageContentDiv,
+  PageCenteredOnScreen,
+  PageContentDivFullMobileScreen,
+  EditDataHeader,
 };

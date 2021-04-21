@@ -65,18 +65,11 @@ export default function SignUpUser() {
   const classes = useStyles();
   const [registerError, setRegisterError] = useState('');
   const [isInfluencer, setIsInfluencer] = useState(false);
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-  // const [cpf, setCpf] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
 
   const firstName = useRef('')
   const lastName = useRef('')
   const cpf = useRef('')
-  // const birthDate = useRef('')
   const email = useRef('')
   const password = useRef('')
   const confirmPassword = useRef('')
@@ -86,34 +79,45 @@ export default function SignUpUser() {
   const history = useRouter();
   const dispatch = useDispatch();
   
-  const [influencerRegister, setInfluencerRegister] = useState({
-    socialMedia: '',
-    contentType: '',
-    socialMediaName: '',
-    influencerLink: '',
-  });
-  console.log(influencerRegister)
+  const socialMedia = useRef('')
+  const contentType = useRef('')
+  const socialMediaName = useRef('')
+  const influencerLink = useRef('')
+
+  // const [influencerRegister, setInfluencerRegister] = useState({
+  //   socialMedia: '',
+  //   contentType: '',
+  //   socialMediaName: '',
+  //   influencerLink: '',
+  // });
+
   const handleRegister = (e) => {
     e.preventDefault();
     if (!privacyAndTerms) return setRegisterError('Faltou aceitar os termos =)')
     return axios
       .post(process.env.NEXT_PUBLIC_API_URL_USER_REGISTER, {
-        firstName,
-        lastName,
-        cpf,
-        birthDate,
-        email,
-        password,
-        confirmPassword,
-        newsAcceptance,
-        privacyAndTerms,
-        influencerRegister,
+        firstName: firstName.current,
+        lastName: lastName.current,
+        cpf: cpf.current,
+        birthDate: birthDate,
+        email: email.current,
+        password: password.current,
+        confirmPassword: confirmPassword.current,
+        newsAcceptance: newsAcceptance,
+        privacyAndTerms: privacyAndTerms,
+        influencer: {
+          socialMedia: socialMedia.current,
+          contentType: contentType.current,
+          socialMediaName: socialMediaName.current,
+          influencerLink: influencerLink.current,
+        },
+        isInfluencer,
       })
       .then((res) => {
         if (!res) return setLoginError('Sem conexação')
         localStorage.setItem('token', res.data.token);
         console.log(res)
-        dispatch(userDataAction(res.data.userData))
+        dispatch(userDataAction(res.data))
         return history.push('/');
       })
       .catch(({ response }) => {
@@ -162,8 +166,10 @@ export default function SignUpUser() {
               </Grid>
               {isInfluencer ?
                 <InfluencerRegisterOptions
-                  setInfluencerRegister={setInfluencerRegister}
-                  influencerRegister={influencerRegister}
+                  socialMedia={socialMedia}
+                  contentType={contentType}
+                  socialMediaName={socialMediaName}
+                  influencerLink={influencerLink}
                 />
                 :
                 null

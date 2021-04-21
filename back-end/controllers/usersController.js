@@ -15,17 +15,18 @@ const registerUser = rescue(async (req, res, next) => {
   const {
     firstName,
     lastName,
+    cpf,
+    birthDate,
     email,
     password,
     confirmPassword,
-    cpf,
-    birthDate,
     addresses = [],
+    isInfluencer = false,
     influencer = {},
     newsAcceptance = false,
     privacyAndTerms,
   } = req.body;
-
+  console.log(influencer)
   validateSchemas(next, userRegisterSchema, {
     firstName,
     lastName,
@@ -57,13 +58,18 @@ const registerUser = rescue(async (req, res, next) => {
     });
   }
 
-  const { cpf: usercpf, ...newUser } = await usersService.registerUser({
-    firstName,
-    lastName,
-    email,
+  const { password: userPasswordFromDB, ...newUser } = await usersService.registerUser({
+    personalData: {
+      firstName,
+      lastName,
+      cpf,
+      birthDate,
+    },
+    accountData: {
+      email,
+    },
+    isInfluencer,
     password,
-    cpf,
-    birthDate,
     addresses,
     influencer,
     newsAcceptance,
@@ -72,9 +78,9 @@ const registerUser = rescue(async (req, res, next) => {
 
   const token = createJwtToken(newUser);
 
-  const userData = { firstName, addresses };
-  mailer();
-  return res.status(201).json({ token, userData });
+  const { _id, ...userDataToSendFront } = newUser;
+  
+  return res.status(201).json({ token, ...userDataToSendFront });
 });
 
 const userLogin = rescue(async (req, res, next) => {
@@ -90,9 +96,9 @@ const userLogin = rescue(async (req, res, next) => {
 
   const token = createJwtToken(user);
 
-  const userData = { firstName: user.firstName, addresses: user.addresses };
+  const { _id, password: userPasswordFromDB, ...userDataToSendFront } = user;
 
-  return res.status(200).json({ token, userData });
+  return res.status(200).json({ token, ...userDataToSendFront });
 });
 
 const updateUserToInfluencer = rescue(async (req, res, next) => {

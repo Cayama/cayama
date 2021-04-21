@@ -1,12 +1,9 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { InfluencerPrimarySocialMedia, InfluencerContentType } from '../../../components/influencerInput';
+import { handleUseRef } from '../../../utils/index';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -29,8 +26,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfluencerRegisterOptions = ({
-  setInfluencerRegister,
-  influencerRegister,
+  socialMedia,
+  contentType,
+  socialMediaName,
+  influencerLink,
 }) => {
   const classes = useStyles();
 
@@ -46,51 +45,14 @@ const InfluencerRegisterOptions = ({
           label="Nome do Perfil"
           type="text"
           id="socialMediaName"
-          onChange={({ target: { value } }) => setInfluencerRegister({
-            ...influencerRegister, socialMediaName: value
-          })}
+          onChange={({ target: { value } }) => handleUseRef(socialMediaName, value)}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="social-media">Rede Social Principal</InputLabel>
-          <Select
-            labelId="social-media"
-            id="social-media"
-            name='socialMedia'
-            onChange={({ target: { value } }) => setInfluencerRegister({
-              ...influencerRegister, socialMedia: value
-            })}
-          >
-            <MenuItem value={'Instagram'}>Instagram</MenuItem>
-            <MenuItem value={'YouTube'}>YouTube</MenuItem>
-            <MenuItem value={'TikTok'}>TikTok</MenuItem>
-            <MenuItem value={'Twitter'}>Twitter</MenuItem>
-            <MenuItem value={'Facebook'}>Facebook</MenuItem>
-            <MenuItem value={'Outra'}>Outra</MenuItem>
-          </Select>
-        </FormControl>
+        <InfluencerPrimarySocialMedia fieldToUseRef={socialMedia} />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="contentType">Conteúdo</InputLabel>
-          <Select
-            labelId="contentType"
-            id="contentType"
-            name='contentType'
-            onChange={({ target: { value } }) => setInfluencerRegister({
-              ...influencerRegister, contentType: value
-            })}
-          >
-            <MenuItem value={'Moda'}>Moda</MenuItem>
-            <MenuItem value={'Moda Fitness'}>Moda Fitness</MenuItem>
-            <MenuItem value={'Maquiagem'}>Maquiagem</MenuItem>
-            <MenuItem value={'Beleza'}>Beleza</MenuItem>
-            <MenuItem value={'Life Style'}>Life Style</MenuItem>
-            <MenuItem value={'Saúde'}>Saúde</MenuItem>
-            <MenuItem value={'Outra'}>Outra</MenuItem>
-          </Select>
-        </FormControl>
+        <InfluencerContentType fieldToUseRef={contentType} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -102,9 +64,7 @@ const InfluencerRegisterOptions = ({
           label="Seu Link"
           type="text"
           id="influencerLink"
-          onChange={({ target: { value } }) => setInfluencerRegister({
-            ...influencerRegister, influencerLink: value
-          })}
+          onChange={({ target: { value } }) => handleUseRef(influencerLink, value)}
         />
       </Grid>
     </Grid>

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 import Header from '../../../patterns/header';
 import Head from '../../../infra/components/head';
 import Footer from '../../../patterns/footer';
@@ -10,9 +12,15 @@ import {
   EditableCardsData,
   EditableUserPersonalData,
   EditableUserData,
+  EditableInfluencerData,
+  EditableStoreData,
 } from '../../../components/accountsData';
+import { getToken } from '../../../utils/index';
 
 function Profile() {
+  const token = getToken();
+  const allUserData = useSelector((state) => state.userDataReducer.userData);
+
   return (
     <div>
       <Head title="Profile" />
@@ -20,15 +28,34 @@ function Profile() {
       <main>
         <PageContainerSection>
           <h3>Meus Dados</h3>
-          <EditableUserData email="jafetguerra@hotmail.com" />
+          <EditableUserData email={allUserData.accountData.email} />
           <EditableUserPersonalData 
-            phone="31996471888"
-            firstName="Jafet Henrique"
-            lastName="Guerra Fagunde"
-            cpf="12900211638"
+            phone={allUserData.personalData.phone}
+            firstName={allUserData.personalData.firstName}
+            lastName={allUserData.personalData.lastName}
+            cpf={allUserData.personalData.cpf}
           />
-          <EditableCardsData />
-          <EditableShippingData />
+          {allUserData.isInfluencer ?
+            <EditableInfluencerData
+              socialMedia={allUserData.influencer.socialMedia}
+              contentType={allUserData.influencer.contentType}
+              socialMediaName={allUserData.influencer.socialMediaName}
+              influencerLink={allUserData.influencer.influencerLink}
+            />
+            :
+            null
+          }
+          {allUserData.storeData.storeName ?
+            <EditableStoreData
+              phone={allUserData.storeData.phone}
+              storeName={allUserData.storeData.storeName}
+              cnpj={allUserData.storeData.cnpj}
+            />
+            :
+            null
+          }
+          <EditableCardsData cardsInfo={[]} />
+          <EditableShippingData addresses={allUserData.addresses} />
         </PageContainerSection>
       </main>
       <Footer />

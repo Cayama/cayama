@@ -3,14 +3,13 @@ const connection = require('./connection');
 
 const getUserByEmail = async (email) => {
   const db = await connection();
-  const user = db.collection('users').findOne({ email });
-
+  const user = await db.collection('users').findOne({ 'accountData.email': email });
   return user;
 };
 
 const getUserById = async (id) => {
   const db = await connection();
-  const user = db.collection('users').findOne({ _id: ObjectId(id) });
+  const user = await db.collection('users').findOne({ _id: ObjectId(id) });
 
   return user;
 };
