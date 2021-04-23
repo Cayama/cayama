@@ -80,7 +80,7 @@ const fieldsObjectManager = {
       'lastName',
       'cpf',
       'birthDate',
-      'storeData',
+      'storePersonalData',
       'personalData',
       'accountData',
       'isInfluencer',
@@ -185,7 +185,7 @@ const storeDataUpdateSchema = Joi.object({
 });
 
 const choices = {
-  storeData: storeDataUpdateSchema,
+  storePersonalData: storeDataUpdateSchema,
   personalData: userPersonalDataSchema,
   accountData: userAccountDataUpdateSchema,
   isInfluencer: isInfluencerSchema,

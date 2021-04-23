@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware, multerMiddleware, redirectMiddleware } = require('../middlewares/index');
-const { storesPaths: { registerStore, updateStoreDataCarrosselImages } } = require('./paths/index');
+const { storesPaths: { registerStore, updateStoreDataCarrosselImages, updateFieldInStoreData } } = require('./paths/index');
 
 const storesRoutes = Router();
 
@@ -14,6 +14,7 @@ module.exports = (io) => {
         { name: 'carrosselImages', maxCount: 8 },
       ]),
       controllers.storesController.updateStoreDataCarrosselImages)
+    .put(updateFieldInStoreData, jwtMiddleware, controllers.storesController.updateFieldInStoreData)
     .delete('/product/:id', jwtMiddleware, controllers.storesController.deleteProduct);
 
   return storesRoutes;

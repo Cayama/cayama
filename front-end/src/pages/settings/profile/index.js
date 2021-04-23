@@ -44,9 +44,9 @@ function Profile() {
           }
           {allUserData.storeData.storeName ?
             <EditableStoreData
-              phone={allUserData.storeData.phone}
-              storeName={allUserData.storeData.storeName}
-              cnpj={allUserData.storeData.cnpj}
+              phone={allUserData.storeData.storePersonalData.phone}
+              storeName={allUserData.storeData.storePersonalData.storeName}
+              cnpj={allUserData.storeData.storePersonalData.cnpj}
             />
             :
             null
