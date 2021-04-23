@@ -5,6 +5,7 @@ import getToken from './getToken';
 import cleanUser from './cleanUser';
 import verifyExpiredToken from './verifyExpiredToken';
 import handleUseRef from './handleUseRef';
+import returnArrayOfObjects from './returnArrayOfObjects';
 
 export {
   firstLetterUpercase,
@@ -14,4 +15,5 @@ export {
   cleanUser,
   verifyExpiredToken,
   handleUseRef,
+  returnArrayOfObjects,
 }

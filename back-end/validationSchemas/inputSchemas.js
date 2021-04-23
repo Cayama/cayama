@@ -55,6 +55,8 @@ const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 const newsAcceptanceSchema = Joi.boolean();
 const privacyAndTermsSchema = Joi.boolean().truthy();
 
+const isInfluencerSchema = Joi.boolean();
+
 const fieldsObjectManager = {
   categories: {
     array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas'],
@@ -78,6 +80,12 @@ const fieldsObjectManager = {
       'lastName',
       'cpf',
       'birthDate',
+      'storeData',
+      'personalData',
+      'accountData',
+      'isInfluencer',
+      'newsAcceptance',
+      'password',
       'storeName',
       'cnpj',
       'addresses',
@@ -113,6 +121,7 @@ const validateMongoId = (value, helper) => {
 };
 
 const validateRegisterInfo = (value, helper) => {
+  console.log(value)
   const schema = choices[value.fieldToUpdate];
   const { error } = Joi.object({ newValue: schema }).validate({
     newValue: value.newValue,
@@ -158,7 +167,29 @@ const influencerSchema = Joi.object({
   influencerLink: influencerLinkSchema,
 });
 
+const userAccountDataUpdateSchema = Joi.object({
+  email: emailSchema,
+});
+
+const userPersonalDataSchema = Joi.object({
+  firstName: registerNameSchema,
+  lastName: registerNameSchema,
+  cpf: cpfSchema,
+  phone: phoneSchema,
+});
+
+const storeDataUpdateSchema = Joi.object({
+  storeName: registerNameSchema,
+  cnpj: cnpjSchema,
+});
+
 const choices = {
+  storeData: storeDataUpdateSchema,
+  personalData: userPersonalDataSchema,
+  accountData: userAccountDataUpdateSchema,
+  isInfluencer: isInfluencerSchema,
+  newsAcceptance: newsAcceptanceSchema,
+  password: passwordSchema,
   firstName: registerNameSchema,
   lastName: registerNameSchema,
   email: emailSchema,
@@ -211,4 +242,5 @@ module.exports = {
   fieldsExistenceSchema,
   newsAcceptanceSchema,
   privacyAndTermsSchema,
+  isInfluencerSchema,
 };

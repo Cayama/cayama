@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { userDataAction } from '../../redux/action/userDataAction';
+import DeleteIcon from '@material-ui/icons/Delete'; 
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { PageContentDiv } from '../dataGrid';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
 import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
 import { CustomInputWithUseRef } from '../layout/inputGroup';
-import { handleUseRef } from '../../utils/index';
+import { handleUseRef, getToken, returnArrayOfObjects } from '../../utils/index';
 import { AddAddressForm } from '../address';
 import { AddCreditCardForm } from '../creditCard';
 import { InfluencerPrimarySocialMedia, InfluencerContentType } from '../influencerInput';
@@ -14,10 +17,26 @@ import { InfluencerPrimarySocialMedia, InfluencerContentType } from '../influenc
 const EditableUserData = ({ email }) => {
   const [disabled, setDisabled] = useState(true);
   const inputEmail = useRef(email);
+  const token = getToken();
   
   const submitUserData = () => {
-      
-  };
+      // Nao pode alterar email por aqui, apenas ve-lo. A Alteracao de email e senha deve ser feita por outro meio.
+      // return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+      //   {
+      //     fieldToUpdate: 'accountData',
+      //     newValue: { email: inputEmail.current },
+      //   },
+      //   {
+      //     headers: { authorization: token }
+      //   }
+      // )
+      // .then(response => {
+      //   console.log(response);
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // })
+  };    
 
   return (
     <div>
@@ -53,9 +72,31 @@ const EditableUserPersonalData = ({ phone, firstName, lastName, cpf }) => {
   const inputLastName = useRef(lastName);
   const inputCpf = useRef(cpf);
   const inputPhone = useRef(phone);
+  const dispatch = useDispatch();
+  const token = getToken();
   
   const submitPeronalData = () => {
-
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+        {
+          fieldToUpdate: 'personalData',
+          newValue: {
+            firstName: inputFirstName.current,
+            lastName: inputLastName.current,
+            cpf: inputCpf.current,
+            phone: inputPhone.current,
+          },
+        },
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   };
 
   return (
@@ -124,9 +165,31 @@ const EditableStoreData = ({ phone, storeName, cnpj }) => {
   const inputStoreName = useRef(storeName);
   const inputCnpj = useRef(cnpj);
   const inputPhone = useRef(phone);
+
+  const dispatch = useDispatch();
+  const token = getToken();
   
   const submitStoreData = () => {
-
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+        {
+          fieldToUpdate: 'storeData',
+          newValue: {
+            storeName: inputStoreName.current,
+            cnpj: inputCnpj.current,
+            phone: inputPhone.current,
+          },
+        },
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   };
 
   return (
@@ -186,8 +249,31 @@ const EditableInfluencerData = ({ influencerLink, socialMedia, contentType, soci
   const inputContentType = useRef(contentType);
   const inputSocialMediaName = useRef(socialMediaName);
 
-  const submitStoreData = () => {
-    
+  const dispatch = useDispatch();
+  const token = getToken();
+
+  const submitInfluencerData = () => {
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+        {
+          fieldToUpdate: 'influencer',
+          newValue: {
+            socialMedia: inputSocialMedia.current,
+            influencerLink: inputLink.current,
+            contentType: inputContentType.current,
+            socialMediaName: inputSocialMediaName.current,
+          },
+        },
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   };
 
   return (
@@ -225,7 +311,7 @@ const EditableInfluencerData = ({ influencerLink, socialMedia, contentType, soci
           </Grid>
         </Grid>
         <EditButtonContainer>
-          <SaveDataButton disabled={disabled} onClick={submitStoreData} />
+          <SaveDataButton disabled={disabled} onClick={submitInfluencerData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
@@ -235,21 +321,44 @@ const EditableInfluencerData = ({ influencerLink, socialMedia, contentType, soci
   );
 }
 
-const EditableCardsData = ({ cardsInfo }) => {
+const EditableCardsData = ({ cardsInfo = [] }) => {
   const [disabled, setDisabled] = useState(true);
   const [addCard, setAddCard] = useState(false);
-
-  const [cardsArray, setCardsArray] = useState(cardsInfo);
   
-  const handleSaveCreditCard = (cardNumber, cardFlag, expireDate, nameOnCard, cpfOwner, secureCode) => {
-    // fazer chamada api para salvar novo cartao;
-    setAddCard(false);
+  const dispatch = useDispatch();
+  const token = getToken();
+
+  const updateCardData = (newCards) => {
+    const arrayOfObjects = returnArrayOfObjects(cardsInfo, newCards)
+
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+      {
+        fieldToUpdate: 'cardData',
+        newValue: arrayOfObjects,
+      },
+      {
+        headers: { authorization: token }
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  const deleteCard = (cardInfo) => {
-    const newCardsArray = cards.filter((card) => card.cardNumber !== cardInfo.cardNumber);
-    // fazer chamada api para salvar novo cartao;
-    setCardsArray(newCardsArray);
+  const deleteCard = (cardToDeleteInfo) => {
+    console.log(cardToDeleteInfo)
+    const newCardsArray = [...cardsInfo].filter((card) => card.cardNumber !== cardToDeleteInfo.cardNumber);
+    console.log(newCardsArray)
+    updateCardData(newCardsArray);
+  }
+
+  const addCardData = (cardsObj) => {
+    updateCardData(cardsObj);
+    return setAddCard(false);
   }
 
   return (
@@ -257,7 +366,7 @@ const EditableCardsData = ({ cardsInfo }) => {
       <h5>Cartões</h5>
       <PageContentDiv width="50vw">
         <div>
-          {cardsArray.map((card, index) => {
+          {cardsInfo.map((card, index) => {
             return(
               <CardDataContainer key={index}>
                 {/* <Image src="C:\Users\jafet.h.fagundes\cayama\front-end\dataMock\Mastercard-logo.jpg" width="100%" height="50%" /> */}
@@ -278,7 +387,7 @@ const EditableCardsData = ({ cardsInfo }) => {
             Adicionar
           </CayamaPrimaryButton>
         </EditButtonContainer>
-        {addCard ? <AddCreditCardForm handleSaveCreditCard={handleSaveCreditCard} setAddCard={setAddCard} /> : null}
+        {addCard ? <AddCreditCardForm addCardData={addCardData} setAddCard={setAddCard} /> : null}
       </PageContentDiv>
     </div>
   );
@@ -286,12 +395,43 @@ const EditableCardsData = ({ cardsInfo }) => {
 
 const EditableShippingData = ({ addresses }) => {
   const [disabled, setDisabled] = useState(true);
-  const [addressesArray, setAddressesArray] = useState(addresses);
   const [addAddress, setAddAddress] = useState(false);
 
-  const handleSaveAddress = (address, city, state, neighborhood, country, cep, complement, number) => {
-    // add logica de envio dos dados para api.
-    setAddAddress(!addAddress)
+  const dispatch = useDispatch();
+  const token = getToken();
+
+  const updateAddressData = (newAdresses) => {
+    const arrayOfObjects = returnArrayOfObjects(addresses, newAdresses)
+
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+      {
+        fieldToUpdate: 'addresses',
+        newValue: arrayOfObjects,
+      },
+      {
+        headers: { authorization: token }
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const deleteAddress = (addressToDeleteInfo) => {
+    console.log(addressToDeleteInfo);
+    const newAddressArray = [...addresses].filter((address) => 
+      `${address.address} ${address.number} ${address.complement}` !== addressToDeleteInfo);
+    console.log(newAddressArray);
+    updateAddressData(newAddressArray);
+  }
+
+  const addAddressData = (addressObj) => {
+    updateAddressData(addressObj);
+    return setAddAddress(false);
   }
 
   return ( 
@@ -299,19 +439,16 @@ const EditableShippingData = ({ addresses }) => {
       <h5>Endereços</h5>
       <PageContentDiv width="50vw">
         <div>
-          {addressesArray.map((address, index) => {
+          {addresses.map((address, index) => {
             return(
               <CardDataContainer key={index}>
-                {/* <Image src="C:\Users\jafet.h.fagundes\cayama\front-end\dataMock\Mastercard-logo.jpg" width="100%" height="50%" /> */}
                 <CardDataContent>
-                  <h5>{address.address}</h5>
+                  <h5>{address.address} {address.number}</h5>
                   <span>{address.recipient}</span>
                   <span>{address.complement}</span>
                   <span>{address.city}</span>
                 </CardDataContent>
-                {/* <CayamaSecondaryButton onClick={() => deleteCard(card)}>
-                  Excluir
-                </CayamaSecondaryButton> */}
+                <DeleteIcon onClick={() => deleteAddress(`${address.address} ${address.number} ${address.complement}`)} />
               </CardDataContainer>
             )
           })}
@@ -321,7 +458,7 @@ const EditableShippingData = ({ addresses }) => {
             Adicionar
           </CayamaPrimaryButton>
         </EditButtonContainer>
-        {addAddress ? <AddAddressForm handleSaveAddress={handleSaveAddress} setAddAddress={setAddAddress} /> : null}
+        {addAddress ? <AddAddressForm addAddressData={addAddressData} setAddAddress={setAddAddress} /> : null}
       </PageContentDiv>
     </div>
   )

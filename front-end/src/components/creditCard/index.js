@@ -7,7 +7,7 @@ import { handleUseRef } from '../../utils/index';
 import { PageContentDivFullMobileScreen, PageCenteredOnScreen, EditDataHeader } from '../dataGrid';
 import { CayamaPrimaryButton } from '../layout/buttonGroup';
 
-const AddCreditCardForm = ({ handleSaveCreditCard, setAddCard }) => {
+const AddCreditCardForm = ({ addCardData, setAddCard }) => {
   
   const cardNumber = useRef('');
   const cardFlag = useRef('');
@@ -76,7 +76,14 @@ const AddCreditCardForm = ({ handleSaveCreditCard, setAddCard }) => {
           </Grid>
         </Grid>
         <CayamaPrimaryButton 
-          onClick={() => handleSaveCreditCard(cardNumber, cardFlag, expireDate, nameOnCard, cpfOwner, secureCode)}
+          onClick={() => addCardData({
+            cardNumber: cardNumber.current,
+            cardFlag: cardFlag.current,
+            expireDate: expireDate.current,
+            nameOnCard: nameOnCard.current,
+            cpfOwner: cpfOwner.current,
+            secureCode: secureCode.current
+          })}
         >
           Salvar Cartão
         </CayamaPrimaryButton>

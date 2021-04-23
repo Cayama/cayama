@@ -7,7 +7,7 @@ import { handleUseRef } from '../../utils/index';
 import { PageContentDivFullMobileScreen, PageCenteredOnScreen, EditDataHeader } from '../dataGrid';
 import { CayamaPrimaryButton, CayamaSecondaryButton } from '../layout/buttonGroup';
 
-const AddAddressForm = ({ handleSaveAddress, setAddAddress }) => {
+const AddAddressForm = ({ addAddressData, setAddAddress }) => {
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -17,6 +17,7 @@ const AddAddressForm = ({ handleSaveAddress, setAddAddress }) => {
   const cep = useRef('');
   const complement = useRef('');
   const number = useRef('');
+  const recipient = useRef('');
 
   const getAddressByApi = () => {
     axios.get(`https://viacep.com.br/ws/${cep.current}/json/`)
@@ -41,7 +42,7 @@ const AddAddressForm = ({ handleSaveAddress, setAddAddress }) => {
           <CloseIcon onClick={() => setAddAddress(false)} />
         </EditDataHeader>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6} sm={6}>
             <TextField
               required
               id="zip"
@@ -53,6 +54,16 @@ const AddAddressForm = ({ handleSaveAddress, setAddAddress }) => {
             />
           </Grid>
           <CayamaSecondaryButton onClick={getAddressByApi}>Buscar</CayamaSecondaryButton>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="recipient"
+              name="recipient"
+              label="Nome Completo"
+              fullWidth
+              required
+              onChange={(e) => handleUseRef(recipient, e.target.value)}
+            />
+          </Grid>
           <Grid item xs={12}>
             <TextField
               required
@@ -129,7 +140,17 @@ const AddAddressForm = ({ handleSaveAddress, setAddAddress }) => {
           </Grid>
         </Grid>
         <CayamaPrimaryButton 
-          onClick={() => handleSaveAddress(address, city, state, neighborhood, country, cep, complement, number)}
+          onClick={() => addAddressData({
+            address,
+            city,
+            state,
+            neighborhood,
+            country: country.current,
+            cep: cep.current,
+            complement: complement.current,
+            number: number.current,
+            recipient: recipient.current,
+          })}
         >
           Salvar Endereço
         </CayamaPrimaryButton>

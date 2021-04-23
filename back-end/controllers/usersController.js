@@ -127,18 +127,18 @@ const updateBasicRegistersData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id } = req.user;
 
-  validateSchemas(next, updateRegisterInfoSchema, {
-    fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
-    newValueObject: { newValue, fieldToUpdate },
-  });
+  // validateSchemas(next, updateRegisterInfoSchema, {
+  //   fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
+  //   newValueObject: { newValue, fieldToUpdate },
+  // });
 
-  const updatedUser = await usersService.updateBasicRegistersData(
+  const { _id: dbId, password, ...updatedUser } = await usersService.updateBasicRegistersData(
     fieldToUpdate,
     newValue,
     _id,
   );
-
-  return res.status(200).json({ updatedUser });
+  console.log(updatedUser)
+  return res.status(200).json({ ...updatedUser });
 });
 
 const getUserById = rescue(async (req, res, _next) => {
