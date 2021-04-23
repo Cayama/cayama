@@ -28,8 +28,10 @@ const registerStore = rescue(async (req, res, next) => {
 
   const { password: userPasswordFromDB, ...newStore } = await storesService.registerStore({
     storeData: {
-      storeName,
-      cnpj,
+      storePersonalData: {
+        storeName,
+        cnpj,
+      }
     },
     addresses: [],
     personalData: {},
@@ -41,64 +43,6 @@ const registerStore = rescue(async (req, res, next) => {
 
   return res.status(201).json({ token, ...newStore });
 });
-
-// const registerProduct = rescue(async (req, res, next) => {
-//   const {
-//     productName,
-//     price,
-//     category,
-//     stockQuantity = 1,
-//     description,
-//     brand,
-//     color,
-//     sizes = [],
-//     reviews = [],
-//   } = req.body;
-
-//   const { _id } = req.user;
-//   console.log(req.files);
-//   const { productImages, productSizeTableImage } = req.files;
-//   const productsImgKeys = (productImages || []).map((product) => product.key);
-//   const productsImgUrls = (productImages || []).map((product) => product.location);
-
-//   const productSizeTableImgKeys = (productSizeTableImage || []).map((product) => product.key);
-//   const productSizeTableImgUrls = (productSizeTableImage || []).map((product) => product.location);
-
-//   validateSchemas(next, productRegisterSchema, {
-//     productName,
-//     price,
-//     category: { field: 'categories', value: category },
-//     stockQuantity,
-//     description,
-//     reviews,
-//     productsImgKeys,
-//     productsImgUrls,
-//     productSizeTableImgKeys,
-//     productSizeTableImgUrls,
-//     brand,
-//     color,
-//     sizes,
-//   }, 'failedProductRegister');
-
-//   const addNewProduct = await storesService.addNewProduct({
-//     sellerId: _id,
-//     productName,
-//     price,
-//     category,
-//     stockQuantity,
-//     description,
-//     reviews,
-//     brand,
-//     color,
-//     sizes,
-//     productsImgKeys,
-//     productsImgUrls,
-//     productSizeTableImgKeys,
-//     productSizeTableImgUrls,
-//   });
-
-//   return res.status(201).json(addNewProduct);
-// });
 
 const deleteProduct = rescue(async (req, res, next) => {
   const { _id, email } = req.user;
@@ -155,13 +99,18 @@ const updateStoreDataCarrosselImages = rescue(async (req, res, next) => {
 });
 
 const updateFieldInStoreData = rescue(async (req, res, next) => {
-  const { fieldToUpdate,  } = req.body;
+  const { fieldToUpdate, newValue } = req.body;
+  const { _id: userId } = req.user;
+  console.log(newValue);
 
+  // validateSchemas(next, updateRegisterInfoSchema, {
+  //   fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
+  //   newValueObject: { newValue, fieldToUpdate },
+  // });
 
-  validateSchemas(next, updateRegisterInfoSchema, {
-    fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
-    newValueObject: { newValue, fieldToUpdate },
-  });
+  const { _id, password, ...updatedStore } = await storesService.updateFieldInStoreData(userId, fieldToUpdate, newValue, next);
+
+  return res.status(200).json({ ...updatedStore })
 
 });
 

@@ -171,9 +171,9 @@ const EditableStoreData = ({ phone, storeName, cnpj }) => {
   const token = getToken();
   
   const submitStoreData = () => {
-    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_USER_UPDATE_BY_FIELD}`, 
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_DATA_FIELD}`,
         {
-          fieldToUpdate: 'storeData',
+          fieldToUpdate: 'storePersonalData',
           newValue: {
             storeName: inputStoreName.current,
             cnpj: inputCnpj.current,
@@ -478,7 +478,7 @@ const EditableCarroselData = ({ initialFiles }) => {
   const handleRegister = (e) => {
     e.preventDefault();
     return axios
-      .put(process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_PROFILE,
+      .put(process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_CARROSSEL_IMG,
         handleUpload(),
         {
           headers: { authorization: token }

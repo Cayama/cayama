@@ -1,4 +1,6 @@
 const { storesModel } = require('../models/index');
+const { validateSchemas } = require('../services/schemasService');
+const { updateRegisterInfoSchema } = require('../validationSchemas/usersSchemas/index');
 
 const getStoreByCnpj = async (cnpj) => {
   const store = await storesModel.getStoreByCnpj(cnpj);
@@ -23,7 +25,17 @@ const updatedProducts = async (userId, newProductsArray) => {
 const updateStoreDataCarrosselImages = async (userId, carrosselImages) => {
   const updatedCarrosselImages = await storesModel.updateStoreDataCarrosselImages(userId, carrosselImages);
   return updatedCarrosselImages;
-}
+};
+
+const updateFieldInStoreData = async (userId, fieldToUpdate, newValue, next) => {
+  validateSchemas(next, updateRegisterInfoSchema, {
+    fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
+    newValueObject: { newValue, fieldToUpdate },
+  });
+  
+  const updatedStore = await storesModel.updateFieldInStoreData(userId, fieldToUpdate, newValue);
+  return updatedStore;
+};
 
 module.exports = {
   getStoreByCnpj,
@@ -31,4 +43,5 @@ module.exports = {
   // addNewProduct,
   updatedProducts,
   updateStoreDataCarrosselImages,
+  updateFieldInStoreData,
 };
