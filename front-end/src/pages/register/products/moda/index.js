@@ -35,7 +35,7 @@ function RegisterProductPage() {
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
   const [formatedPrice, setFormatedPrice] = useState('');
-  const [category, setCategory] = useState([]);
+  // const [category, setCategory] = useState([]);
 
   const color = useRef(''); 
   const productName = useRef('');
@@ -44,7 +44,7 @@ function RegisterProductPage() {
   const stockQuantity = useRef('');
   const description = useRef('');
 
-  // const { query: { category } } = useRouterFunction();
+  const { query: { category } } = useRouterFunction();
 
   useVerifyExpiredToken()
   const token = getToken();
@@ -64,17 +64,17 @@ function RegisterProductPage() {
 
   const handleUpload = () => {
     const formData = new FormData();
-    formDataArray(formData, productImages, "productImages")
+    formDataArray(formData, productImages, "productImages");
     formData.append("productName", productName.current);
     formData.append("price", price.current);
     formData.append("stockQuantity", stockQuantity.current);
     formData.append("description", description.current);
     formData.append("brand", brand.current);
     formData.append("category", category);
-    formDataArray(formData, sizes, "sizes[]")
+    formDataArray(formData, sizes, "sizes[]");
     formData.append("color", color.current);
-    formDataArray(formData, reviews, "reviews[]")
-    formDataArray(formData, productSizeTableImage, "productSizeTableImage")
+    formDataArray(formData, reviews, "reviews[]");
+    formDataArray(formData, productSizeTableImage, "productSizeTableImage");
     return formData;
   }
 
@@ -128,7 +128,7 @@ function RegisterProductPage() {
               </Grid>
               {categoriesArray.length === 0 ?
                 <Grid item xs={12} sm={6}>
-                  <Link href="/register-category">Cadastre Categorias para sua loja</Link>
+                  <Link href={process.env.NEXT_PUBLIC_PATH_STORE_PROFILE}>Cadastre Categorias para sua loja</Link>
                 </Grid>
                 :
                 <Grid item xs={12} sm={6}>

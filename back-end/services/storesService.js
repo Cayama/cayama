@@ -20,9 +20,15 @@ const updatedProducts = async (userId, newProductsArray) => {
   return newProducts;
 };
 
+const updateStoreDataCarrosselImages = async (userId, carrosselImages) => {
+  const updatedCarrosselImages = await storesModel.updateStoreDataCarrosselImages(userId, carrosselImages);
+  return updatedCarrosselImages;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
   // addNewProduct,
   updatedProducts,
+  updateStoreDataCarrosselImages,
 };

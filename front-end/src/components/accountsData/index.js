@@ -8,7 +8,8 @@ import { PageContentDiv } from '../dataGrid';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
 import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
 import { CustomInputWithUseRef } from '../layout/inputGroup';
-import { handleUseRef, getToken, returnArrayOfObjects } from '../../utils/index';
+import { ImagesDropzoneArea } from '../imagesDropzoneArea';
+import { handleUseRef, getToken, returnArrayOfObjects, formDataArray } from '../../utils/index';
 import { AddAddressForm } from '../address';
 import { AddCreditCardForm } from '../creditCard';
 import { InfluencerPrimarySocialMedia, InfluencerContentType } from '../influencerInput';
@@ -464,6 +465,53 @@ const EditableShippingData = ({ addresses }) => {
   )
 }
 
+const EditableCarroselData = ({ initialFiles }) => {
+  const [carrosselImages, setCarrosselImages] = useState([]);
+  const token = getToken();
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    formDataArray(formData, carrosselImages, "carrosselImages");
+    return formData;
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    return axios
+      .put(process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_PROFILE,
+        handleUpload(),
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        if (!res) return setNoConnectionError('Sem conexação.')
+        console.log(res)
+      })
+      .catch(({ response }) => {
+        console.log(response);
+        if (!response) return setNoConnectionError('Sem conexação.');
+      })
+  }
+  return (
+    <div>
+      <h5>Imagens Carrossel</h5>
+      <PageContentDiv width="50vw">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <ImagesDropzoneArea setImages={setCarrosselImages} initialFiles={initialFiles} />
+          </Grid>
+        </Grid>
+        <EditButtonContainer>
+          <CayamaPrimaryButton onClick={handleRegister}>
+              Salvar
+          </CayamaPrimaryButton>
+        </EditButtonContainer>
+      </PageContentDiv>
+    </div>
+  );
+}
+
 export {
   EditableAccountData,
   EditableUserPersonalData,
@@ -471,4 +519,5 @@ export {
   EditableInfluencerData,
   EditableShippingData,
   EditableCardsData,
+  EditableCarroselData,
 };

@@ -34,9 +34,22 @@ const updatedProducts = async (userId, newProductsArray) => {
   return newProducts.value;
 };
 
+const updateStoreDataCarrosselImages = async (userId, carrosselImages) => {
+  const db = await connection();
+  const newProducts = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $set: { 'storeData.carrosselImages': carrosselImages } },
+      { returnOriginal: false },
+    );
+
+  return newProducts.value;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
   // addNewProduct,
   updatedProducts,
+  updateStoreDataCarrosselImages,
 };

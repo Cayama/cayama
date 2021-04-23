@@ -253,7 +253,7 @@ const CustomInputWithUseState = ({ name, id, setInput, input, label, disabled = 
       id={id}
       value={input}
       disabled={disabled}
-      onChange={(e) => setInput(fieldToUseRef, e.target.value)}
+      onChange={(e) => setInput(e.target.value)}
     />
   );
 };

@@ -3,6 +3,7 @@ import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import PhoneIphoneOutlinedIcon from '@material-ui/icons/PhoneIphoneOutlined';
+import MoneyOffOutlinedIcon from '@material-ui/icons/MoneyOffOutlined';
 
 const navBarStructure = [
   {
@@ -18,12 +19,17 @@ const navBarStructure = [
   {
     name: 'Ofertas',
     url: '/settings/ofertas',
-    icon: <LoyaltyOutlinedIcon />,
+    icon: <MoneyOffOutlinedIcon />,
   },
   {
     name: 'Vender',
     url: '/settings/anuncie',
-    icon: <StorefrontOutlinedIcon />,
+    icon: <LoyaltyOutlinedIcon />,
+  },
+  {
+    name: 'Minha Loja',
+    url: '/settings/store-profile',
+    icon: <StorefrontOutlinedIcon />
   },
   {
     name: 'Influencer',
