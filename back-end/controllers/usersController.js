@@ -7,6 +7,7 @@ const {
   loginSchema,
   userInfluencerSchema,
   updateRegisterInfoSchema,
+  userAddressesSchema,
 } = require('../validationSchemas/usersSchemas/index');
 const { mailer } = require('../utils/index');
 const { validateSchemas } = require('../services/schemasService');
@@ -127,17 +128,13 @@ const updateBasicRegistersData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id } = req.user;
 
-  // validateSchemas(next, updateRegisterInfoSchema, {
-  //   fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
-  //   newValueObject: { newValue, fieldToUpdate },
-  // });
-
   const { _id: dbId, password, ...updatedUser } = await usersService.updateBasicRegistersData(
     fieldToUpdate,
     newValue,
     _id,
+    next,
   );
-  console.log(updatedUser)
+
   return res.status(200).json({ ...updatedUser });
 });
 

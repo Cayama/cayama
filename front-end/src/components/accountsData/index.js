@@ -14,7 +14,7 @@ import { AddCreditCardForm } from '../creditCard';
 import { InfluencerPrimarySocialMedia, InfluencerContentType } from '../influencerInput';
 // import Image from '../../infra/components/image';
 
-const EditableUserData = ({ email }) => {
+const EditableAccountData = ({ email }) => {
   const [disabled, setDisabled] = useState(true);
   const inputEmail = useRef(email);
   const token = getToken();
@@ -465,10 +465,10 @@ const EditableShippingData = ({ addresses }) => {
 }
 
 export {
-  EditableShippingData,
-  EditableCardsData,
+  EditableAccountData,
   EditableUserPersonalData,
-  EditableUserData,
   EditableStoreData,
   EditableInfluencerData,
+  EditableShippingData,
+  EditableCardsData,
 };
