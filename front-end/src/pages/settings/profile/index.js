@@ -54,7 +54,7 @@ function Profile() {
             :
             null
           }
-          <EditableCardsData cardsInfo={[]} />
+          <EditableCardsData cardsInfo={allUserData.cardData} />
           <EditableShippingData addresses={allUserData.addresses} />
         </PageContainerSection>
       </main>

@@ -16,6 +16,7 @@ const INITIAL_STATE = {
     },
     accountData: { email: null },
     addresses: [],
+    cardData: [],
   }
 };
 
@@ -38,6 +39,7 @@ const userDataReducer = (state = INITIAL_STATE, action) => {
           },
           accountData: { email: null },
           addresses: [],
+          cardData: [],
         }
       }
     case USER_DATA:

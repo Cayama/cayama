@@ -2,6 +2,7 @@ const Boom = require('boom');
 
 module.exports = (err, _req, res, _next) => {
   console.log('error middleware');
+  console.log(err)
   if (Boom.isBoom(err)) {
     const { statusCode, error, message } = err.output.payload;
 

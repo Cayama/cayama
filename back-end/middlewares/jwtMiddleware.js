@@ -18,7 +18,6 @@ module.exports = rescue(async (req, _res, next) => {
     const decoded = jwt.verify(token, SECRET);
 
     const user = await usersModel.getUserByEmail(decoded.user.accountData.email);
-
     if (!user) return next(Boom.unauthorized('Usuário não encontrado'));
 
     req.user = user;
