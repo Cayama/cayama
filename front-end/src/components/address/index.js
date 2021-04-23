@@ -18,6 +18,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
   const complement = useRef('');
   const number = useRef('');
   const recipient = useRef('');
+  const phone = useRef('');
 
   const getAddressByApi = () => {
     axios.get(`https://viacep.com.br/ws/${cep.current}/json/`)
@@ -62,6 +63,17 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
               fullWidth
               required
               onChange={(e) => handleUseRef(recipient, e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <TextField
+              required
+              id="phone"
+              name="phone"
+              label="Telefone"
+              fullWidth
+              onChange={(e) => handleUseRef(phone, e.target.value)}
+              autoComplete="phone"
             />
           </Grid>
           <Grid item xs={12}>
@@ -150,6 +162,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
             complement: complement.current,
             number: number.current,
             recipient: recipient.current,
+            phone: phone.current,
           })}
         >
           Salvar Endereço

@@ -18,7 +18,7 @@ const emailSchema = Joi.string()
 
 const birthDateSchema = Joi.string();
 
-const cepSchema = Joi.string().length(8).required().error(() => new Error('Cep deve conter 8 caracteres numéricos'));
+const cepSchema = Joi.string().length(9).required().error(() => new Error('Cep deve conter 8 caracteres numéricos'));
 
 const shippingAddressSchema = Joi.string().required();
 
@@ -121,7 +121,6 @@ const validateMongoId = (value, helper) => {
 };
 
 const validateRegisterInfo = (value, helper) => {
-  console.log(value)
   const schema = choices[value.fieldToUpdate];
   const { error } = Joi.object({ newValue: schema }).validate({
     newValue: value.newValue,
@@ -140,15 +139,16 @@ const newValueSchema = Joi.custom(validateRegisterInfo);
 const addressesSchema = Joi.array()
   .items(
     Joi.object({
-      name: registerNameSchema,
+      recipient: registerNameSchema,
       cep: cepSchema,
       state: shippingAddressSchema,
       city: shippingAddressSchema,
       neighborhood: shippingAddressSchema,
-      street: shippingAddressSchema,
+      address: shippingAddressSchema,
       number: shippingAddressSchema,
       complement: shippingAddressSchema,
       phone: phoneSchema,
+      country: registerNameSchema,
     }),
   )
   .required();
@@ -181,6 +181,7 @@ const userPersonalDataSchema = Joi.object({
 const storeDataUpdateSchema = Joi.object({
   storeName: registerNameSchema,
   cnpj: cnpjSchema,
+  phone: phoneSchema,
 });
 
 const choices = {
@@ -209,16 +210,6 @@ const arrayOfObjectsSchema = Joi.array().min(1).items(Joi.object({
   quantity: shippingAddressSchema,
   price: shippingAddressSchema,
 })).required();
-
-// const validatePurchaseObjectsSchema = (value, helper) => {
-//   if (value.length === 0) {
-//     return helper.error('\"purchases\" is empty');
-//   }
-
-//   return purchaseObjectsSchema;
-// };
-
-// const arrayOfObjectsSchema = Joi.custom(validatePurchaseObjectsSchema);
 
 module.exports = {
   registerNameSchema,

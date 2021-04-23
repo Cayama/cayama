@@ -11,7 +11,7 @@ import {
   EditableShippingData,
   EditableCardsData,
   EditableUserPersonalData,
-  EditableUserData,
+  EditableAccountData,
   EditableInfluencerData,
   EditableStoreData,
 } from '../../../components/accountsData';
@@ -28,7 +28,7 @@ function Profile() {
       <main>
         <PageContainerSection>
           <h3>Meus Dados</h3>
-          <EditableUserData email={allUserData.accountData.email} />
+          <EditableAccountData email={allUserData.accountData.email} />
           <EditableUserPersonalData 
             phone={allUserData.personalData.phone}
             firstName={allUserData.personalData.firstName}
