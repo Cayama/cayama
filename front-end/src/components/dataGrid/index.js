@@ -64,12 +64,12 @@ const PageCenteredOnScreen = styled.div`
   position: fixed;
   top: 25vh;
   left: 12.5vw;
+  z-index: 100;
 
   @media screen and (max-width: 415px) {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
   }
 `;
 

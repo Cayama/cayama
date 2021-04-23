@@ -138,9 +138,38 @@ const deleteProduct = rescue(async (req, res, next) => {
 
 const updateProduct = rescue(async (req, res, next) => {});
 
+const updateStoreDataCarrosselImages = rescue(async (req, res, next) => {
+  const { carrosselImages: carrosselImagesToUpdate } = req.files;
+  const { _id } = req.user;
+  const productsImgKeys = (carrosselImagesToUpdate || []).map((product) => product.key);
+  const productsImgUrls = (carrosselImagesToUpdate || []).map((product) => product.location);
+
+  const carrosselImages = {
+    productsImgKeys,
+    productsImgUrls ,
+  };
+
+  const updatedCarrosselImages = await storesService.updateStoreDataCarrosselImages(_id, carrosselImages);
+
+  return res.status(200).json({ message: "Imagens do carrosel atualizadas" });
+});
+
+const updateFieldInStoreData = rescue(async (req, res, next) => {
+  const { fieldToUpdate,  } = req.body;
+
+
+  validateSchemas(next, updateRegisterInfoSchema, {
+    fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
+    newValueObject: { newValue, fieldToUpdate },
+  });
+
+});
+
 module.exports = {
   updateProduct,
   registerStore,
   // registerProduct,
   deleteProduct,
+  updateStoreDataCarrosselImages,
+  updateFieldInStoreData,
 };

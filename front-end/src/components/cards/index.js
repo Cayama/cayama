@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import { CustomInputWithUseState } from '../layout/inputGroup';
+import { CustomInputWithUseRef, CustomInputWithUseState } from '../layout/inputGroup';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
@@ -308,7 +308,7 @@ const CardWithSearchCategoryInput = ({ setInput, defaultValue, fieldToUseRef, on
           <h2>Nome do produto</h2>
           <InputButtonContainer>
             <InputContainer>
-              <CustomInputWithUseState
+              <CustomInputWithUseRef
                 name="searchProductCategory"
                 id="searchProductCategory"
                 setInput={setInput}
