@@ -4,10 +4,11 @@ import { userDataAction } from '../../redux/action/userDataAction';
 import DeleteIcon from '@material-ui/icons/Delete'; 
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import { SketchPicker } from 'react-color';
 import { PageContentDiv } from '../dataGrid';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
 import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
-import { CustomInputWithUseRef } from '../layout/inputGroup';
+import { CustomInputWithUseRef, CustomInputWithUseState } from '../layout/inputGroup';
 import { ImagesDropzoneArea } from '../imagesDropzoneArea';
 import { handleUseRef, getToken, returnArrayOfObjects, formDataArray } from '../../utils/index';
 import { AddAddressForm } from '../address';
@@ -423,10 +424,8 @@ const EditableShippingData = ({ addresses }) => {
   }
 
   const deleteAddress = (addressToDeleteInfo) => {
-    console.log(addressToDeleteInfo);
     const newAddressArray = [...addresses].filter((address) => 
       `${address.address} ${address.number} ${address.complement}` !== addressToDeleteInfo);
-    console.log(newAddressArray);
     updateAddressData(newAddressArray);
   }
 
@@ -466,7 +465,10 @@ const EditableShippingData = ({ addresses }) => {
 }
 
 const EditableCarroselData = ({ initialFiles }) => {
+  const [disabled, setDisabled] = useState(true);
   const [carrosselImages, setCarrosselImages] = useState([]);
+  const [noConnectionError, setNoConnectionError] = useState(null);
+  const dispatch = useDispatch();
   const token = getToken();
 
   const handleUpload = () => {
@@ -475,7 +477,7 @@ const EditableCarroselData = ({ initialFiles }) => {
     return formData;
   }
 
-  const handleRegister = (e) => {
+  const handleCarrosselData = (e) => {
     e.preventDefault();
     return axios
       .put(process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_CARROSSEL_IMG,
@@ -487,6 +489,7 @@ const EditableCarroselData = ({ initialFiles }) => {
       .then((res) => {
         if (!res) return setNoConnectionError('Sem conexação.')
         console.log(res)
+        dispatch(userDataAction(res.data));
       })
       .catch(({ response }) => {
         console.log(response);
@@ -503,8 +506,154 @@ const EditableCarroselData = ({ initialFiles }) => {
           </Grid>
         </Grid>
         <EditButtonContainer>
-          <CayamaPrimaryButton onClick={handleRegister}>
-              Salvar
+          <SaveDataButton disabled={disabled} onClick={handleCarrosselData} />
+          <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
+            Editar
+          </CayamaPrimaryButton>
+        </EditButtonContainer>
+      </PageContentDiv>
+    </div>
+  );
+}
+
+const EditableStoreColorsData = ({ primaryColorDB, secondaryColorDB }) => {
+  const token = getToken();
+  const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(true);
+  const [primaryColor, setPrimaryColor] = useState(primaryColorDB);
+  const [secondaryColor, setSecondaryColor] = useState(secondaryColorDB);
+  
+  const handlePrimaryColorChange = (color) => {
+    setPrimaryColor(color.hex);
+  };
+
+  const handleSecondaryColorChange = (color) => {
+    setSecondaryColor(color.hex);
+  };
+
+  const submitStoreColorsData = () => {
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_DATA_FIELD}`,
+        {
+          fieldToUpdate: 'storeColorsData',
+          newValue: {
+            primaryColor,
+            secondaryColor,
+          },
+        },
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(userDataAction(res.data));
+        setDisabled(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  return (
+    <div>
+      <h5>Cores da Loja</h5>
+      <PageContentDiv width="50vw">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <CustomInputWithUseState
+              name="primaryStoreColor"
+              id="primaryStoreColor"
+              disabled={true}
+              label="Cor primaria"
+              input={primaryColor}
+            />
+          </Grid>
+          {!disabled ?
+            <Grid item xs={12} sm={12}>
+              <SketchPicker 
+                color={primaryColor}
+                onChange={handlePrimaryColorChange}
+              />
+            </Grid>
+            :
+            null
+          }
+          <Grid item xs={12} sm={6}>
+            <CustomInputWithUseState
+              name="secondaryStoreColor"
+              id="secondaryStoreColor"
+              disabled={true}
+              label="Cor secundaria"
+              input={secondaryColor}
+            />
+          </Grid>
+          {!disabled ?
+            <Grid item xs={12} sm={12}>
+              <SketchPicker 
+                color={secondaryColor}
+                onChange={handleSecondaryColorChange}
+              />
+            </Grid>
+            :
+            null
+          }
+        </Grid>
+        <EditButtonContainer>
+          <SaveDataButton disabled={disabled} onClick={submitStoreColorsData} />
+          <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
+            Editar
+          </CayamaPrimaryButton>
+        </EditButtonContainer>
+      </PageContentDiv>  
+    </div>
+  );
+}
+
+const EditableLogoData = ({ initialFiles }) => {
+  const [disabled, setDisabled] = useState(true);
+  const [logoImage, setLogoImage] = useState([]);
+  const [noConnectionError, setNoConnectionError] = useState(null);
+  const dispatch = useDispatch();
+  const token = getToken();
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    formDataArray(formData, logoImage, "logoImage");
+    return formData;
+  }
+
+  const handleLogoData = (e) => {
+    e.preventDefault();
+    return axios
+      .put(process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_LOGO_IMG,
+        handleUpload(),
+        {
+          headers: { authorization: token }
+        }
+      )
+      .then((res) => {
+        if (!res) return setNoConnectionError('Sem conexação.')
+        console.log(res)
+        dispatch(userDataAction(res.data));
+      })
+      .catch(({ response }) => {
+        console.log(response);
+        if (!response) return setNoConnectionError('Sem conexação.');
+      })
+  }
+  return (
+    <div>
+      <h5>Logo da Loja</h5>
+      <PageContentDiv width="50vw">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <ImagesDropzoneArea setImages={setLogoImage} initialFiles={initialFiles} />
+          </Grid>
+        </Grid>
+        <EditButtonContainer>
+          <SaveDataButton disabled={disabled} onClick={handleLogoData} />
+          <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
+            Editar
           </CayamaPrimaryButton>
         </EditButtonContainer>
       </PageContentDiv>
@@ -520,4 +669,6 @@ export {
   EditableShippingData,
   EditableCardsData,
   EditableCarroselData,
+  EditableStoreColorsData,
+  EditableLogoData,
 };

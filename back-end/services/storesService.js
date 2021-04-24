@@ -37,6 +37,11 @@ const updateFieldInStoreData = async (userId, fieldToUpdate, newValue, next) => 
   return updatedStore;
 };
 
+const updateStoreDataLogoImage = async (userId, logoImage) => {
+  const updatedLogoImage = await storesModel.updateStoreDataLogoImage(userId, logoImage);
+  return updatedLogoImage;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
@@ -44,4 +49,5 @@ module.exports = {
   updatedProducts,
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
+  updateStoreDataLogoImage,
 };

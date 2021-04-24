@@ -57,6 +57,13 @@ const privacyAndTermsSchema = Joi.boolean().truthy();
 
 const isInfluencerSchema = Joi.boolean();
 
+const hexColorSchema = Joi.string()
+  .regex(
+    /^#(?:[0-9a-fA-F]{3}){1,2}$/,
+  )
+  .required()
+  .error(() => new Error('Cor inválida'));
+
 const fieldsObjectManager = {
   categories: {
     array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas'],
@@ -81,6 +88,7 @@ const fieldsObjectManager = {
       'cpf',
       'birthDate',
       'storePersonalData',
+      'storeColorsData',
       'personalData',
       'accountData',
       'isInfluencer',
@@ -184,7 +192,13 @@ const storeDataUpdateSchema = Joi.object({
   phone: phoneSchema,
 });
 
+const storeColorsDataUpdateSchema = Joi.object({
+  primaryColor: hexColorSchema,
+  secondaryColor: hexColorSchema,
+});
+
 const choices = {
+  storeColorsData: storeColorsDataUpdateSchema,
   storePersonalData: storeDataUpdateSchema,
   personalData: userPersonalDataSchema,
   accountData: userAccountDataUpdateSchema,

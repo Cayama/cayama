@@ -31,8 +31,20 @@ const registerStore = rescue(async (req, res, next) => {
       storePersonalData: {
         storeName,
         cnpj,
-      }
+      },
+      storeColorsData: {
+        primaryColor: "#245BBD",
+        secondaryColor: "#cad4e3",
+      },
+      carrosselImages: {
+        productsImgUrls: [],
+      },
+      logoImage: {
+        logoImgUrls: [],
+      },
     },
+    isInfluencer: false,
+    haveStore: true,
     addresses: [],
     personalData: {},
     accountData: { email },
@@ -84,18 +96,36 @@ const updateProduct = rescue(async (req, res, next) => {});
 
 const updateStoreDataCarrosselImages = rescue(async (req, res, next) => {
   const { carrosselImages: carrosselImagesToUpdate } = req.files;
-  const { _id } = req.user;
-  const productsImgKeys = (carrosselImagesToUpdate || []).map((product) => product.key);
-  const productsImgUrls = (carrosselImagesToUpdate || []).map((product) => product.location);
+  const { _id: userId } = req.user;
+
+  const carrosselImgKeys = (carrosselImagesToUpdate || []).map((carrossel) => carrossel.key) || [];
+  const carrosselImgUrls = (carrosselImagesToUpdate || []).map((carrossel) => carrossel.location)|| [];
 
   const carrosselImages = {
-    productsImgKeys,
-    productsImgUrls ,
+    carrosselImgKeys,
+    carrosselImgUrls ,
   };
 
-  const updatedCarrosselImages = await storesService.updateStoreDataCarrosselImages(_id, carrosselImages);
+  const { _id, password, ...updatedCarrosselImages } = await storesService.updateStoreDataCarrosselImages(userId, carrosselImages);
 
-  return res.status(200).json({ message: "Imagens do carrosel atualizadas" });
+  return res.status(200).json({ ...updatedCarrosselImages });
+});
+
+const updateStoreDataLogoImage = rescue(async (req, res, next) => {
+  const { logoImage: logoImageToUpdate } = req.files;
+  const { _id: userId } = req.user;
+
+  const logoImgKeys = (logoImageToUpdate || []).map((logo) => logo.key) || [];
+  const logoImgUrls = (logoImageToUpdate || []).map((logo) => logo.location)|| [];
+
+  const logoImage = {
+    logoImgKeys,
+    logoImgUrls ,
+  };
+
+  const { _id, password, ...updatedLogoImage } = await storesService.updateStoreDataLogoImage(userId, logoImage);
+
+  return res.status(200).json({ ...updatedLogoImage });
 });
 
 const updateFieldInStoreData = rescue(async (req, res, next) => {
@@ -121,4 +151,5 @@ module.exports = {
   deleteProduct,
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
+  updateStoreDataLogoImage,
 };
