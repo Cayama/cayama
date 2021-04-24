@@ -46,6 +46,18 @@ const updateStoreDataCarrosselImages = async (userId, carrosselImages) => {
   return newProducts.value;
 }
 
+const updateStoreDataLogoImage = async (userId, logoImage) => {
+  const db = await connection();
+  const newProducts = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $set: { 'storeData.logoImage': logoImage } },
+      { returnOriginal: false },
+    );
+
+  return newProducts.value;
+}
+
 const updateFieldInStoreData = async (userId, fieldToUpdate, newValue) => {
   const db = await connection();
   const newProducts = await db.collection('users')
@@ -65,4 +77,5 @@ module.exports = {
   updatedProducts,
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
+  updateStoreDataLogoImage,
 };

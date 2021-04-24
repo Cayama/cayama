@@ -10,9 +10,19 @@ const INITIAL_STATE = {
       phone: null,
     },
     storeData: {
-      storeName: null,
-      phone: null,
-      cnpj: null,
+      storePersonalData: {
+        storeName:null,
+      },
+      storeColorsData: {
+        primaryColor: null,
+        secondaryColor: null,
+      },
+      carrosselImages: {
+        carrosselImgUrls: [],
+      },
+      logoImage: {
+        logoImgUrls: [],
+      }
     },
     accountData: { email: null },
     addresses: [],
@@ -23,25 +33,7 @@ const INITIAL_STATE = {
 const userDataReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_SIGN_OUT:
-      return {
-        userData: {
-          personalData: {
-            firstName: null,
-            lastName: null,
-            email: null,
-            cpf: null,
-            phone: null,
-          },
-          storeData: {
-            storeName: null,
-            phone: null,
-            cnpj: null,
-          },
-          accountData: { email: null },
-          addresses: [],
-          cardData: [],
-        }
-      }
+      return INITIAL_STATE;
     case USER_DATA:
       return {
         ...state,

@@ -27,7 +27,9 @@ const registerUser = rescue(async (req, res, next) => {
     newsAcceptance = false,
     privacyAndTerms,
   } = req.body;
+
   console.log(influencer)
+
   validateSchemas(next, userRegisterSchema, {
     firstName,
     lastName,
@@ -70,9 +72,11 @@ const registerUser = rescue(async (req, res, next) => {
       email,
     },
     isInfluencer,
+    haveStore: false,
     password,
     addresses,
     influencer,
+    haveStore,
     newsAcceptance,
     privacyAndTerms,
   });

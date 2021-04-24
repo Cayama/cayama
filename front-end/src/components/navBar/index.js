@@ -12,7 +12,7 @@ import cayamaLinksMock from '../../../dataMock/cayamaLinksMock';
 const NavBar = () => {
   const [token, setToken] = useState('');
   const hamburgerOpen = useSelector((state) => state.hamburgerMenuReducer.status);
-  const { personalData: { firstName }, storeData: { storeName }, addresses } = useSelector((state) => state.userDataReducer.userData);
+  const { personalData: { firstName }, storeData: { storePersonalData: { storeName } }, addresses } = useSelector((state) => state.userDataReducer.userData);
 
   useEffect(() => {
     const browserLocalStorage = localStorage.getItem('token') || '';

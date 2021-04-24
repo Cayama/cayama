@@ -3,7 +3,7 @@ import { DropzoneArea } from 'material-ui-dropzone'
 import carroselDataMock from '../../../dataMock/carroselMock';
 // import { Container } from './styles';
 
-function ImagesDropzoneArea({ setImages, initialFiles }) {
+function ImagesDropzoneArea({ setImages, initialFiles, filesLimit = 8 }) {
   return (
     <DropzoneArea
       acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
@@ -11,7 +11,7 @@ function ImagesDropzoneArea({ setImages, initialFiles }) {
       maxFileSize={5000000}
       dropzoneText="Arraste as imagens do produto para aqui"
       showPreviewsInDropzone={true}
-      filesLimit={8}
+      filesLimit={filesLimit}
       onAdd={(fileObjs) => console.log('Added Files:', fileObjs)}
       onChange={(files) => setImages(files)}
       initialFiles={initialFiles}

@@ -5,7 +5,12 @@ import Head from '../../../infra/components/head';
 import Footer from '../../../patterns/footer';
 import { getToken } from '../../../utils/index';
 import { PageContainerSection } from '../../../components/dataGrid';
-import { EditableStoreData, EditableCarroselData } from '../../../components/accountsData';
+import {
+  EditableStoreData,
+  EditableCarroselData,
+  EditableStoreColorsData,
+  EditableLogoData,
+} from '../../../components/accountsData';
 // import { Container } from './styles';
 
 function StoreProfile() {
@@ -29,11 +34,13 @@ function StoreProfile() {
             :
             null
           }
-          <EditableCarroselData initialFiles={carrosselImages} />
-          {/* Registrar Cores da loja, primaria e secundaria */}
+          <EditableCarroselData initialFiles={allUserData.storeData.carrosselImages.carrosselImgUrls} />
+          <EditableStoreColorsData
+            primaryColorDB={allUserData.storeData.storeColorsData.primaryColor}
+            secondaryColorDB={allUserData.storeData.storeColorsData.secondaryColor}
+          />
+          <EditableLogoData initialFiles={allUserData.storeData.logoImage.logoImgUrls} />
           {/* Registrar categorias */}
-          {/* Registrar Logo */}
-          {/* Registrar fotos de capa */}
         </PageContainerSection>
       </main>
       <Footer />
