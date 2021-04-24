@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Router from 'next/router'
+import { useSelector } from 'react-redux';
+import Router from 'next/router';
 import useRouterFunction from '../../../../infra/components/useRouter';
 import { useVerifyExpiredToken } from '../../../../customHooks/index';
 import axios from 'axios';
@@ -15,46 +16,44 @@ import {
   PriceInput,
   DisabledInput,
 } from '../../../../components/layout/inputGroup';
-import { handleUseRef } from '../../../../utils/index';
 import HandleSubmissionMessage from '../../../../components/handleSubmissionMessage';
 import { DropDownSelect } from '../../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
 import { RegisterProductButton } from './styles';
-import { getToken, formDataArray } from '../../../../utils/index';
+import {
+  getToken,
+  formDataArray,
+  formDataArrayOfObjects,
+  handleUseRef,
+  getReduxUserData
+} from '../../../../utils/index';
 import formatNumbersToBRL from '../../../../utils/formatNumbersToBRL';
-import CustomPropertyAdd from '../../../../components/customPropertyAdd';
+import { CustomPropertyAddSizeQuantity, CustomPropertyAddString } from '../../../../components/customPropertyAdd';
 import { PageContainerSection, PageContentDiv } from '../../../../components/dataGrid';
 
 function RegisterProductPage() {
+  const allUserData = getReduxUserData();
+  useVerifyExpiredToken();
+
   const [submited, setSubmited] = useState(false);
   const [noConnectionError, setNoConnectionError] = useState(null);
   const [registerProductMessage, setRegisterProductMessage] = useState(null);
-  const [categoriesArray, setCategoriesArray] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [productSizeTableImage, setProductSizeTableImage] = useState(null);
   const [formatedPrice, setFormatedPrice] = useState('');
-  // const [category, setCategory] = useState([]);
-
   const color = useRef(''); 
   const productName = useRef('');
   const brand = useRef('');
   const price = useRef(''); 
   const stockQuantity = useRef('');
   const description = useRef('');
+  const storeCategory = useRef('');
 
   const { query: { category } } = useRouterFunction();
 
-  useVerifyExpiredToken()
   const token = getToken();
-
-  const getCategory = () => {
-    // const pathNameSplited = history.pathname.split('/');
-    // const category = pathNameSplited[pathNameSplited.length - 1];
-    // console.log(category)
-    return category;
-  }
 
   const setPriceFunction = (value) => {
     const formatedPriceString = formatNumbersToBRL(value);
@@ -71,9 +70,10 @@ function RegisterProductPage() {
     formData.append("description", description.current);
     formData.append("brand", brand.current);
     formData.append("category", category);
-    formDataArray(formData, sizes, "sizes[]");
+    formData.append("storeCategory", storeCategory.current);
+    formData.append("sizes", JSON.stringify(sizes));
     formData.append("color", color.current);
-    formDataArray(formData, reviews, "reviews[]");
+    formData.append("reviews", JSON.stringify(reviews));
     formDataArray(formData, productSizeTableImage, "productSizeTableImage");
     return formData;
   }
@@ -126,15 +126,17 @@ function RegisterProductPage() {
               <Grid item xs={12} sm={6}>
                 <CustomInputWithUseRef name="color" id="color" label="Cores" setInput={handleUseRef} defaultValue={color.current} fieldToUseRef={color} />
               </Grid>
-              {categoriesArray.length === 0 ?
+              {allUserData.storeData.storeCategoriesData.length === 0 ?
                 <Grid item xs={12} sm={6}>
                   <Link href={process.env.NEXT_PUBLIC_PATH_STORE_PROFILE}>Cadastre Categorias para sua loja</Link>
                 </Grid>
                 :
                 <Grid item xs={12} sm={6}>
                   <DropDownSelect
-                    dropDownArray={categoriesArray}
-                    selectorName='Categoria'
+                    dropDownArray={allUserData.storeData.storeCategoriesData}
+                    selectorName='Sua Categoria'
+                    handleChange={handleUseRef}
+                    fieldToUseRef={storeCategory}
                   />
                 </Grid>
               }
@@ -144,18 +146,19 @@ function RegisterProductPage() {
               <Grid item xs={12} sm={6}>
                 <PriceInput value={formatedPrice} label="Preço" setPrice={setPriceFunction} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <CustomInputWithUseRef name="stockQuantity" id="stockQuantity" label="Quantidade" setInput={handleUseRef} defaultValue={stockQuantity.current} fieldToUseRef={stockQuantity}/>
-              </Grid>
-              <CustomPropertyAdd
+              </Grid> */}
+              <CustomPropertyAddSizeQuantity
                 name="size"
                 id="size"
-                addButtonText="Adicionar Tamanho"
+                addButtonText="Adicionar Tamanho com quantidade"
                 label="Tamanho"
                 setInputsArray={setSizes}
                 inputsArray={sizes}
+                quantityPerSize={true}
               />
-              <CustomPropertyAdd
+              <CustomPropertyAddString
                 name="reviews"
                 id="reviews"
                 addButtonText="Adicionar Reviews"

@@ -52,6 +52,13 @@ const arrayLinksSchema = Joi.array().items(Joi.string()).required();
 
 const arrayReviewLinksSchema = Joi.array().items(Joi.string());
 
+const arraySizesWithQuantitySchema = Joi.array().items(
+  Joi.object({
+    size: Joi.string().required(),
+    stockQuantity: productStockQuantitySchema, 
+  }
+));
+
 const newsAcceptanceSchema = Joi.boolean();
 const privacyAndTermsSchema = Joi.boolean().truthy();
 
@@ -252,4 +259,5 @@ module.exports = {
   newsAcceptanceSchema,
   privacyAndTermsSchema,
   isInfluencerSchema,
+  arraySizesWithQuantitySchema,
 };
