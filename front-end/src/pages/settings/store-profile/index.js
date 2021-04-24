@@ -10,13 +10,12 @@ import {
   EditableCarroselData,
   EditableStoreColorsData,
   EditableLogoData,
+  EditableStoreCategories,
 } from '../../../components/accountsData';
 // import { Container } from './styles';
 
 function StoreProfile() {
-  const token = getToken();
   const allUserData = useSelector((state) => state.userDataReducer.userData);
-  const [carrosselImages, setCarrosselImages] = useState([]);
 
   return (
     <div>
@@ -39,8 +38,8 @@ function StoreProfile() {
             primaryColorDB={allUserData.storeData.storeColorsData.primaryColor}
             secondaryColorDB={allUserData.storeData.storeColorsData.secondaryColor}
           />
+          <EditableStoreCategories categoriesDB={allUserData.storeData.storeCategoriesData} />
           <EditableLogoData initialFiles={allUserData.storeData.logoImage.logoImgUrls} />
-          {/* Registrar categorias */}
         </PageContainerSection>
       </main>
       <Footer />

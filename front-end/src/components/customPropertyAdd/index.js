@@ -10,7 +10,7 @@ import {
   CustomInputWithUseState,
 } from '../../components/layout/inputGroup';
 
-function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inputsArray }) {
+function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inputsArray, disabled = false }) {
   const [inputName, setInputName] = useState('');
 
   const setInputFunction = (value) => {
@@ -25,6 +25,7 @@ function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inp
   }
 
   const removeInput = (value) => {
+    if (disabled) return;
     const newAllInputs = inputsArray.filter((input) => input !== value);
     setInputsArray(newAllInputs);
   };
@@ -38,11 +39,12 @@ function CustomPropertyAdd({ addButtonText, label, name, id, setInputsArray, inp
             id={id}
             label={label}
             input={inputName}
+            disabled={disabled}
             setInput={setInputFunction}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-        <AddButton onClick={addInput}>{addButtonText}</AddButton>
+        <AddButton disabled={disabled} onClick={addInput}>{addButtonText}</AddButton>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>

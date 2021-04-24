@@ -131,7 +131,7 @@ const updateStoreDataLogoImage = rescue(async (req, res, next) => {
 const updateFieldInStoreData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id: userId } = req.user;
-  console.log(newValue);
+  console.log(typeof newValue);
 
   // validateSchemas(next, updateRegisterInfoSchema, {
   //   fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
