@@ -7,11 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    width: 120,
+    width: 150,
   },
 }));
 
-const DropDownSelect = ({ dropDownArray, handleChange, selectorName }) => {
+const DropDownSelect = ({ dropDownArray, handleChange, selectorName, fieldToUseRef }) => {
   const classes = useStyles();
   return (
     <FormControl className={classes.formControl}>
@@ -19,11 +19,10 @@ const DropDownSelect = ({ dropDownArray, handleChange, selectorName }) => {
       <Select
         labelId="dropDownSelector"
         id="dropDownSelector"
-        value=''
-        onChange={handleChange}
+        onChange={(e) => handleChange(fieldToUseRef, e.target.value)}
       >
-        {dropDownArray.map(({ value, name }) => (
-          <MenuItem value={value}>{name}</MenuItem>
+        {dropDownArray.map((element, index) => (
+          <MenuItem key={index} value={element}>{element}</MenuItem>
         ))}
       </Select>
     </FormControl>

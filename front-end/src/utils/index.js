@@ -6,6 +6,8 @@ import cleanUser from './cleanUser';
 import verifyExpiredToken from './verifyExpiredToken';
 import handleUseRef from './handleUseRef';
 import returnArrayOfObjects from './returnArrayOfObjects';
+import getReduxUserData from './getReduxUserData';
+import formDataArrayOfObjects from './formDataArrayOfObjects';
 
 export {
   firstLetterUpercase,
@@ -16,4 +18,6 @@ export {
   verifyExpiredToken,
   handleUseRef,
   returnArrayOfObjects,
+  getReduxUserData,
+  formDataArrayOfObjects,
 }

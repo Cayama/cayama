@@ -1,4 +1,4 @@
-module.exports = (previousArrya, objectOrArray) => {
+const returnArrayOfObjects = (previousArrya, objectOrArray) => {
   let newArrayOfObjects;
 
   if (Array.isArray(objectOrArray)) {
@@ -9,3 +9,5 @@ module.exports = (previousArrya, objectOrArray) => {
 
   return newArrayOfObjects
 }
+
+export default returnArrayOfObjects;

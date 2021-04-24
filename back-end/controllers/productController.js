@@ -10,14 +10,17 @@ const registerProduct = rescue(async (req, res, next) => {
     productName,
     price,
     category,
-    stockQuantity = 1,
     description,
     brand,
     color,
-    sizes = [],
-    reviews = [],
+    sizes: stringSizesArray = [],
+    reviews: stringReviewsArray = [],
+    storeCategory,
   } = req.body;
 
+  const sizes = JSON.parse(stringSizesArray);
+  const reviews = JSON.parse(stringReviewsArray);
+  console.log(reviews)
   const { _id } = req.user;
   const { productImages, productSizeTableImage } = req.files;
   const productsImgKeys = (productImages || []).map((product) => product.key);
@@ -30,7 +33,6 @@ const registerProduct = rescue(async (req, res, next) => {
     productName,
     price,
     category: { field: 'categories', value: category },
-    stockQuantity,
     description,
     reviews,
     productsImgKeys,
@@ -47,7 +49,6 @@ const registerProduct = rescue(async (req, res, next) => {
     productName,
     price,
     category,
-    stockQuantity,
     description,
     reviews,
     brand,
@@ -57,6 +58,7 @@ const registerProduct = rescue(async (req, res, next) => {
     productsImgUrls,
     productSizeTableImgKeys,
     productSizeTableImgUrls,
+    storeCategory,
   });
 
   return res.status(201).json(addNewProduct);
@@ -82,10 +84,12 @@ const getProductById = rescue(async (req, res, next) => {
 });
 
 const getProductsByField = rescue(async (req, res, next) => {
-  const { page } = req.query;
+  const { page = 1 } = req.query;
   const { field, fieldValue } = req.body;
   const products = await productService.getProductsByField(page, field, fieldValue);
   
+  console.log(products)
+
   return res.status(200).json({ products });
 });
 
