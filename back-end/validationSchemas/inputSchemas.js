@@ -89,6 +89,7 @@ const fieldsObjectManager = {
       'birthDate',
       'storePersonalData',
       'storeColorsData',
+      'storeCategoriesData',
       'personalData',
       'accountData',
       'isInfluencer',
@@ -192,12 +193,15 @@ const storeDataUpdateSchema = Joi.object({
   phone: phoneSchema,
 });
 
+const storeCategoriesDataUpdateSchema = Joi.array().items(Joi.string())
+
 const storeColorsDataUpdateSchema = Joi.object({
   primaryColor: hexColorSchema,
   secondaryColor: hexColorSchema,
 });
 
 const choices = {
+  storeCategoriesData: storeCategoriesDataUpdateSchema,
   storeColorsData: storeColorsDataUpdateSchema,
   storePersonalData: storeDataUpdateSchema,
   personalData: userPersonalDataSchema,

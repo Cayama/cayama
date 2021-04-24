@@ -6,6 +6,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { SketchPicker } from 'react-color';
 import { PageContentDiv } from '../dataGrid';
+import CustomPropertyAdd from '../customPropertyAdd';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
 import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
 import { CustomInputWithUseRef, CustomInputWithUseState } from '../layout/inputGroup';
@@ -661,6 +662,63 @@ const EditableLogoData = ({ initialFiles }) => {
   );
 }
 
+const EditableStoreCategories = ({ categoriesDB = [] }) => {
+  const [categories, setCategories] = useState(categoriesDB);
+  const [disabled, setDisabled] = useState(true);
+  const [noConnectionError, setNoConnectionError] = useState(null);
+
+  console.log(categories)
+  const dispatch = useDispatch();
+  const token = getToken();
+
+  const handleStoreCategoriesData = () => {
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_DATA_FIELD}`,
+    {
+      fieldToUpdate: 'storeCategoriesData',
+      newValue: categories,
+    },
+    {
+      headers: { authorization: token }
+    }
+  )
+  .then((res) => {
+    if (!res) return setNoConnectionError('Sem conexação.');
+    console.log(res);
+    dispatch(userDataAction(res.data));
+    setDisabled(true);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+  return (
+    <div>
+      <PageContentDiv width="50vw">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <CustomPropertyAdd
+              name="categories"
+              id="categories"
+              addButtonText="Adicionar Categorias"
+              label="Categorias"
+              setInputsArray={setCategories}
+              inputsArray={categories}
+              disabled={disabled}
+            />
+          </Grid>
+        </Grid>
+        <EditButtonContainer>
+          <SaveDataButton disabled={disabled} onClick={handleStoreCategoriesData} />
+          <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
+            Editar
+          </CayamaPrimaryButton>
+        </EditButtonContainer>
+      </PageContentDiv>
+    </div>
+  );
+}
+
 export {
   EditableAccountData,
   EditableUserPersonalData,
@@ -671,4 +729,5 @@ export {
   EditableCarroselData,
   EditableStoreColorsData,
   EditableLogoData,
+  EditableStoreCategories,
 };

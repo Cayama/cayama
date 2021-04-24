@@ -22,7 +22,8 @@ const INITIAL_STATE = {
       },
       logoImage: {
         logoImgUrls: [],
-      }
+      },
+      storeCategoriesData: [],
     },
     accountData: { email: null },
     addresses: [],
