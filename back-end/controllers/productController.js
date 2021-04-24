@@ -84,10 +84,12 @@ const getProductById = rescue(async (req, res, next) => {
 });
 
 const getProductsByField = rescue(async (req, res, next) => {
-  const { page } = req.query;
+  const { page = 1 } = req.query;
   const { field, fieldValue } = req.body;
   const products = await productService.getProductsByField(page, field, fieldValue);
   
+  console.log(products)
+
   return res.status(200).json({ products });
 });
 

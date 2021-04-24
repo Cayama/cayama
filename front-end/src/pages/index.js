@@ -11,44 +11,24 @@ import { ProductsSectionDisplay } from '../components/productsSectionDisplay';
 
 import productsMock from '../../dataMock/productsMock';
 
-// export async function getServerSideProps(context) {
-//   const data = await axios.get(
-//     process.env.NEXT_PUBLIC_API_URL_GET_PRODUCTS_BY_FIELD, 
-//     {
-//       field: 'category',
-//       fieldValue: 'Blusas'
-//     }
-//   );
-//   // console.log(res);
-//   // const data = await res.json();
+export async function getStaticProps(context) {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL_GET_PRODUCTS_BY_FIELD, 
+    {
+      field: 'category',
+      fieldValue: 'Blusas'
+    }
+  );
+  const { products } = await res.json();
 
-//   return {
-//     props: {
-//       productsArray: data,
-//     }
-//   }
-// };
+  return {
+    props: {
+      productsArray: products,
+    }
+  }
+};
 
-export default function Home() {
-  // const [products, setProducts] = useState([]);
-
-  // const test = async () => {
-  //   const data = await axios.get(
-  //     process.env.NEXT_PUBLIC_API_URL_GET_PRODUCTS_BY_FIELD, 
-  //     {
-  //       field: 'category',
-  //       fieldValue: 'Blusas'
-  //     }
-  //   );
-  //   return setProducts(data.data.products);
-  // }
-
-  // useEffect(() => {
-  //   test();
-  // }, [])
-
-  // console.log(products);
-  // if (products.length === 0) return <div>Loading...</div>
+export default function Home({ productsArray }) {
   return (
     <div>
       <Head title='Home - Cayama' />
@@ -59,7 +39,7 @@ export default function Home() {
         <HomePageTitles>
           Produtos em destaque
         </HomePageTitles>
-        <ProductsSectionDisplay productsArray={productsMock} />
+        <ProductsSectionDisplay productsArray={productsArray} />
       </main>
       <Footer />
     </div>
