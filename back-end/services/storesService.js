@@ -1,6 +1,7 @@
 const { storesModel } = require('../models/index');
 const { validateSchemas } = require('../services/schemasService');
 const { updateRegisterInfoSchema } = require('../validationSchemas/usersSchemas/index');
+const { validateMongoIdSchema } = require('../validationSchemas/inputSchemas');
 
 const getStoreByCnpj = async (cnpj) => {
   const store = await storesModel.getStoreByCnpj(cnpj);
@@ -42,6 +43,14 @@ const updateStoreDataLogoImage = async (userId, logoImage) => {
   return updatedLogoImage;
 }
 
+const getStorePageDataById = async (storeId, next) => {
+
+  validateSchemas(next, validateMongoIdSchema, storeId);
+
+  const storeData = await storesModel.getStorePageDataById(storeId);
+  return storeData
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
@@ -50,4 +59,5 @@ module.exports = {
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
   updateStoreDataLogoImage,
+  getStorePageDataById,
 };

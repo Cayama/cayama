@@ -7,7 +7,7 @@ const productRoutes = Router();
 
 module.exports = (io) => {
     productRoutes
-      .get(getProductByField, controllers.productController.getProductsByField)
+      .post(getProductByField, controllers.productController.getProductsByField)
       .post(
         registerProduct,
         jwtMiddleware,

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { SketchPicker } from 'react-color';
 import { PageContentDiv } from '../dataGrid';
-import CustomPropertyAdd from '../customPropertyAdd';
+import { CustomPropertyAddString } from '../customPropertyAdd';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
 import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
 import { CustomInputWithUseRef, CustomInputWithUseState } from '../layout/inputGroup';
@@ -697,7 +697,7 @@ const EditableStoreCategories = ({ categoriesDB = [] }) => {
       <PageContentDiv width="50vw">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12}>
-            <CustomPropertyAdd
+            <CustomPropertyAddString
               name="categories"
               id="categories"
               addButtonText="Adicionar Categorias"
