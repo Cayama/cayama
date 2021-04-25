@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 const Title = styled.h1`
   color: ${({ theme }) => theme.colors.secundary};
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `
 
 const CardTitle = styled.h5`

@@ -70,6 +70,13 @@ const updateFieldInStoreData = async (userId, fieldToUpdate, newValue) => {
   return newProducts.value;
 }
 
+const getStorePageDataById = async (storeId) => {
+  const db = await connection();
+  const store = await db.collection('users').findOne({ _id: ObjectId(storeId) });
+
+  return store;
+}
+
 module.exports = {
   getStoreByCnpj,
   registerStore,
@@ -78,4 +85,5 @@ module.exports = {
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
   updateStoreDataLogoImage,
+  getStorePageDataById,
 };

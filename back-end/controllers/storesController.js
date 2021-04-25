@@ -131,18 +131,20 @@ const updateStoreDataLogoImage = rescue(async (req, res, next) => {
 const updateFieldInStoreData = rescue(async (req, res, next) => {
   const { fieldToUpdate, newValue } = req.body;
   const { _id: userId } = req.user;
-  console.log(typeof newValue);
-
-  // validateSchemas(next, updateRegisterInfoSchema, {
-  //   fieldToUpdate: { field: 'fieldToUpdate', value: fieldToUpdate },
-  //   newValueObject: { newValue, fieldToUpdate },
-  // });
 
   const { _id, password, ...updatedStore } = await storesService.updateFieldInStoreData(userId, fieldToUpdate, newValue, next);
 
   return res.status(200).json({ ...updatedStore })
 
 });
+
+const getStorePageDataById = rescue(async (req, res, next) => {
+  const { storeId } = req.body;
+
+  const { storeData } = await storesService.getStorePageDataById(storeId, next);
+
+  return res.status(200).json({ storeData });
+})
 
 module.exports = {
   updateProduct,
@@ -152,4 +154,5 @@ module.exports = {
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
   updateStoreDataLogoImage,
+  getStorePageDataById,
 };

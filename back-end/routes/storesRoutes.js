@@ -6,12 +6,14 @@ const { storesPaths: {
   updateStoreDataCarrosselImages,
   updateFieldInStoreData,
   updateStoreDataLogoImages,
+  getStorePageData,
 } } = require('./paths/index');
 
 const storesRoutes = Router();
 
 module.exports = (io) => {
   storesRoutes
+    .get(getStorePageData, controllers.storesController.getStorePageDataById)
     .post(registerStore, controllers.storesController.registerStore)
     .put(updateStoreDataCarrosselImages,
       jwtMiddleware,

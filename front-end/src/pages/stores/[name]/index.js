@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Head from '../../../infra/components/head';
 import Header from '../../../patterns/header';
 import Footer from '../../../patterns/footer';
@@ -15,6 +16,24 @@ import mockStoreLink from '../../../../dataMock/storeLinkMock';
 import carroselDataMock from '../../../../dataMock/carroselMock';
 
 function CustomStore() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.post(
+      process.env.NEXT_PUBLIC_API_URL_STORE_PAGE_DATA, 
+      {
+        storeId: '608451cdf55b7554d48870a5'
+      }
+    )
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+
+  }, []);
+
   const storeName = 'Cayama'
   return (
     <div>
