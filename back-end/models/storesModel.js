@@ -70,6 +70,18 @@ const updateFieldInStoreData = async (userId, fieldToUpdate, newValue) => {
   return newProducts.value;
 }
 
+const updateCategoriesInStoreData = async (userId, updatedCategories) => {
+  const db = await connection();
+  const newProducts = await db.collection('users')
+    .findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $set: { ['storeData.storeCategoriesData']: updatedCategories } },
+      { returnOriginal: false },
+    );
+
+  return newProducts.value;
+}
+
 const getStorePageDataById = async (storeId) => {
   const db = await connection();
   const store = await db.collection('users').findOne({ _id: ObjectId(storeId) });
@@ -86,4 +98,5 @@ module.exports = {
   updateFieldInStoreData,
   updateStoreDataLogoImage,
   getStorePageDataById,
+  updateCategoriesInStoreData,
 };

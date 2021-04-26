@@ -96,9 +96,10 @@ function CustomPropertyAddString ({ addButtonText, label, name, id, setInputsArr
     setInputName('');
   }
 
-  const removeInput = (size) => {
+  const removeInput = (inputCurrentValue) => {
     if (disabled) return;
-    const newAllInputs = inputsArray.filter((input) => input.size !== size);
+    console.log(inputCurrentValue)
+    const newAllInputs = inputsArray.filter((input) => input !== inputCurrentValue);
     setInputsArray(newAllInputs);
   };
 
@@ -123,7 +124,7 @@ function CustomPropertyAddString ({ addButtonText, label, name, id, setInputsArr
         {inputsArray.map((inputName, index) => {
           return (
             <Grid item key={index}>
-              <InputWithX onClick={(e) => removeInput(e.currentTarget.value)}>
+              <InputWithX onClick={() => removeInput(inputName)}>
                 <SizeText>
                   {inputName}
                 </SizeText>
@@ -141,5 +142,5 @@ function CustomPropertyAddString ({ addButtonText, label, name, id, setInputsArr
 
 export {
   CustomPropertyAddSizeQuantity,
-  CustomPropertyAddString
+  CustomPropertyAddString,
 };

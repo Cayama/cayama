@@ -17,7 +17,7 @@ import {
   DisabledInput,
 } from '../../../../components/layout/inputGroup';
 import HandleSubmissionMessage from '../../../../components/handleSubmissionMessage';
-import { DropDownSelect } from '../../../../components/layout/selectGroup';
+import { DropDownStoreCategorySelect } from '../../../../components/layout/selectGroup';
 import Grid from '@material-ui/core/Grid';
 import { RegisterProductButton } from './styles';
 import {
@@ -132,7 +132,7 @@ function RegisterProductPage() {
                 </Grid>
                 :
                 <Grid item xs={12} sm={6}>
-                  <DropDownSelect
+                  <DropDownStoreCategorySelect
                     dropDownArray={allUserData.storeData.storeCategoriesData}
                     selectorName='Sua Categoria'
                     handleChange={handleUseRef}

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { SearchButton, SearchInput, SearchContainerRow } from './styles';
 import { BsSearch } from 'react-icons/bs';
 
-const SearchBar = ({ placeholderText }) => {
+const SearchBar = ({ placeholderText, searchBarButtonColor }) => {
   const [searchText, setSearchText] = useState(null);
   const history = useRouter();
 
@@ -23,7 +23,7 @@ const SearchBar = ({ placeholderText }) => {
   return (
     <SearchContainerRow>
       <SearchInput placeholder={placeholderText} onChange={(event) => handleChange(event)} />
-      <SearchButton onClick={(e) => sendToProductsPageList(e)}>
+      <SearchButton searchBarButtonColor={searchBarButtonColor} onClick={(e) => sendToProductsPageList(e)}>
         <BsSearch />
       </SearchButton>
     </SearchContainerRow>

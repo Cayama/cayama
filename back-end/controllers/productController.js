@@ -83,12 +83,11 @@ const getProductById = rescue(async (req, res, next) => {
   return res.status(200).json({ product });
 });
 
-const getProductsByField = rescue(async (req, res, next) => {
+const getProductsByFieldAndPaged = rescue(async (req, res, next) => {
   const { page = 1 } = req.query;
-  const { field, fieldValue } = req.body;
-  const products = await productService.getProductsByField(page, field, fieldValue);
-  
-  console.log(products)
+  const { field, fieldValue } = req.query;
+
+  const products = await productService.getProductsByFieldAndPaged(page, field, fieldValue);
 
   return res.status(200).json({ products });
 });
@@ -103,6 +102,6 @@ module.exports = {
   registerProduct,
   deleteProduct,
   getProductById,
-  getProductsByField,
+  getProductsByFieldAndPaged,
   updateProduct
 }

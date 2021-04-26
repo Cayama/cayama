@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Head from '../../../infra/components/head';
 import Header from '../../../patterns/header';
 import Footer from '../../../patterns/footer';
 import { ProductsSectionDisplay } from '../../../components/productsSectionDisplay';
 import StoreNav from '../../../components/storeNav';
-import Grid from '@material-ui/core/Grid';
-import Link from '../../../infra/components/link';
-import { CarouselComponent } from '../../../components/carrossel';
+import { handleUseRef } from '../../../utils/index';
+import { CarrosselComponent } from '../../../components/carrossel';
 import { SearchBarStore } from './styles';
 import SearchBar from '../../../components/searchBar';
 
@@ -17,16 +16,16 @@ import carroselDataMock from '../../../../dataMock/carroselMock';
 
 function CustomStore() {
   const [loading, setLoading] = useState(true);
+  const storeData = useRef({});
+  const storeProducts = useRef([]);
 
   useEffect(() => {
-    axios.post(
-      process.env.NEXT_PUBLIC_API_URL_STORE_PAGE_DATA, 
-      {
-        storeId: '608451cdf55b7554d48870a5'
-      }
-    )
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL_STORE_PAGE_DATA}?storeId=608451cdf55b7554d48870a5&page=1`)
     .then((res) => {
       console.log(res);
+      handleUseRef(storeData, res.data.storeData);
+      handleUseRef(storeProducts, res.data.storeProducts);
+      setLoading(false);
     })
     .catch((err) => {
       console.log(err);
@@ -34,18 +33,26 @@ function CustomStore() {
 
   }, []);
 
-  const storeName = 'Cayama'
+  if (loading) return <div>Loading...</div>
+
   return (
     <div>
       <Head title='Cadastre seu produto' />
       <Header />
       <main>
-        <StoreNav storeLinksArray={mockStoreLink} />
-        <CarouselComponent carouselImageArray={carroselDataMock} />
+        <StoreNav
+          logoImageLink={storeData.current.logoImage.logoImgUrls[0]}
+          storeLinksArray={storeData.current.storeCategoriesData}
+          storeColors={storeData.current.storeColorsData}
+        />
+        <CarrosselComponent carrosselImageArray={storeData.current.carrosselImages.carrosselImgUrls} />
         <SearchBarStore>
-          <SearchBar placeholderText={`Buscar produtos na ${storeName}`} />
+          <SearchBar
+            searchBarButtonColor={storeData.current.storeColorsData.secondaryColor}
+            placeholderText={`Buscar produtos na ${storeData.current.storePersonalData.storeName}`}
+          />
         </SearchBarStore>
-        <ProductsSectionDisplay productsArray={productsMock} />
+        <ProductsSectionDisplay productsArray={storeProducts.current} storeName={storeData.current.storePersonalData.storeName} />
       </main>
       <Footer />
     </div>

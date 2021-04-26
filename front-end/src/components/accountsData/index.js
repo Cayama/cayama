@@ -663,7 +663,8 @@ const EditableLogoData = ({ initialFiles }) => {
 }
 
 const EditableStoreCategories = ({ categoriesDB = [] }) => {
-  const [categories, setCategories] = useState(categoriesDB);
+  const categoriesOnlyWithStrings = categoriesDB.map((category) => category.linkText) || [];
+  const [categories, setCategories] = useState(categoriesOnlyWithStrings);
   const [disabled, setDisabled] = useState(true);
   const [noConnectionError, setNoConnectionError] = useState(null);
 
@@ -672,11 +673,8 @@ const EditableStoreCategories = ({ categoriesDB = [] }) => {
   const token = getToken();
 
   const handleStoreCategoriesData = () => {
-    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_DATA_FIELD}`,
-    {
-      fieldToUpdate: 'storeCategoriesData',
-      newValue: categories,
-    },
+    return axios.put(`${process.env.NEXT_PUBLIC_API_URL_UPDATE_STORE_CATEGORIES_DATA}`,
+    { categories },
     {
       headers: { authorization: token }
     }

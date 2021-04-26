@@ -16,11 +16,20 @@ const getProductById = async (productId) => {
   return newProduct;
 }
 
-const getProductsByField = async (page, field, fieldValue) => {
+const getProductsByFieldAndPaged = async (page, field, fieldValue) => {
   const PAGE_SIZE = 15;
   const pageInt = parseInt(page);
   const skip = (pageInt - 1) * PAGE_SIZE;
   const products = await productModel.getProductsByField(PAGE_SIZE, skip, field, fieldValue);
+
+  return products;
+};
+
+const getProductsBySellerIdAndPaged = async (page, sellerId) => {
+  const PAGE_SIZE = 15;
+  const pageInt = parseInt(page);
+  const skip = (pageInt - 1) * PAGE_SIZE;
+  const products = await productModel.getProductsByField(PAGE_SIZE, skip, sellerId);
 
   return products;
 };
@@ -119,5 +128,6 @@ module.exports = {
   deleteProduct,
   getProductById,
   updateProduct,
-  getProductsByField,
+  getProductsByFieldAndPaged,
+  getProductsBySellerIdAndPaged,
 };
