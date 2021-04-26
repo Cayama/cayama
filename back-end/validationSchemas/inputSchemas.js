@@ -130,6 +130,7 @@ const validateFieldExistence = (value, helper) => {
 };
 
 const validateMongoId = (value, helper) => {
+  console.log(value)
   if (!ObjectId.isValid(value)) {
     return helper.error('Id inválido');
   }

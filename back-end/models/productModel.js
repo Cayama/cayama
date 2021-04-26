@@ -16,9 +16,22 @@ const getProductById = async (productId) => {
 }
 
 const getProductsByField = async (PAGE_SIZE, skip, field, fieldValue) => {
+  console.log(field)
+  console.log(fieldValue)
   const db = await connection();
   const products = await db.collection('products').aggregate([
     { $match: { [field]: fieldValue } },
+    { $skip: skip },
+    { $limit: PAGE_SIZE }
+  ]).toArray();
+
+  return  products;
+}
+
+const getProductsBySellerId = async (PAGE_SIZE, skip, sellerId) => {
+  const db = await connection();
+  const products = await db.collection('products').aggregate([
+    { $match: { 'sellerId': ObjectId(sellerId) } },
     { $skip: skip },
     { $limit: PAGE_SIZE }
   ]).toArray();
@@ -51,4 +64,5 @@ const deleteProductById = async (productId) => {
     getProductById,
     deleteProductById,
     getProductsByField,
+    getProductsBySellerId,
   };

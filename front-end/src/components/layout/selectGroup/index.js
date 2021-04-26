@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropDownSelect = ({ dropDownArray, handleChange, selectorName, fieldToUseRef }) => {
+const DropDownStoreCategorySelect = ({ dropDownArray, handleChange, selectorName, fieldToUseRef }) => {
   const classes = useStyles();
   return (
     <FormControl className={classes.formControl}>
@@ -22,7 +22,7 @@ const DropDownSelect = ({ dropDownArray, handleChange, selectorName, fieldToUseR
         onChange={(e) => handleChange(fieldToUseRef, e.target.value)}
       >
         {dropDownArray.map((element, index) => (
-          <MenuItem key={index} value={element}>{element}</MenuItem>
+          <MenuItem key={index} value={element.linkText}>{element.linkText}</MenuItem>
         ))}
       </Select>
     </FormControl>
@@ -30,5 +30,5 @@ const DropDownSelect = ({ dropDownArray, handleChange, selectorName, fieldToUseR
 };
 
 export {
-  DropDownSelect,
+  DropDownStoreCategorySelect,
 }

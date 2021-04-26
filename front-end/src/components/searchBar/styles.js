@@ -12,7 +12,7 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  background: ${({ theme }) => theme.colors.secundary};
+  background: ${({ theme, searchBarButtonColor }) => searchBarButtonColor || theme.colors.secondary};
   display: flex;
   align-items: center;
   justify-content: center;

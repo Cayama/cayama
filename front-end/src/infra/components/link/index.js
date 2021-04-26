@@ -13,8 +13,4 @@ const Link = ({ href, children, onClick, color }) => {
   );
 }
 
-Link.propTypes = {
-  href: PropTypes.string.isRequired,
-}
-
 export default Link;

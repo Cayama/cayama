@@ -44,12 +44,29 @@ const updateStoreDataLogoImage = async (userId, logoImage) => {
 }
 
 const getStorePageDataById = async (storeId, next) => {
-
   validateSchemas(next, validateMongoIdSchema, storeId);
 
   const storeData = await storesModel.getStorePageDataById(storeId);
   return storeData
 }
+
+const updateCategoriesInStoreData = async (userId, categories, storeData, next) => {
+  validateSchemas(next, updateRegisterInfoSchema, {
+    fieldToUpdate: { field: 'fieldToUpdate', value: 'storeCategoriesData' },
+    newValueObject: { newValue: categories , fieldToUpdate: 'storeCategoriesData' },
+  });
+
+  const categoriesWithPath = categories.map((category) => {
+    return { 
+      'linkText': category,
+      'path': `/store/${storeData.storePersonalData.storeName.trim().toLowerCase()}/${category.trim().toLowerCase()}`,
+    };
+  })
+
+  const storeWithUpdatedCategories = await storesModel.updateCategoriesInStoreData(userId, categoriesWithPath);
+
+  return storeWithUpdatedCategories;
+} 
 
 module.exports = {
   getStoreByCnpj,
@@ -60,4 +77,5 @@ module.exports = {
   updateFieldInStoreData,
   updateStoreDataLogoImage,
   getStorePageDataById,
+  updateCategoriesInStoreData,
 };

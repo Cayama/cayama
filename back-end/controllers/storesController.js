@@ -3,7 +3,7 @@ const path = require('path');
 const Boom = require('boom');
 const rescue = require('express-rescue');
 const aws = require('aws-sdk');
-const { usersService, storesService } = require('../services/index');
+const { usersService, storesService, productService } = require('../services/index');
 const { createJwtToken } = require('../utils/index');
 const {
   storeRegisterSchema,
@@ -135,15 +135,26 @@ const updateFieldInStoreData = rescue(async (req, res, next) => {
   const { _id, password, ...updatedStore } = await storesService.updateFieldInStoreData(userId, fieldToUpdate, newValue, next);
 
   return res.status(200).json({ ...updatedStore })
+});
+
+const updateCategoriesInStoreData = rescue(async (req, res, next) => {
+  const { categories } = req.body;
+  const { _id: userId, storeData } = req.user;
+
+  const { _id, password, ...updatedStore } = await storesService.updateCategoriesInStoreData(userId, categories, storeData, next);
+
+  return res.status(200).json({ ...updatedStore })
 
 });
 
 const getStorePageDataById = rescue(async (req, res, next) => {
-  const { storeId } = req.body;
+  const { storeId, page } = req.query;
 
   const { storeData } = await storesService.getStorePageDataById(storeId, next);
 
-  return res.status(200).json({ storeData });
+  const storeProducts = await productService.getProductsBySellerIdAndPaged(page, storeId)
+  
+  return res.status(200).json({ storeData, storeProducts });
 })
 
 module.exports = {
@@ -155,4 +166,5 @@ module.exports = {
   updateFieldInStoreData,
   updateStoreDataLogoImage,
   getStorePageDataById,
+  updateCategoriesInStoreData,
 };

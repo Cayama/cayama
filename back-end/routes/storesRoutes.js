@@ -7,6 +7,7 @@ const { storesPaths: {
   updateFieldInStoreData,
   updateStoreDataLogoImages,
   getStorePageData,
+  updateStoresCategories,
 } } = require('./paths/index');
 
 const storesRoutes = Router();
@@ -28,6 +29,7 @@ module.exports = (io) => {
       ]),
       controllers.storesController.updateStoreDataLogoImage)
     .put(updateFieldInStoreData, jwtMiddleware, controllers.storesController.updateFieldInStoreData)
+    .put(updateStoresCategories, jwtMiddleware, controllers.storesController.updateCategoriesInStoreData)
     .delete('/product/:id', jwtMiddleware, controllers.storesController.deleteProduct);
 
   return storesRoutes;

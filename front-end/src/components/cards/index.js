@@ -138,15 +138,16 @@ const useStylesProduct = makeStyles({
 
 const ProductCard = ({
   productData: {
-    productName, price, shipping, category, storeName = 'cayama', productsImgUrls,
-  }
+    productName, price, shipping, category, productsImgUrls,
+  },
+  storeName,
 }) => {
   const classes = useStylesProduct();
-  // const productNameLink = productName.replaceAll(' ', '-').toLowerCase();
+  const productNameLink = productName.replaceAll(' ', '-').toLowerCase();
 
   return (
     <Card className={classes.productCardroot}>
-        <Link href={`/${category}/${productName}/${storeName}`}>
+        <Link href={`/${category.toLowerCase()}/${productNameLink}/${storeName}`}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
