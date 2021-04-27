@@ -1,12 +1,20 @@
 const { Router } = require('express');
 const controllers = require('../controllers/index');
 const { jwtMiddleware, multerMiddleware } = require('../middlewares/index');
-const { productPaths: { registerProduct, deleteProduct, getProductByField, updateProduct } } = require('./paths/index');
+const { productPaths: {
+  registerProduct,
+  deleteProduct,
+  getProductByField,
+  updateProduct,
+  getProductsInMarketplaceByText,
+  getProductsInSpecificStoreByText,
+} } = require('./paths/index');
 
 const productRoutes = Router();
 
 module.exports = (io) => {
     productRoutes
+      .get(getProductsInMarketplaceByText, controllers.productController.getProductsInMarketplaceByTextAndPaged)
       .get(getProductByField, controllers.productController.getProductsByFieldAndPaged)
       .post(
         registerProduct,

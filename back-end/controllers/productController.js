@@ -4,15 +4,19 @@ const {
   productRegisterSchema,
 } = require('../validationSchemas/productSchema/index');
 const { validateSchemas } = require('../services/schemasService');
+const { convertStringPriceToDouble } = require('../utils/index');
 
 const registerProduct = rescue(async (req, res, next) => {
   const {
     productName,
-    price,
+    price: stringPrice,
     category,
     description,
     brand,
     color,
+    freeShipping = false, // colocar no front ainda
+    isNew = false, // colocar no front ainda
+    withFees = false, // colocar no front ainda
     sizes: stringSizesArray = [],
     reviews: stringReviewsArray = [],
     storeCategory,
@@ -20,7 +24,8 @@ const registerProduct = rescue(async (req, res, next) => {
 
   const sizes = JSON.parse(stringSizesArray);
   const reviews = JSON.parse(stringReviewsArray);
-  console.log(reviews)
+  const price = convertStringPriceToDouble(stringPrice);
+
   const { _id } = req.user;
   const { productImages, productSizeTableImage } = req.files;
   const productsImgKeys = (productImages || []).map((product) => product.key);
@@ -53,6 +58,9 @@ const registerProduct = rescue(async (req, res, next) => {
     reviews,
     brand,
     color,
+    freeShipping,
+    isNew,
+    withFees,
     sizes,
     productsImgKeys,
     productsImgUrls,
@@ -98,10 +106,39 @@ const updateProduct = rescue(async (req, res, next) => {
   return res.status(201).json(updatedProduct);
 });
 
+const getProductsInMarketplaceByTextAndPaged = rescue(async (req, res, next) => {
+  const { searchText, page = 1 } = req.query;
+  // const { arrayOfObjectFilters } = req.body;
+  const arrayOfObjectFilters = [
+    {
+      filter: 'shipping',
+      value: true,
+    },
+    {
+      filter: 'priceRange',
+      value: {
+        first: '10',
+        second: '300',
+      }
+    },
+    {
+      filter: 'condition',
+      value: true,
+    },
+    {
+      filter: 'payment',
+      value: true,
+    },
+  ]
+  const products = await productService.getProductsInMarketplaceByTextAndPaged(page, searchText, arrayOfObjectFilters);
+  return res.status(200).json({ products });
+})
+
 module.exports = {
   registerProduct,
   deleteProduct,
   getProductById,
   getProductsByFieldAndPaged,
-  updateProduct
+  updateProduct,
+  getProductsInMarketplaceByTextAndPaged,
 }

@@ -7,7 +7,7 @@ import { MyHeader, HeaderContainerRow } from './styles';
 import BurguerNav from '../../components/navBar/burguerNav';
 import ShoppingCart from '../../components/shoppingCart';
 
-function Header({ children }) {
+function Header({ children, page }) {
   const [positionHeader, setPositionHeader] = useState('0')
   let prevScrollPos = 0;
   useEffect(() => {
@@ -32,7 +32,7 @@ function Header({ children }) {
             <Image alt="logo" src='/img/logoCayama.png' width="100%" height="30%" />
           </div>
         </Link>
-        <SearchBar placeholderText="Buscar produtos" />
+        <SearchBar placeholderText="Buscar produtos" page={page} />
         <ShoppingCart />
         <BurguerNav />
       </HeaderContainerRow>

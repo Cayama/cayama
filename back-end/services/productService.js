@@ -3,7 +3,7 @@ const {
   productRegisterSchema,
 } = require('../validationSchemas/productSchema/index');
 const { validateSchemas } = require('../services/schemasService');
-const { deleteImage } = require('../utils/index');
+const { deleteImage, convertStringPriceToDouble } = require('../utils/index');
 const Boom = require('boom');
 
 const registerProduct = async (productObj) => {
@@ -20,7 +20,8 @@ const getProductsByFieldAndPaged = async (page, field, fieldValue) => {
   const PAGE_SIZE = 15;
   const pageInt = parseInt(page);
   const skip = (pageInt - 1) * PAGE_SIZE;
-  const products = await productModel.getProductsByField(PAGE_SIZE, skip, field, fieldValue);
+  const textSearchedRegex = new RegExp(fieldValue.slice(0, -2), 'i');
+  const products = await productModel.getProductsByField(PAGE_SIZE, skip, field, textSearchedRegex);
 
   return products;
 };
@@ -31,6 +32,40 @@ const getProductsBySellerIdAndPaged = async (page, sellerId) => {
   const skip = (pageInt - 1) * PAGE_SIZE;
   const products = await productModel.getProductsByField(PAGE_SIZE, skip, sellerId);
 
+  return products;
+};
+
+const getProductsInMarketplaceByTextAndPaged = async (page, searchText, arrayOfObjectFilters) => {
+  const PAGE_SIZE = 15;
+  const pageInt = parseInt(page);
+  const skip = (pageInt - 1) * PAGE_SIZE;
+
+  const textSearchedRegex = new RegExp(searchText.toLowerCase().slice(0, -2), 'i');
+
+  const mongoFilters = arrayOfObjectFilters.map(({ filter, value }) => {
+    if (filter === 'shipping') return { '$match': { 'freeShipping': value } };
+    
+    if (filter === 'priceRange') {
+      return { 
+        '$match': { 
+          '$and': [{ 'price': { 
+              "$gte": convertStringPriceToDouble(value.first), 
+              '$lte': convertStringPriceToDouble(value.second) 
+            } 
+          }] 
+        } 
+      };
+    }
+
+    if (filter === 'condition') return { '$match': { 'isNew': value } };
+    
+    if (filter === 'payment') return { '$match': { 'withFees': value } };
+  })
+
+  mongoFilters.push({'$match': { 'productName': textSearchedRegex }})
+  console.log(mongoFilters)
+
+  const products = await productModel.getProductsInMarketplaceByTextAndPaged(PAGE_SIZE, skip, mongoFilters);
   return products;
 };
 
@@ -122,7 +157,7 @@ const updateProduct = async (body, user, files, next) => {
 
   return updatedProduct;
 };
-  
+
 module.exports = {
   registerProduct,
   deleteProduct,
@@ -130,4 +165,5 @@ module.exports = {
   updateProduct,
   getProductsByFieldAndPaged,
   getProductsBySellerIdAndPaged,
+  getProductsInMarketplaceByTextAndPaged,
 };

@@ -15,12 +15,22 @@ const getProductById = async (productId) => {
   return product
 }
 
-const getProductsByField = async (PAGE_SIZE, skip, field, fieldValue) => {
-  console.log(field)
-  console.log(fieldValue)
+const getProductsByField = async (PAGE_SIZE, skip, field, fieldValueRegex) => {
   const db = await connection();
   const products = await db.collection('products').aggregate([
-    { $match: { [field]: fieldValue } },
+    { $match: { [field]: fieldValueRegex } },
+    { $skip: skip },
+    { $limit: PAGE_SIZE }
+  ]).toArray();
+
+  return  products;
+}
+
+const getProductsInMarketplaceByTextAndPaged = async (PAGE_SIZE, skip, mongoFilters) => {
+  const db = await connection();
+  const products = await db.collection('products').aggregate([
+    ...mongoFilters,
+    // { $match: { [field]: fieldValue } },
     { $skip: skip },
     { $limit: PAGE_SIZE }
   ]).toArray();
@@ -65,4 +75,5 @@ const deleteProductById = async (productId) => {
     deleteProductById,
     getProductsByField,
     getProductsBySellerId,
+    getProductsInMarketplaceByTextAndPaged,
   };

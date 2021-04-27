@@ -1,0 +1,1 @@
+module.exports = (stringPrice) => parseFloat(stringPrice.replace(',', '.'))

@@ -156,7 +156,7 @@ const ProductCard = ({
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                R$ {price}
+                R$ {price.toString().replace('.', ',')}
               </Typography>
               {shipping ? 'Frete Grátis' : null}
               <Typography variant="body1" color="textSecondary" component="p">
