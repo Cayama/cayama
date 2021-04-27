@@ -42,7 +42,9 @@ const cnpjSchema = Joi.string()
 const influencerLinkSchema = Joi.string().min(3).max(30).trim()
   .required();
 
-const productPriceSchema = Joi.string().regex(/\d+(?:\.\d{3})*?,\d{2}/).required();
+// const productPriceSchema = Joi.string().regex(/\d+(?:\.\d{3})*?,\d{2}/).required();
+
+const productPriceSchema = Joi.number().required();
 
 const productStockQuantitySchema = Joi.number().integer().positive().required();
 
@@ -73,7 +75,7 @@ const hexColorSchema = Joi.string()
 
 const fieldsObjectManager = {
   categories: {
-    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas'],
+    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas', 'Calça'],
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   socialMedia: {
