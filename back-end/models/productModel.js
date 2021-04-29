@@ -30,7 +30,6 @@ const getProductsInMarketplaceByTextAndPaged = async (PAGE_SIZE, skip, mongoFilt
   const db = await connection();
   const products = await db.collection('products').aggregate([
     ...mongoFilters,
-    // { $match: { [field]: fieldValue } },
     { $skip: skip },
     { $limit: PAGE_SIZE }
   ]).toArray();

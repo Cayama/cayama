@@ -13,18 +13,17 @@ import OrderAndFilterMobile from '../../components/orderAndFilter/orderAndFilter
 import FilterWeb from '../../components/orderAndFilter/filterWeb';
 import OrderWeb from '../../components/orderAndFilter/orderWeb';
 
-import productsMock from '../../../dataMock/productsMock';
-
 function SearchProductListPage() {
   const { query: { search = 'Busque um Produto', page } } = useRouter();
   const [loading, setLoading] = useState(true);
   const [pageToSearch, setPageToSearch] = useState(page || 1);
   const [productsArray, setProductsArray] = useState([]);
   const [searchError, setSearchError] = useState(null);
-  const [filtersAndOrderArray, setFiltersAndOrderArray] = useState([]);
+  const [filtersArray, setFiltersArray] = useState([]);
+  const [orderObject, setOrderObject] = useState({});
 
   const getProducts = () => {
-    return axios.get(`${process.env.NEXT_PUBLIC_API_URL_SEARCH_PRODUCT_IN_MARKETPLACE}?searchText=${search}&page=${pageToSearch}&filtersAndOrderArray=${JSON.stringify(filtersAndOrderArray)}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_API_URL_SEARCH_PRODUCT_IN_MARKETPLACE}?searchText=${search}&page=${pageToSearch}&filtersArray=${JSON.stringify(filtersArray)}&orderObject=${JSON.stringify(orderObject)}`)
       .then((res) => {
         if (!res) return setSearchError('Sem conexação')
         console.log(res);
@@ -44,7 +43,7 @@ function SearchProductListPage() {
       setLoading(true);
       getProducts()
     }
-  }, [search, filtersAndOrderArray])
+  }, [search, filtersArray, orderObject])
 
   if (loading) return <div>Loading...</div>
 
@@ -56,23 +55,23 @@ function SearchProductListPage() {
         <SearchProductListPageContainer>
           <Hidden mdUp>
           <OrderAndFilterMobile
-            filtersAndOrderArray={filtersAndOrderArray}
-            setFiltersAndOrderArray={setFiltersAndOrderArray}
+            filtersArray={filtersArray}
+            setFiltersArray={setFiltersArray}
+            setOrderObject={setOrderObject}
             search={search}
           />
           </Hidden>
           <Hidden mdDown>
             <FilterWeb
-              filtersAndOrderArray={filtersAndOrderArray}
-              setFiltersAndOrderArray={setFiltersAndOrderArray}
+              filtersArray={filtersArray}
+              setFiltersArray={setFiltersArray}
               search={search}
             />
           </Hidden>
           <div>
             <Hidden mdDown>
               <OrderWeb
-                filtersAndOrderArray={filtersAndOrderArray}
-                setFiltersAndOrderArray={setFiltersAndOrderArray}
+                setOrderObject={setOrderObject}
               />
             </Hidden>
             <ProductsSectionDisplay productsArray={productsArray} />

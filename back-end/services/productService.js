@@ -35,37 +35,54 @@ const getProductsBySellerIdAndPaged = async (page, sellerId) => {
   return products;
 };
 
-const getProductsInMarketplaceByTextAndPaged = async (page, searchText, arrayOfObjectFilters) => {
+const getProductsInMarketplaceByTextAndPaged = async (page, searchText, filtersArray, orderObject) => {
   const PAGE_SIZE = 15;
   const pageInt = parseInt(page);
   const skip = (pageInt - 1) * PAGE_SIZE;
 
-  const textSearchedRegex = new RegExp(searchText.toLowerCase().slice(0, -2), 'i');
+  const wordsInSearchArray = searchText.split(' ');
 
-  const mongoFilters = arrayOfObjectFilters.map(({ filter, value }) => {
-    if (filter === 'shipping') return { '$match': { 'freeShipping': value } };
+  const mongoFilters = [];
+  
+  wordsInSearchArray.forEach((word) => mongoFilters.push({
+    '$match': {
+      '$or': [
+        { 'productName': { '$in': [new RegExp(word.toLowerCase().slice(0, -2), 'i')] } },
+        { 'description': { '$in': [new RegExp(word.toLowerCase().slice(0, -2), 'i')] } }
+      ]
+    }
+  }));
+
+  filtersArray.map(({ filter, value }) => {
+    if (filter === 'shipping') return mongoFilters.push({ '$match': { 'freeShipping': value } });
     
     if (filter === 'priceRange') {
-      return { 
-        '$match': { 
+      return mongoFilters.push({ 
+        '$match': {
           '$and': [{ 'price': { 
               "$gte": convertStringPriceToDouble(value.first.toString()), 
               '$lte': convertStringPriceToDouble(value.second.toString()) 
             } 
           }] 
         } 
-      };
+      });
     }
 
-    if (filter === 'condition') return { '$match': { 'isNew': value } };
+    if (filter === 'condition') return mongoFilters.push({ '$match': { 'isNew': value } });
     
-    if (filter === 'payment') return { '$match': { 'withFees': value } };
+    if (filter === 'payment') return mongoFilters.push({ '$match': { 'withFees': value } });
   })
 
-  mongoFilters.push({'$match': { 'productName': textSearchedRegex }})
-  // console.log(mongoFilters)
+  if (orderObject && Object.keys(orderObject).length > 0 && orderObject.constructor === Object) {
+    if (orderObject.order === 'Mais relevante') mongoFilters.push({ $sort: { 'price': 1 } })
+    if (orderObject.order === 'Menor preço') mongoFilters.push({ $sort: { 'price': 1 } })
+    if (orderObject.order === 'Maior preço') mongoFilters.push({ $sort: { 'price': -1 } })
+  } else {
+    mongoFilters.push({ $sort: { 'price': 1 } })
+  }
 
   const products = await productModel.getProductsInMarketplaceByTextAndPaged(PAGE_SIZE, skip, mongoFilters);
+
   return products;
 };
 
