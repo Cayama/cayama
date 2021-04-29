@@ -14,8 +14,8 @@ import { PriceFilterButton } from '../../layout/buttonGroup';
 import { PriceFilterSlider } from '../../slider';
 import { CustomItensWithDeleteIcon } from '../../customPropertyAdd';
 
-function FilterWeb({ search, filtersAndOrderArray, setFiltersAndOrderArray }) {
-  const filtersAndOrderArrayOfStringDescriptions = filtersAndOrderArray.map((element) => element.description);
+function FilterWeb({ search, filtersArray, setFiltersArray }) {
+  const filtersArrayOfStringDescriptions = filtersArray.map((element) => element.description);
   const [value, setValue] = useState([20, 37]);
 
   const handleChange = (event, newValue) => {
@@ -23,24 +23,24 @@ function FilterWeb({ search, filtersAndOrderArray, setFiltersAndOrderArray }) {
   };
 
   const removeFilter = (filterDescription) => {
-    const newFiltersAndOrderArray = filtersAndOrderArray.filter((element) => element.description !== filterDescription);
-    return setFiltersAndOrderArray(newFiltersAndOrderArray);
+    const newFiltersArray = filtersArray.filter((element) => element.description !== filterDescription);
+    return setFiltersArray(newFiltersArray);
   }
 
-  const handleFilterAndOrder = (objectToAdd) => {
-    const newFiltersAndOrderArray = filtersAndOrderArray.filter((element) => element.filter !== objectToAdd.filter) || [];
-    newFiltersAndOrderArray.push(objectToAdd)
-    return setFiltersAndOrderArray(newFiltersAndOrderArray);
+  const handleFilter = (objectToAdd) => {
+    const newFiltersArray = filtersArray.filter((element) => element.filter !== objectToAdd.filter) || [];
+    newFiltersArray.push(objectToAdd)
+    return setFiltersArray(newFiltersArray);
   }
 
   const handlePriceRangeChange = () => {
-    return handleFilterAndOrder({
+    return handleFilter({
       filter: 'priceRange',
       value: {
         first: parseFloat(value[0]),
         second: parseFloat(value[1]),
       },
-      description: `Preço entre R$${value[0]} e R$${value[1]}`
+      description: `De R$${value[0]} a R$${value[1]}`,
     })
   }
 
@@ -50,31 +50,31 @@ function FilterWeb({ search, filtersAndOrderArray, setFiltersAndOrderArray }) {
         <H1FirstLetterUppercase>{search}</H1FirstLetterUppercase>
       </SearchTitleWebContainer>
       <CustomItensWithDeleteIcon
-        arrayOfStrings={filtersAndOrderArrayOfStringDescriptions}
+        arrayOfStrings={filtersArrayOfStringDescriptions}
         setRemoveItem={removeFilter}
       />
       <FilterWebContainer>
 
         <SingleFilterContainer>
           <H3SingleFilter>Frete</H3SingleFilter>
-          <FilterClickAction onClick={() => handleFilterAndOrder({ filter: 'shipping', value: true, description: 'Frete grátis' })}>
+          <FilterClickAction onClick={() => handleFilter({ filter: 'shipping', value: true, description: 'Frete grátis' })}>
             Grátis
           </FilterClickAction>
         </SingleFilterContainer>
 
         <SingleFilterContainer>
           <H3SingleFilter>Pagamento</H3SingleFilter>
-          <FilterClickAction onClick={() => handleFilterAndOrder({ filter: 'payment', value: false, description: 'Sem juros' })}>
+          <FilterClickAction onClick={() => handleFilter({ filter: 'payment', value: false, description: 'Sem juros' })}>
             Sem Juros
           </FilterClickAction>
         </SingleFilterContainer>
 
         <SingleFilterContainer>
           <H3SingleFilter>Condição</H3SingleFilter>
-          <FilterClickAction onClick={() => handleFilterAndOrder({ filter: 'condition', value: true, description: 'Novo' })}>
+          <FilterClickAction onClick={() => handleFilter({ filter: 'condition', value: true, description: 'Novo' })}>
             Novo
           </FilterClickAction>
-          <FilterClickAction onClick={() => handleFilterAndOrder({ filter: 'condition', value: false, description: 'Usado' })}>
+          <FilterClickAction onClick={() => handleFilter({ filter: 'condition', value: false, description: 'Usado' })}>
             Usado
           </FilterClickAction>
         </SingleFilterContainer>

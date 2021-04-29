@@ -107,10 +107,16 @@ const updateProduct = rescue(async (req, res, next) => {
 });
 
 const getProductsInMarketplaceByTextAndPaged = rescue(async (req, res, next) => {
-  const { searchText, page = 1, filtersAndOrderArray: filtersAndOrderArrayString } = req.query;
-  const filtersAndOrderArray = JSON.parse(filtersAndOrderArrayString);
+  const {
+    searchText,
+    page = 1,
+    filtersArray: filtersArrayString,
+    orderObject: orderObjectString,
+  } = req.query;
+  const filtersArray = JSON.parse(filtersArrayString);
+  const orderObject = JSON.parse(orderObjectString);
 
-  const products = await productService.getProductsInMarketplaceByTextAndPaged(page, searchText, filtersAndOrderArray);
+  const products = await productService.getProductsInMarketplaceByTextAndPaged(page, searchText, filtersArray, orderObject);
   return res.status(200).json({ products });
 })
 

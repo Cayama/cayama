@@ -25,7 +25,8 @@ const PriceSubStructureItems = ({ onClick }) => {
       value: {
         first: parseFloat(value[0]),
         second: parseFloat(value[1]),
-      }
+      },
+      description: `De R$${value[0]} a R$${value[1]}`,
     })
   }
 
@@ -116,18 +117,18 @@ function NestedList({ title, structure }) {
   );
 };
 
-function NestedOrderList({ setFiltersAndOrderArray, filtersAndOrderArray }) {
+function NestedOrderList({ setOrderObject }) {
   return (
     <NestedListContainer>
       <div>
         <Divider />
-        <ListItemContent>
+        <ListItemContent onClick={() => setOrderObject({ order: 'Mais relevante' })}>
           Mais relevante
         </ListItemContent>
-        <ListItemContent>
+        <ListItemContent onClick={() => setOrderObject({ order: 'Menor preço' })}>
           Menor preço
         </ListItemContent>
-        <ListItemContent>
+        <ListItemContent onClick={() => setOrderObject({ order: 'Maior preço' })}>
           Maior preço
         </ListItemContent>
       </div>
@@ -135,16 +136,16 @@ function NestedOrderList({ setFiltersAndOrderArray, filtersAndOrderArray }) {
   );
 };
 
-const NestedFilterList = ({ setFiltersAndOrderArray, filtersAndOrderArray }) => {
+const NestedFilterList = ({ setFiltersArray, filtersArray }) => {
   const [shippingOpen, setShippingOpen] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [conditionOpen, setConditionOpen] = useState(false);
   const [priceRangeOpen, setPriceRangeOpen] = useState(false);
 
-  const handleFilterAndOrder = (objectToAdd) => {
-    const newFiltersAndOrderArray = filtersAndOrderArray.filter((element) => element.filter !== objectToAdd.filter) || [];
-    newFiltersAndOrderArray.push(objectToAdd)
-    return setFiltersAndOrderArray(newFiltersAndOrderArray);
+  const handleFilter = (objectToAdd) => {
+    const newFiltersArray = filtersArray.filter((element) => element.filter !== objectToAdd.filter) || [];
+    newFiltersArray.push(objectToAdd)
+    return setFiltersArray(newFiltersArray);
   }
 
   return (
@@ -155,7 +156,7 @@ const NestedFilterList = ({ setFiltersAndOrderArray, filtersAndOrderArray }) => 
           Frete {shippingOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItemContent>
         {shippingOpen ?
-          <ListItemContent onClick={() => handleFilterAndOrder({ filter: 'shipping', value: true, description: 'Frete grátis' })}>
+          <ListItemContent onClick={() => handleFilter({ filter: 'shipping', value: true, description: 'Frete grátis' })}>
             <SubStructureText>Grátis</SubStructureText>
           </ListItemContent>
           :
@@ -167,7 +168,7 @@ const NestedFilterList = ({ setFiltersAndOrderArray, filtersAndOrderArray }) => 
           Pagamento {paymentOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItemContent>
         {paymentOpen ?
-          <ListItemContent onClick={() => handleFilterAndOrder({ filter: 'payment', value: false, description: 'Sem juros' })}>
+          <ListItemContent onClick={() => handleFilter({ filter: 'payment', value: false, description: 'Sem juros' })}>
             <SubStructureText>Sem juros</SubStructureText>
           </ListItemContent>
           :
@@ -180,10 +181,10 @@ const NestedFilterList = ({ setFiltersAndOrderArray, filtersAndOrderArray }) => 
         </ListItemContent>
         {conditionOpen ?
           <div>
-            <ListItemContent onClick={() => handleFilterAndOrder({ filter: 'condition', value: true, description: 'Novo' })}>
+            <ListItemContent onClick={() => handleFilter({ filter: 'condition', value: true, description: 'Novo' })}>
               <SubStructureText>Novo</SubStructureText>
             </ListItemContent>
-            <ListItemContent onClick={() => handleFilterAndOrder({ filter: 'condition', value: false, description: 'Usado' })}>
+            <ListItemContent onClick={() => handleFilter({ filter: 'condition', value: false, description: 'Usado' })}>
               <SubStructureText>Usado</SubStructureText>
             </ListItemContent>
           </div>
@@ -196,7 +197,7 @@ const NestedFilterList = ({ setFiltersAndOrderArray, filtersAndOrderArray }) => 
           Preço {priceRangeOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItemContent>
         {priceRangeOpen ?
-          <PriceSubStructureItems onClick={handleFilterAndOrder} />
+          <PriceSubStructureItems onClick={handleFilter} />
           :
           null
         }

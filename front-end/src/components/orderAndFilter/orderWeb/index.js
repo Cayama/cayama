@@ -4,27 +4,32 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { ListItemContent } from '../../layout/listGroup';
 
-import { searchProductListPageOrderStructure } from '../structure';
-
-function OrderWeb() {
+function OrderWeb({ setOrderObject }) {
   const [open, setOpen] = useState(false);
   const [orderType, setOrderType] = useState('Mais relevante');
 
-  const handleClick = () => {
+  const handleOpenClick = () => {
     setOpen(!open);
-  };
+  }
+
+  const handleOrderObject = (objectValue) => {
+    handleOpenClick(!open);
+    return setOrderObject(objectValue);
+  }
 
   return (
     <OrderWebContainer>
       <OrderWebPhrase>Ordenar por:</OrderWebPhrase>
       <div>
-        <OrderWebClickContainer onClick={handleClick}>
+        <OrderWebClickContainer onClick={handleOpenClick}>
           <span>{orderType}</span>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </OrderWebClickContainer>
         {open ?
           <OrderWebDropDown>
-            {searchProductListPageOrderStructure.map(({ name }) => <ListItemContent>{name}</ListItemContent> )}
+            <ListItemContent onClick={() => handleOrderObject({ order: 'Mais relevante' })}>Mais relevante</ListItemContent>
+            <ListItemContent onClick={() => handleOrderObject({ order: 'Menor preço' })}>Menor preço</ListItemContent>
+            <ListItemContent onClick={() => handleOrderObject({ order: 'Maior preço' })}>Maior preço</ListItemContent>
           </OrderWebDropDown>
           :
         null
