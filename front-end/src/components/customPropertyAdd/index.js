@@ -82,6 +82,27 @@ function CustomPropertyAddSizeQuantity ({ addButtonText, label, name, id, setInp
   );
 }
 
+const CustomItensWithDeleteIcon = ({ arrayOfStrings, setRemoveItem }) => {
+  return (
+    <Grid container item>
+      {arrayOfStrings.map((inputName, index) => {
+        return (
+          <Grid item key={index}>
+            <InputWithX onClick={() => setRemoveItem(inputName)}>
+              <SizeText>
+                {inputName}
+              </SizeText>
+              <div>
+                <DeleteIcon />
+              </div>
+            </InputWithX>
+          </Grid>
+        )
+      })}
+    </Grid>
+  );
+}
+
 function CustomPropertyAddString ({ addButtonText, label, name, id, setInputsArray, inputsArray, disabled = false }) {
   const [inputName, setInputName] = useState('');
 
@@ -143,4 +164,5 @@ function CustomPropertyAddString ({ addButtonText, label, name, id, setInputsArr
 export {
   CustomPropertyAddSizeQuantity,
   CustomPropertyAddString,
+  CustomItensWithDeleteIcon,
 };

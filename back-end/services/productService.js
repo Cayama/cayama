@@ -49,8 +49,8 @@ const getProductsInMarketplaceByTextAndPaged = async (page, searchText, arrayOfO
       return { 
         '$match': { 
           '$and': [{ 'price': { 
-              "$gte": convertStringPriceToDouble(value.first), 
-              '$lte': convertStringPriceToDouble(value.second) 
+              "$gte": convertStringPriceToDouble(value.first.toString()), 
+              '$lte': convertStringPriceToDouble(value.second.toString()) 
             } 
           }] 
         } 
@@ -63,7 +63,7 @@ const getProductsInMarketplaceByTextAndPaged = async (page, searchText, arrayOfO
   })
 
   mongoFilters.push({'$match': { 'productName': textSearchedRegex }})
-  console.log(mongoFilters)
+  // console.log(mongoFilters)
 
   const products = await productModel.getProductsInMarketplaceByTextAndPaged(PAGE_SIZE, skip, mongoFilters);
   return products;

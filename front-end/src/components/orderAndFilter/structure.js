@@ -1,6 +1,5 @@
 import Slider from '@material-ui/core/Slider';
 
-
 const kkk = () => console.log('lol');
 
 const searchProductListPageOrderStructure = [

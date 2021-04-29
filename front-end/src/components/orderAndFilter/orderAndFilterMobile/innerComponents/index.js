@@ -7,7 +7,7 @@ import {
   CloseIconContainer,
   TitleAndFilter,
 } from './styles';
-import NestedList from '../../../lists';
+import { NestedList } from '../../../lists';
 
 function OrderAndFilter({ title, icon, structure }) {
   const [isEnabled, setIsEnabled] = useState(false)
@@ -23,7 +23,7 @@ function OrderAndFilter({ title, icon, structure }) {
         <TitleAndFilter>
           {title} por:
         </TitleAndFilter>
-        <NestedList title={title} structure={structure} />
+        {structure}
       </LinksToClickContainer>
     </OrderAndFilterContainer>
   );

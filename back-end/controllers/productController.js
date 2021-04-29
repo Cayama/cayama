@@ -107,30 +107,10 @@ const updateProduct = rescue(async (req, res, next) => {
 });
 
 const getProductsInMarketplaceByTextAndPaged = rescue(async (req, res, next) => {
-  const { searchText, page = 1 } = req.query;
-  // const { arrayOfObjectFilters } = req.body;
-  const arrayOfObjectFilters = [
-    {
-      filter: 'shipping',
-      value: true,
-    },
-    {
-      filter: 'priceRange',
-      value: {
-        first: '10',
-        second: '300',
-      }
-    },
-    {
-      filter: 'condition',
-      value: true,
-    },
-    {
-      filter: 'payment',
-      value: true,
-    },
-  ]
-  const products = await productService.getProductsInMarketplaceByTextAndPaged(page, searchText, arrayOfObjectFilters);
+  const { searchText, page = 1, filtersAndOrderArray: filtersAndOrderArrayString } = req.query;
+  const filtersAndOrderArray = JSON.parse(filtersAndOrderArrayString);
+
+  const products = await productService.getProductsInMarketplaceByTextAndPaged(page, searchText, filtersAndOrderArray);
   return res.status(200).json({ products });
 })
 
