@@ -22,7 +22,7 @@ const NavBar = () => {
   return (
     <MyNavBar>
       <ShippingAddressContainer>
-        {addresses && addresses.length > 0 ? (<ShippingAddressText><LocationOnOutlinedIcon /> {firstName}: {addresses[0].street} {addresses[0].number}</ShippingAddressText>) : null}
+        {addresses && addresses.length > 0 ? (<ShippingAddressText><LocationOnOutlinedIcon /> {firstName || storeName}: {addresses[0].address} {addresses[0].number}</ShippingAddressText>) : null}
       </ShippingAddressContainer>
       <DropDownCustomizable linksArray={cayamaLinksMock}>
         Categorias
