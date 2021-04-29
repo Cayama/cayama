@@ -88,7 +88,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
               autoComplete="shipping address-line1"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6} sm={6}>
             <TextField
               id="number"
               name="number"
@@ -98,7 +98,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
               autoComplete="shipping address-line2"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6} sm={6}>
             <TextField
               id="address2"
               name="address2"
@@ -130,7 +130,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6} sm={6}>
             <TextField
               id="state"
               name="state"
@@ -140,7 +140,7 @@ const AddAddressForm = ({ addAddressData, setAddAddress }) => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6} sm={6}>
             <TextField
               id="country"
               name="country"
