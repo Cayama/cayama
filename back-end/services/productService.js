@@ -30,7 +30,7 @@ const getProductsBySellerIdAndPaged = async (page, sellerId) => {
   const PAGE_SIZE = 15;
   const pageInt = parseInt(page);
   const skip = (pageInt - 1) * PAGE_SIZE;
-  const products = await productModel.getProductsByField(PAGE_SIZE, skip, sellerId);
+  const products = await productModel.getProductsBySellerId(PAGE_SIZE, skip, sellerId);
 
   return products;
 };

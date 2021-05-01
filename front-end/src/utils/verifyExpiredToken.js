@@ -11,7 +11,7 @@ const verifyExpiredToken = () => {
 
     return false;
   }
-  return false;
+  return true;
 }
 
 export default verifyExpiredToken;

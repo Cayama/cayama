@@ -79,6 +79,11 @@ const EditDataHeader = styled.div`
   align-items: center;
 `;
 
+const FlexEndContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export {
   ContainerRow,
   ContainerColumn,
@@ -89,4 +94,5 @@ export {
   PageCenteredOnScreen,
   PageContentDivFullMobileScreen,
   EditDataHeader,
+  FlexEndContainer,
 };

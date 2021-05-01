@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios';
+import React from 'react';
 import Head from '../infra/components/head';
 import Header from '../patterns/header';
 import Footer from '../patterns/footer';
 import { CarrosselComponent, tutorialSteps } from '../components/carrossel';
-import { PromoCard, ProductCard } from '../components/cards';
-import { ProductsCardSection } from '../components/dataGrid';
+import { PromoCard } from '../components/cards';
 import { HomePageTitles } from '../components/titles';
 import { ProductsSectionDisplay } from '../components/productsSectionDisplay';
-
-import productsMock from '../../dataMock/productsMock';
 
 export async function getStaticProps(context) {
   const res = await fetch(

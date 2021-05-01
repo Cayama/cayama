@@ -5,10 +5,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { SketchPicker } from 'react-color';
-import { PageContentDiv } from '../dataGrid';
+import { PageContentDiv, FlexEndContainer } from '../dataGrid';
 import { CustomPropertyAddString } from '../customPropertyAdd';
 import { CayamaPrimaryButton, CayamaSecondaryButton, SaveDataButton } from '../layout/buttonGroup';
-import { EditButtonContainer, CardDataContainer, CardDataContent } from './styles';
+import { CardDataContainer, CardDataContent } from './styles';
 import { CustomInputWithUseRef, CustomInputWithUseState } from '../layout/inputGroup';
 import { ImagesDropzoneArea } from '../imagesDropzoneArea';
 import { handleUseRef, getToken, returnArrayOfObjects, formDataArray } from '../../utils/index';
@@ -58,12 +58,12 @@ const EditableAccountData = ({ email }) => {
             />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={submitUserData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -152,12 +152,12 @@ const EditableUserPersonalData = ({ phone, firstName, lastName, cpf }) => {
             />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={submitPeronalData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -234,12 +234,12 @@ const EditableStoreData = ({ phone, storeName, cnpj }) => {
             />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={submitStoreData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -313,12 +313,12 @@ const EditableInfluencerData = ({ influencerLink, socialMedia, contentType, soci
             <InfluencerContentType disabled={disabled} fieldToUseRef={inputContentType} defaultValue={inputContentType.current} />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={submitInfluencerData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -385,11 +385,11 @@ const EditableCardsData = ({ cardsInfo = [] }) => {
             )
           })}
         </div>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <CayamaPrimaryButton onClick={() => setAddCard(true)}>
             Adicionar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
         {addCard ? <AddCreditCardForm addCardData={addCardData} setAddCard={setAddCard} /> : null}
       </PageContentDiv>
     </div>
@@ -454,11 +454,11 @@ const EditableShippingData = ({ addresses }) => {
             )
           })}
         </div>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <CayamaPrimaryButton onClick={() => setAddAddress(true)}>
             Adicionar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
         {addAddress ? <AddAddressForm addAddressData={addAddressData} setAddAddress={setAddAddress} /> : null}
       </PageContentDiv>
     </div>
@@ -506,12 +506,12 @@ const EditableCarroselData = ({ initialFiles }) => {
             <ImagesDropzoneArea setImages={setCarrosselImages} initialFiles={initialFiles} />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={handleCarrosselData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -599,12 +599,12 @@ const EditableStoreColorsData = ({ primaryColorDB, secondaryColorDB }) => {
             null
           }
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={submitStoreColorsData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>  
     </div>
   );
@@ -651,12 +651,12 @@ const EditableLogoData = ({ initialFiles }) => {
             <ImagesDropzoneArea setImages={setLogoImage} initialFiles={initialFiles} />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={handleLogoData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );
@@ -706,12 +706,12 @@ const EditableStoreCategories = ({ categoriesDB = [] }) => {
             />
           </Grid>
         </Grid>
-        <EditButtonContainer>
+        <FlexEndContainer>
           <SaveDataButton disabled={disabled} onClick={handleStoreCategoriesData} />
           <CayamaPrimaryButton onClick={(() => setDisabled(!disabled))}>
             Editar
           </CayamaPrimaryButton>
-        </EditButtonContainer>
+        </FlexEndContainer>
       </PageContentDiv>
     </div>
   );

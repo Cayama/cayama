@@ -82,9 +82,9 @@ const updateCategoriesInStoreData = async (userId, updatedCategories) => {
   return newProducts.value;
 }
 
-const getStorePageDataById = async (storeId) => {
+const getStorePageDataById = async (storeName) => {
   const db = await connection();
-  const store = await db.collection('users').findOne({ _id: ObjectId(storeId) });
+  const store = await db.collection('users').findOne({'storeData.storePersonalData.storeName': storeName });
 
   return store;
 }

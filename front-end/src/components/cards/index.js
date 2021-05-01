@@ -128,17 +128,19 @@ const useStylesProduct = makeStyles({
   productCardroot: {
     width: '46vw',
     maxWidth: 230,
-    maxHeight: 250,
+    height: 'auto',
+    maxHeight: 400,
     margin: '1vw 1vw 1vh 1vw',
   },
   media: {
-    height: 140,
+    height: 250,
+    maxHeight: 350,
   },
 });
 
 const ProductCard = ({
   productData: {
-    productName, price, shipping, category, productsImgUrls,
+    productName, price, freeShipping, category, productsImgUrls,
   },
   storeName,
 }) => {
@@ -158,7 +160,7 @@ const ProductCard = ({
               <Typography gutterBottom variant="h5" component="h2">
                 R$ {price.toString().replace('.', ',')}
               </Typography>
-              {shipping ? 'Frete Grátis' : null}
+              {freeShipping ? 'Frete Grátis' : null}
               <Typography variant="body1" color="textSecondary" component="p">
                 {productName}
               </Typography>

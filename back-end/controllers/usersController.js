@@ -26,6 +26,7 @@ const registerUser = rescue(async (req, res, next) => {
     influencer = {},
     newsAcceptance = false,
     privacyAndTerms,
+    haveStore = false,
   } = req.body;
 
   console.log(influencer)
@@ -72,7 +73,6 @@ const registerUser = rescue(async (req, res, next) => {
       email,
     },
     isInfluencer,
-    haveStore: false,
     password,
     addresses,
     influencer,
