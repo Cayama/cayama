@@ -43,10 +43,10 @@ const updateStoreDataLogoImage = async (userId, logoImage) => {
   return updatedLogoImage;
 }
 
-const getStorePageDataById = async (storeId, next) => {
-  validateSchemas(next, validateMongoIdSchema, storeId);
-
-  const storeData = await storesModel.getStorePageDataById(storeId);
+const getStorePageDataById = async (storeName, next) => {
+  // validateSchemas(next, validateMongoIdSchema, storeId);
+  const storeNameLowerCase = storeName.toLowerCase();
+  const storeData = await storesModel.getStorePageDataById(storeNameLowerCase);
   return storeData
 }
 

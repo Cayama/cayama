@@ -75,7 +75,7 @@ const hexColorSchema = Joi.string()
 
 const fieldsObjectManager = {
   categories: {
-    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas', 'Calça'],
+    array: ['tecnologia', 'moda', 'fitness', 'saúde', 'bebidas', 'Blusas', 'Calça', 'Bermuda', 'Top', 'Calçados', 'Chuteira', 'Jaqueta'],
     error: 'Tipo de Conteúdo inserido não esta entre as opções',
   },
   socialMedia: {

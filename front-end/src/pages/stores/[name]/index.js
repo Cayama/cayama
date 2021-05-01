@@ -8,26 +8,32 @@ import StoreNav from '../../../components/storeNav';
 import { handleUseRef } from '../../../utils/index';
 import { CarrosselComponent } from '../../../components/carrossel';
 import { SearchBarStore } from './styles';
+import useRouterFunction from '../../../infra/components/useRouter';
 import SearchBar from '../../../components/searchBar';
+
+import carroselDataMock from '../../../../dataMock/carroselMock';
 
 function CustomStore({ storeId = '608451cdf55b7554d48870a5' }) {
   const [loading, setLoading] = useState(true);
+  const { query: { name } } = useRouterFunction();
   const storeData = useRef({});
   const storeProducts = useRef([]);
-
+  
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL_STORE_PAGE_DATA}?storeId=${storeId}&page=1`)
-    .then((res) => {
-      console.log(res);
-      handleUseRef(storeData, res.data.storeData);
-      handleUseRef(storeProducts, res.data.storeProducts);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    if (name) {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL_STORE_PAGE_DATA}?storeName=${name}&page=1`)
+      .then((res) => {
+        console.log(res);
+        handleUseRef(storeData, res.data.storeData);
+        handleUseRef(storeProducts, res.data.storeProducts);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
 
-  }, []);
+  }, [name]);
 
   if (loading) return <div>Loading...</div>
 
@@ -41,7 +47,7 @@ function CustomStore({ storeId = '608451cdf55b7554d48870a5' }) {
           storeLinksArray={storeData.current.storeCategoriesData}
           storeColors={storeData.current.storeColorsData}
         />
-        <CarrosselComponent carrosselImageArray={storeData.current.carrosselImages.carrosselImgUrls} />
+        <CarrosselComponent carrosselImageArray={storeData.current.carrosselImages.carrosselImgUrls || carroselDataMock} />
         <SearchBarStore>
           <SearchBar
             searchBarButtonColor={storeData.current.storeColorsData.secondaryColor}

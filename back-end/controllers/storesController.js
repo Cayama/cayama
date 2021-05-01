@@ -29,7 +29,7 @@ const registerStore = rescue(async (req, res, next) => {
   const { password: userPasswordFromDB, ...newStore } = await storesService.registerStore({
     storeData: {
       storePersonalData: {
-        storeName,
+        storeName: storeName.toLowerCase(),
         cnpj,
       },
       storeColorsData: {
@@ -148,11 +148,11 @@ const updateCategoriesInStoreData = rescue(async (req, res, next) => {
 });
 
 const getStorePageDataById = rescue(async (req, res, next) => {
-  const { storeId, page } = req.query;
+  const { storeName, page } = req.query;
 
-  const { storeData } = await storesService.getStorePageDataById(storeId, next);
-
-  const storeProducts = await productService.getProductsBySellerIdAndPaged(page, storeId)
+  const { storeData, _id: userId } = await storesService.getStorePageDataById(storeName, next);
+  console.log(userId)
+  const storeProducts = await productService.getProductsBySellerIdAndPaged(page, userId)
   
   return res.status(200).json({ storeData, storeProducts });
 })
