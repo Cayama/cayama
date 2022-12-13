@@ -21,7 +21,7 @@
     "boom": "^7.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-rescue": "^1.1.30",
     "form-data": "^3.0.0",
     "joi": "^17.2.1",
