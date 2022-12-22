@@ -25,7 +25,7 @@
     "express-rescue": "^1.1.30",
     "form-data": "^3.0.0",
     "joi": "^17.2.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mkdirp": "^1.0.4",
     "mongodb": "^3.6.2",
     "multer": "^1.4.2",
